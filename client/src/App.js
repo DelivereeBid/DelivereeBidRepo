@@ -1,23 +1,21 @@
 import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import { HomeShipper, HomeTransporter, CreatePostShipper, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation } from './pages'
+import { HomeShipper, HomeTransporter, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
 
 function App() {
   return (
     <Provider store={store}>
-      <nav>
 
-      </nav>
 
       <Switch>
           <Route exact path='/shipper'>
             <HomeShipper/>
           </Route>
-          <Route exact path='/shipper/createPost'>
+          {/* <Route exact path='/shipper/createPost'>
             <CreatePostShipper/>
-          </Route>
+          </Route> */}
           <Route exact path='/shipper/payment'>
             <PaymentMethod/>
           </Route>
