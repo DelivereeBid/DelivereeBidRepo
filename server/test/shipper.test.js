@@ -178,23 +178,23 @@ describe("Shipper Router Test", () => {
     ]);
   });
 
-//   describe("POST/login - shipper authentication process", () => {
-//     beforeAll((done) => {
-//       Shipper.create(shipper_data)
-//         .then((_) => {
-//           done();
-//         })
-//         .catch((err) => {
-//           done(err);
-//         });
-//     });
+  describe("POST/login - shipper authentication process", () => {
+    // beforeAll((done) => {
+    //   Shipper.create(shipper_data)
+    //     .then((_) => {
+    //       done();
+    //     })
+    //     .catch((err) => {
+    //       done(err);
+    //     });
+    // });
 
-//     afterAll((done) => {
-//       queryInterface
-//         .bulkDelete("Shippers", {})
-//         .then(() => done())
-//         .catch((err) => done(err));
-//     });
+    // afterAll((done) => {
+    //   queryInterface
+    //     .bulkDelete("Shippers", {})
+    //     .then(() => done())
+    //     .catch((err) => done(err));
+    // });
 
 //     it("200 Success Login - should return access_token", (done) => {
 //       request(app)
@@ -222,5 +222,5 @@ describe("Shipper Router Test", () => {
 //           done();
 //         });
 //     });
-//   });
+  });
 });
