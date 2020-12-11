@@ -5,11 +5,13 @@ const { queryInterface } = sequelize;
 
 describe("Transporter Router Test", () => {
   const transporter_data = {
+    name: "HDL",
     email: "hdl@mail.com",
     password: "halo123456",
   };
 
   const transporter_data2 = {
+    name: "PUS",
     email: "pus@mail.com",
     password: "halo123456",
   };
@@ -39,11 +41,38 @@ describe("Transporter Router Test", () => {
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(201);
-          expect(body.id).toHaveProperty("id", expect.any(Number));
-          expect(body.email).toHaveProperty(
-            "email",
-            expect.any(transporter_data.email)
-          );
+          expect(body).toHaveProperty("id", expect.any(Number));
+          expect(body).toHaveProperty("name", expect(transporter_data.name));
+          expect(body).toHaveProperty("email", expect(transporter_data.email));
+          done();
+        });
+    });
+
+    it("400 Failed register - should return error if name is empty", (done) => {
+      request(app)
+        .post("/transporter/register")
+        .send({
+          name: "",
+          email: "hdl@mail.com",
+          password: "halo123456",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(body).toHaveProperty("message", "Name cannot be empty");
+          done();
+        });
+    });
+
+    it("400 Failed register - should return error if name is null", (done) => {
+      request(app)
+        .post("/transporter/register")
+        .send({
+          email: "hdl@mail.com",
+          password: "halo123456",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(body).toHaveProperty("message", "Name cannot be empty");
           done();
         });
     });
@@ -52,6 +81,7 @@ describe("Transporter Router Test", () => {
       request(app)
         .post("/transporter/register")
         .send({
+          name: "HDL",
           password: "halo123456",
         })
         .then((response) => {
@@ -66,6 +96,7 @@ describe("Transporter Router Test", () => {
       request(app)
         .post("/transporter/register")
         .send({
+          name: "HDL",
           email: "",
           password: "halo123456",
         })
@@ -77,11 +108,13 @@ describe("Transporter Router Test", () => {
         });
     });
 
-    it("400 Failed register - should return error if password is empty", (done) => {
+    it("400 Failed register - should return error if password is empty string", (done) => {
       request(app)
         .post("/transporter/register")
         .send({
+          name: "HDL",
           email: "hdl@mail.com",
+          name: "",
         })
         .then((response) => {
           const { body, status } = response;
@@ -91,10 +124,25 @@ describe("Transporter Router Test", () => {
         });
     });
 
+    it("400 Failed register - should return error if password is null", (done) => {
+      request(app)
+        .post("/transporter/register")
+        .send({
+          name: "HDL",
+          email: "hdl@mail.com",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toHaveProperty("message", "Password cannot be empty");
+        });
+    });
+
     it("400 Failed register - should return error if email have invalid format", (done) => {
       request(app)
         .post("/transporter/register")
         .send({
+          name: "HDL",
           email: "hdl.com",
           password: "halo123456",
         })
@@ -109,6 +157,7 @@ describe("Transporter Router Test", () => {
       request(app)
         .post("/transporter/register")
         .send({
+          name: "PUS",
           email: "pus@mail.com",
           password: "halo123456",
         })
