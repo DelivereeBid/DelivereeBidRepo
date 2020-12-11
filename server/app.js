@@ -13,3 +13,5 @@ app.use(router)
 app.use(err)
 
 app.listen(port, () => console.log(`server running: http://localhost:${port}`))
+
+module.exports = app
