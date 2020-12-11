@@ -2,8 +2,9 @@ const router = require('express').Router()
 const ShipperController = require('../controllers/shipper')
 
 
-router.post("/shipper/register", ShipperController.register)
-
+router.post("/register", ShipperController.register)
+router.post("/login", ShipperController.login)
+router.get("/", ShipperController.findAll)
 
 
 

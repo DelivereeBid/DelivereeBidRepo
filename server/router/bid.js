@@ -1,9 +1,14 @@
 const router = require('express').Router()
 const BidController = require('../controllers/bid')
 
+const {authenticationShipper, authorizationBid} = require('../middlewares/auth')
 
-router.get("/bid", BidController.findAll)
-
+router.use(authenticationShipper)
+router.get("/", BidController.findAll)
+router.get("/:id", BidController.getById)
+router.post("/", BidController.createBid)
+router.put("/:id", authorizationBid, BidController.updateBid)
+router.delete("/:id", authorizationBid, BidController.deleteBid)
 
 
 
