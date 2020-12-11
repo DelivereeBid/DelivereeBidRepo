@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       service_picture: {
-        allowNull: false,
+        defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
         type: Sequelize.STRING
       },
       vehicle: {
