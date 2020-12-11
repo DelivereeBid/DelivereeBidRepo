@@ -5,12 +5,12 @@ const { queryInterface } = sequelize;
 
 describe("Shipper Router Test", () => {
   const shipper_data = {
-    email: "dhl@mail.com",
+    email: "zalada@mail.com",
     password: "halo123456",
   };
 
   const shipper_data2 = {
-    email: "ups@mail.com",
+    email: "tutuplapak@mail.com",
     password: "halo123456",
   };
 
@@ -81,7 +81,7 @@ describe("Shipper Router Test", () => {
       request(app)
         .post("/shippers/register")
         .send({
-          email: "dhl@mail.com",
+          email: "zalada@mail.com",
         })
         .then((response) => {
           const { body, status } = response;
@@ -109,13 +109,16 @@ describe("Shipper Router Test", () => {
       request(app)
         .post("/shipper/register")
         .send({
-          email: "ups@mail.com",
+          email: "tutuplapak@mail.com",
           password: "halo123456",
         })
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toHaveProperty("message", "ups@mail.com already exist");
+          expect(body).toHaveProperty(
+            "message",
+            "tutuplapak@mail.com already exist"
+          );
           done();
         }),
     ]);
