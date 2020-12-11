@@ -4,7 +4,7 @@ function VechileInformation (props) {
 
     return (
         <>
-            <h1>ini VechileInformation</h1>
+        <h1 className="text-center">ini vehicle information</h1>
         </>
     )
 }
