@@ -42,14 +42,14 @@ class ServiceController {
   static createService(req, res, next) {
     const {
       service_name,
-      service_picture,
+      file,
       vehicle,
       price,
       tracking_log,
     } = req.body;
     Service.create({
       service_name,
-      service_picture,
+      service_picture: file,
       vehicle,
       price,
       tracking_log,
@@ -66,14 +66,14 @@ class ServiceController {
     const { id } = req.params;
     const {
       service_name,
-      service_picture,
+      file,
       vehicle,
       price,
       tracking_log,
       status,
     } = req.body;
     Service.update(
-      { service_name, service_picture, vehicle, price, tracking_log, status },
+      { service_name, service_picture: file, vehicle, price, tracking_log, status },
       {
         where: {
           id: +id,

@@ -15,9 +15,9 @@ class TransporterController {
         .catch(err => next(err))
     }
     static register(req, res, next){
-        const {username, email, password} = req.body
+        const {username, email, password, file} = req.body
         Transporter.create({
-            username, email, password
+            username, email, password, profile_picture: file
         })
         .then((transporter) => {
             res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email})
