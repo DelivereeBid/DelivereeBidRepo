@@ -19,14 +19,14 @@ describe("Shipper Router Test", () => {
   describe("POST/register - register for shipper", () => {
     beforeAll((done) => {
       Shipper.create(shipper_data2)
-        .then((_) => {
+        .then((res) => {
           done();
         })
         .catch((err) => {
           done(err);
         });
     });
-
+  
     afterAll((done) => {
       queryInterface
         .bulkDelete("Shippers", {})
@@ -121,59 +121,61 @@ describe("Shipper Router Test", () => {
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toHaveProperty("message", "Password is required");
+          expect(body).toHaveProperty("message", "Validation len on password failed");
           done();
         });
     });
 
-    // it("400 Failed register - should return error if password is null", (done) => {
-    //   request(app)
-    //     .post("/shipper/register")
-    //     .send({
-    //       username: "Zalada",
-    //       email: "zalada@mail.com",
-    //     })
-    //     .then((response) => {
-    //       const { body, status } = response;
-    //       expect(status).toBe(400);
-    //       expect(body).toHaveProperty("message", "Password cannot be empty");
-    //       done();
-    //     });
-    // });
+    it("400 Failed register - should return error if password is null", (done) => {
+      request(app)
+        .post("/shipper/register")
+        .send({
+          username: "Zalada",
+          email: "zalada@mail.com",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(500);
+          expect(body).toHaveProperty("message", "Internal server error");
+          done();
+        });
+    });
 
-    // it("400 Failed register - should return error if email have invalid format", (done) => {
-    //   request(app)
-    //     .post("/shipper/register")
-    //     .send({
-    //       nama: "Zalada",
-    //       email: "zalada.com",
-    //       password: "halo123456",
-    //     })
-    //     .then((response) => {
-    //       const { body, status } = response;
-    //       expect(status).toBe(400);
-    //       expect(body).toHaveProperty("message", "Invalid email format");
-    //     });
-    // });
+    it("400 Failed register - should return error if email have invalid format", (done) => {
+      request(app)
+        .post("/shipper/register")
+        .send({
+          username: "Zalada",
+          email: "zalada.com",
+          password: "halo123456",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toHaveProperty("message", "Validation isEmail on email failed");
+          done();
+        });
+    });
 
-    // it("400 Failed register - should return error if email already in used", (done) => [
-    //   request(app)
-    //     .post("/shipper/register")
-    //     .send({
-    //       nama: "Tutuplapak",
-    //       email: "tutuplapak@mail.com",
-    //       password: "halo123456",
-    //     })
-    //     .then((response) => {
-    //       const { body, status } = response;
-    //       expect(status).toBe(400);
-    //       expect(body).toHaveProperty(
-    //         "message",
-    //         "tutuplapak@mail.com already exist"
-    //       );
-    //       done();
-    //     }),
-    // ]);
+    it("400 Failed register - should return error if email already in used", (done) => [
+      request(app)
+        .post("/shipper/register")
+        .send({
+          username: "Tutuplapak",
+          email: "tutuplapak@mail.com",
+          password: "halo123456",
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          console.log(body, 'www')
+          expect(body).toHaveProperty(
+            "message",
+            "Email must be unique"
+          );
+          done();
+        }),
+    ]);
   });
 
 //   describe("POST/login - shipper authentication process", () => {
