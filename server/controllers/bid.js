@@ -36,8 +36,8 @@ class BidController {
         }).catch(err => next(err))
     }
     static createBid(req, res, next){
-        const {product_name, file, description, from, to} = req.body
-        Bid.create({product_name, product_picture: file, description, from, to, ShipperId: req.loggedIn.id})
+        const {product_name, product_picture, description, from, to} = req.body
+        Bid.create({product_name, product_picture, description, from, to, ShipperId: req.loggedIn.id})
         .then(bid => {
             res.status(201).json(bid)
         })
@@ -45,8 +45,8 @@ class BidController {
     }
     static updateBid(req, res, next){
         const {id} = req.params
-        const {file, product_name, description, from, to} = req.body
-        Bid.update({product_name, product_picture: file, description, from, to}, {
+        const {product_picture, product_name, description, from, to} = req.body
+        Bid.update({product_name, product_picture, description, from, to}, {
             where: {
                 id: id
             }

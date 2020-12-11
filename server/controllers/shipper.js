@@ -15,9 +15,9 @@ class ShipperController {
         .catch(err => next(err))
     }
     static register(req, res, next){
-        const {username,email,password, file} = req.body
+        const {username,email,password} = req.body
         Shipper.create({
-            username, email, password, profile_picture: file
+            username, email, password
         })
         .then((shipper) => {
             res.status(201).json(res.status(201).json({id: shipper.id, username: shipper.username, email: shipper.email}))
