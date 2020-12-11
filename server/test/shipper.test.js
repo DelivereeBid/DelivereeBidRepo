@@ -158,7 +158,7 @@ describe("Shipper Router Test", () => {
       request(app)
         .post("/shippers/login")
         .send({
-          email: "dhal@mail.com",
+          email: "dalaza@mail.com",
           password: "halo123456",
         })
         .then((response) => {
