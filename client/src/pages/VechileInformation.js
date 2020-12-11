@@ -61,7 +61,7 @@ function VechileInformation (props) {
             </div>
           </div>
           <div className="card" style={{width: '100%', height: '100%'}}></div>
-          </div> 
+          </div>
         </div>
       </>
     )
