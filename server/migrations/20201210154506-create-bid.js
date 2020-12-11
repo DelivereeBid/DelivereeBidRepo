@@ -9,18 +9,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       product_picture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       product_name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       from: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       to: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
