@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const ServiceController = require('../controllers/service')
-
+const upload = require('../middlewares/upload')
 const {authenticationTransporter, authorizationService} = require('../middlewares/auth')
 
 router.use(authenticationTransporter)

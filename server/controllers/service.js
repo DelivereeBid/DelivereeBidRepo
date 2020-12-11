@@ -32,7 +32,10 @@ class ServiceController {
       },
     })
       .then((service) => {
-        res.status(200).json(service);
+        if(!service) throw {msg: "Service not found", code: 404}
+        else {
+          res.status(200).json(service);
+        }
       })
       .catch((err) => next(err));
   }

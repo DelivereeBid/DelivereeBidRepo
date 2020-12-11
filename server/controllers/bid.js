@@ -29,7 +29,10 @@ class BidController {
                 }
             }
         }).then(bid => {
-            res.status(200).json(bid)
+            if(!bid) throw {msg: "Bid not found", code: 404}
+            else {
+                res.status(200).json(bid)
+            }
         }).catch(err => next(err))
     }
     static createBid(req, res, next){

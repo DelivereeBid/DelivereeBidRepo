@@ -33,7 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {args: true, msg: "Password is required"},
-        len: [6, 10]
+        len: {
+          args: [4, 10],
+          msg: "Password length minimum 4 character and maximum 10 character"
+        }
       }
     },
     profile_picture: DataTypes.STRING,
