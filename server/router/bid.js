@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const BidController = require('../controllers/bid')
-
+const upload = require('../middlewares/upload')
 const {authenticationShipper, authorizationBid} = require('../middlewares/auth')
 
 router.use(authenticationShipper)
