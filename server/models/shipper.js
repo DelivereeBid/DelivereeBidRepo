@@ -39,8 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    profile_picture: DataTypes.STRING,
-    wallet: DataTypes.INTEGER
+    profile_picture: {
+      type: DataTypes.STRING,
+      defaultValue: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    },
+    wallet: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    }
   }, {
     sequelize,
     modelName: 'Shipper',

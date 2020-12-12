@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     service_picture: {
+      defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
       allowNull: false,
       type: DataTypes.STRING,
       validate: {

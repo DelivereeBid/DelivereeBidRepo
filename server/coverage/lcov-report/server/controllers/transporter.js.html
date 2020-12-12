@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.82% </span>
+<<<<<<< HEAD
+                <span class="strong">18.18% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/22</span>
+                <span class='fraction'>4/22</span>
+=======
+                <span class="strong">34.78% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>8/23</span>
+>>>>>>> 53fd0cee37bcc298ec0fa078d8bcc309bdbe5823
             </div>
         
             
@@ -37,16 +43,22 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/9</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.84% </span>
+<<<<<<< HEAD
+                <span class="strong">21.05% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/19</span>
+                <span class='fraction'>4/19</span>
+=======
+                <span class="strong">40% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>8/20</span>
+>>>>>>> 53fd0cee37bcc298ec0fa078d8bcc309bdbe5823
             </div>
         
             
@@ -109,7 +121,8 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,15 +139,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,16 +191,17 @@ class TransporterController {
         })
         .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; <span class="cstat-no" title="statement not covered" >next(err))</span>
     }
-    static register(req, res, next){
-        const {username, email, password} = req.body
-        Transporter.create({
+<span class="fstat-no" title="function not covered" >    st</span>atic register(req, res, next){
+        const {username, email, password} = <span class="cstat-no" title="statement not covered" >req.body</span>
+<span class="cstat-no" title="statement not covered" >        Transporter.create({</span>
             username, email, password
         })
-        .then(<span class="fstat-no" title="function not covered" >(t</span>ransporter) =&gt; {
-<span class="cstat-no" title="statement not covered" >            res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email})</span>
+        .then((transporter) =&gt; {
+            console.log(transporter, 'afj;l')
+            res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email})
         })
-        .catch(err =&gt; {
-            next(err)
+        .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; {
+<span class="cstat-no" title="statement not covered" >            next(err)</span>
         })
     }
 <span class="fstat-no" title="function not covered" >    st</span>atic login(req, res, next){
@@ -220,7 +235,11 @@ module.exports = TransporterController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Dec 11 2020 21:16:14 GMT+0700 (Western Indonesia Time)
+<<<<<<< HEAD
+                at Sat Dec 12 2020 00:01:07 GMT+0700 (Indochina Time)
+=======
+                at Fri Dec 11 2020 22:18:05 GMT+0700 (Western Indonesia Time)
+>>>>>>> 53fd0cee37bcc298ec0fa078d8bcc309bdbe5823
             </div>
         </div>
         <script src="../../prettify.js"></script>

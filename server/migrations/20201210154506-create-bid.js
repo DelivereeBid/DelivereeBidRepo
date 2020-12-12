@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       product_picture: {
-        defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
+        allowNull: false,
         type: Sequelize.STRING
       },
       product_name: {

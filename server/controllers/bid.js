@@ -41,7 +41,10 @@ class BidController {
         .then(bid => {
             res.status(201).json(bid)
         })
-        .catch(err => next(err))
+        .catch(err => {
+            console.log(err);
+            next(err)
+        })
     }
     static updateBid(req, res, next){
         const {id} = req.params
