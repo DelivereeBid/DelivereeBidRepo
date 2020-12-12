@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {Navbar, TableRowShipper, CardPostShipper, CreatePostShipper, EditPostShipper} from '../../components'
+import {Navbar, TableRowShipper, CardPostShipper, CreatePostShipper, EditPostShipper, BidderForShipper} from '../../components'
 import {fetchShippers} from '../../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button } from 'react-bootstrap';
+import { Switch, Route, Link } from 'react-router-dom'
 
 
 function HomeShipper (props) {
@@ -43,42 +43,19 @@ function HomeShipper (props) {
                     </div>
 
                 </div>
-                <div className='col-9'>
-                    <h3>Your Bidder</h3>
-                    <div style={{height: '400px', overflowY:'scroll'}}>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                <th>Number</th>
-                                <th>Name</th>
-                                <th>Vechile</th>
-                                <th>Bid</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                                <TableRowShipper/>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button className='btn btn-primary float-right mr-5' style={{width: '150px'}}>Deal</button>
-                </div>
+
+                {/* <Switch>
+                    <Route path='/shipper/bidder/:id'>
+                        <BidderForShipper/>
+                    </Route>
+                    <Route path='/shipper/editPost/:id'>
+                        <EditPostShipper/>
+                    </Route>
+                </Switch> */}
+
+
             </div>
             <CreatePostShipper/>
-            {/* <EditPostShipper/> */}
         </div>
     )
 }
