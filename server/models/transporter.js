@@ -55,6 +55,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
       defaultValue: 0,
+      validate: {
+        minus(value){
+          if(value < 0){
+            throw new Error ('Wallet cannot minus')
+          }
+        }
+      }
     }
   }, {
     sequelize,

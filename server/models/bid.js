@@ -16,29 +16,37 @@ module.exports = (sequelize, DataTypes) => {
   };
   Bid.init({
     product_picture: {
+      allowNull: false,
       defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {args: true, msg: "Product picture is required"}
+        notEmpty: {args: true, msg: "Product picture is required"},
+        notNull: {args: true, msg: "Product picture is required"}
       }
     },
     product_name: {
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {args: true, msg: "Product name is required"}
+        notEmpty: {args: true, msg: "Product name is required"},
+        notNull: {args: true, msg: "Product name is required"}
       }
     },
     description: DataTypes.STRING,
     from: {
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {args: true, msg: "From is required"}
+        notEmpty: {args: true, msg: "From is required"},
+        notNull: {args: true, msg: "From is required"}
       }
     },
     to: {
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {args: true, msg: "To destination is required"}
+        notEmpty: {args: true, msg: "To destination is required"},
+        notNull: {args: true, msg: "To destination is required"}
       }
     },
   }, {
