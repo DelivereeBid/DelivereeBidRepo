@@ -48,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
       validate: {
+        notEmpty: {args: true, msg: "Price is required"},
+        notNull: {args: true, msg: "Price is required"},
         min(value){
           if(value < 0) throw new Error ("Price cannot minus")
         },
@@ -55,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
+      allowNull: false,
       type: DataTypes.STRING,
       defaultValue: "Pending",
       validate: {
@@ -65,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: {args: true, msg: "Tracking loc is required"},
-        notNull: {args: true, msg: "Tracking loc is required"}
+        notEmpty: {args: true, msg: "Tracking log is required"},
+        notNull: {args: true, msg: "Tracking log is required"}
       }
     }
   }, {

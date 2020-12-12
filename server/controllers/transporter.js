@@ -16,12 +16,12 @@ class TransporterController {
         .catch(err => next(err))
     }
     static register(req, res, next){
-        const {username, email, password, file} = req.body
+        const {username, email, password, file, vehicle} = req.body
         Transporter.create({
-            username, email, password, profile_picture: file
+            username, email, password, profile_picture: file, vehicle
         })
         .then((transporter) => {
-            res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email})
+            res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email, vehicle: transporter.vehicle})
         })
         .catch(err => {
             next(err)
@@ -53,8 +53,8 @@ class TransporterController {
     static updateTransporter(req, res, next){
         const {id} = req.params
         const masuk = req.loggedIn.email
-        const {username, wallet} = req.body
-        Transporter.update({username, wallet}, { where: {id: id, email: masuk}})
+        const {username, wallet, vehicle} = req.body
+        Transporter.update({username, wallet, vehicle}, { where: {id: id, email: masuk}})
         .then(transporter => {
             if(transporter[0] === 0) throw {msg: "Not authorized", code: 403}
             else {

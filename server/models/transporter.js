@@ -62,7 +62,15 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    }
+    },
+    vehicle: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {args: true, msg: "Vehicle is required"},
+        notNull: {args: true, msg: "Vehicle is required"}
+      }
+    },
   }, {
     sequelize,
     modelName: 'Transporter',

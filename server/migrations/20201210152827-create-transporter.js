@@ -27,6 +27,9 @@ module.exports = {
       wallet: {
         type: Sequelize.INTEGER
       },
+      vehicle: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
