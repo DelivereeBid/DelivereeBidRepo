@@ -1,13 +1,13 @@
 import React from 'react'
 
 function TableRowShipper(props) {
-
+    const {bidder} = props
     return (
         <tr style={{cursor:'pointer'}}>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Bus</td>
-            <td>20000</td>
+            <th scope="row">{bidder.id}</th>
+            <td>{bidder.name}</td>
+            <td>{bidder.vechile}</td>
+            <td>Rp {bidder.bid.toLocaleString(['ban', 'id'])}</td>
         </tr>
     )
 }
