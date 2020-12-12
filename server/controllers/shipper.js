@@ -23,7 +23,7 @@ class ShipperController {
             res.status(201).json(res.status(201).json({id: shipper.id, username: shipper.username, email: shipper.email}))
         })
         .catch(err => {
-            console.log(err, 'LEEDLE')
+            console.log(err.name, 'LEE')
             next(err)
         })
     }
