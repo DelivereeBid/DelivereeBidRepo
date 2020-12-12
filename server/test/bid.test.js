@@ -379,7 +379,7 @@ describe ("DELETE /BID" , () => {
         }
       });
   });
-  it("401 Error PUT - should respond error if access token is invalid/unauthorized", (done) => {
+  it("401 Error DELETE - should respond error if access token is invalid/unauthorized", (done) => {
     request(app)
       .delete(`/bid/999`)
       // .set('access_token', access_token)
