@@ -92,7 +92,6 @@ describe("Service router test", () => {
             })
     })
   describe("POST/service create service by transporter", () => {
-        console.log(access_token, 'aws');
           it("Create service with code 201", (done) => {
               request(app)
               .post('/service')

@@ -1,5 +1,5 @@
 const {verifyToken} =require('../helper/jwt')
-const {Transporter, Shipper, Service, Bid} = require('../models')
+const {Transporter, Shipper, Post, Bid} = require('../models')
 
 async function authenticationTransporter(req, res, next){
     let { access_token } = req.headers
@@ -39,11 +39,11 @@ async function authenticationShipper(req, res, next){
         next(err)
     }
 }
-async function authorizationService(req, res, next){
+async function authorizationPost(req, res, next){
     try {
-        let service = await Service.findByPk(req.params.id)
-        if(!service) throw {msg: "Service not found", code: 404}
-        if(req.loggedIn.id === service.TransporterId){
+        let post = await Post.findByPk(req.params.id)
+        if(!post) throw {msg: "Post not found", code: 404}
+        if(req.loggedIn.id === post.TransporterId){
             next()
         } else throw {msg: "Not authorized", code: 403}
     } catch (err) {
@@ -61,4 +61,4 @@ async function authorizationBid(req, res, next){
         next(err)
     }
 }
-module.exports = {authenticationTransporter, authenticationShipper, authorizationService, authorizationBid}
+module.exports = {authenticationTransporter, authenticationShipper, authorizationPost, authorizationBid}

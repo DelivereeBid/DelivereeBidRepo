@@ -50,6 +50,22 @@ class ShipperController {
             next(err)
         })
     }
+
+    static updateShipper(req, res, next){
+        const {id} = req.params
+        const masuk = req.loggedIn.email
+        const {username, wallet} = req.body
+        Shipper.update({username, wallet}, {where: {id: id, email: masuk}})
+        .then(shipper => {
+            if(shipper[0] === 0) throw {msg: "Not authorized", code:403}
+            else {
+                res.status(200).json({msg: "Success update profile"})
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
 }
 
 module.exports = ShipperController

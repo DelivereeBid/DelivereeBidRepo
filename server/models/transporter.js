@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Transporter.hasMany(models.Service)
+      Transporter.hasMany(models.Post)
     }
   };
   Transporter.init({
