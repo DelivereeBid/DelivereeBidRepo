@@ -3,7 +3,7 @@ import { Switch, Route, Link } from 'react-router-dom'
 import { HomeShipper, HomeTransporter, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
-import { CreatePostShipper } from './components'
+import { CreatePostShipper, EditPostShipper } from './components'
 
 function App() {
   return (
@@ -19,6 +19,9 @@ function App() {
           </Route>
           <Route exact path='/shipper/payment'>
             <PaymentMethod/>
+          </Route>
+          <Route  path='/shipper/editPost/:id'>
+            <EditPostShipper/>
           </Route>
           <Route exact path='/transporter'>
             <HomeTransporter/>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Navbar, TableRowShipper, CardPostShipper, CreatePostShipper} from '../../components'
+import {Navbar, TableRowShipper, CardPostShipper, CreatePostShipper, EditPostShipper} from '../../components'
 import {fetchShippers} from '../../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap';
@@ -10,7 +10,7 @@ function HomeShipper (props) {
     const shippers = useSelector((state) => state.dataShipper)
     const show = useSelector((state) => state.show)
 
-
+    console.log(shippers)
     const handleShow = () => dispatch({
         type: 'SET_SHOW',
         payload: true
@@ -30,9 +30,16 @@ function HomeShipper (props) {
                     {/* <h3>Your Post<i class="fas fa-plus float-right" type='button' data-toggle="modal" data-target="#exampleModalCentered"></i></h3> */}
 
                     <div style={{height: '400px', overflowY:'scroll'}}>
-                        <CardPostShipper/>
-                        <CardPostShipper/>
-                        <CardPostShipper/>
+                        {
+                            shippers.map(shipper => {
+                                return (
+                                    <CardPostShipper
+                                        key={shipper.id}
+                                        shipper={shipper}
+                                    />
+                                )
+                            })
+                        }
                     </div>
 
                 </div>
@@ -71,6 +78,7 @@ function HomeShipper (props) {
                 </div>
             </div>
             <CreatePostShipper/>
+            {/* <EditPostShipper/> */}
         </div>
     )
 }
