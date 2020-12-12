@@ -2,6 +2,7 @@ const router = require('express').Router()
 const TransporterController = require('../controllers/transporter')
 const upload = require('../middlewares/upload')
 
+// router.post("/register",(req,res) => (console.log('hellow')))
 router.post("/register", upload.single('file'), TransporterController.register)
 router.post("/login", TransporterController.login)
 router.get("/", TransporterController.findAll)

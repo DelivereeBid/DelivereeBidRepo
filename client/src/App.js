@@ -8,8 +8,6 @@ import { CreatePostShipper, EditPostShipper } from './components'
 function App() {
   return (
     <Provider store={store}>
-
-
       <Switch>
           <Route path='/shipper'>
             <HomeShipper/>

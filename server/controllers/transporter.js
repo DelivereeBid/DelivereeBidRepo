@@ -16,13 +16,16 @@ class TransporterController {
     }
     static register(req, res, next){
         const {username, email, password, file} = req.body
+        // console.log(username, '<<< req body')
         Transporter.create({
             username, email, password, profile_picture: file
         })
         .then((transporter) => {
+            console.log('masuk')
             res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email})
         })
         .catch(err => {
+            console.log(err, '<<< ini eror')
             next(err)
         })
     }

@@ -6,7 +6,8 @@ const initialState = {
     dataShipper: [],
     show: false,
     showEdit: false,
-    shipper: {}
+    shipper: {},
+    access_token: ''
 }
 
 export const fetchShippers = () => {
@@ -97,6 +98,43 @@ export const postShipperRemove = (id) => {
     }
   }
 
+export const setLogin = (payload) => {
+    // console.log('masuk 102')
+    return (dispatch) => {
+        // console.log('msuk action')
+        axios({
+            url: '/transporter/login',
+            method: 'POST',
+            data: {
+                email: payload.email,
+                password: payload.password
+            }
+        })
+        .then(({data}) => {
+            console.log(data, '<<< ini data dari action')
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+        })
+        .catch((err) => console.log(err, '<<< error dari action'))
+    }
+}
+
+export const setSignUp = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/transporter/register',
+            method: 'POST',
+            data: payload
+        })
+        .then(({data}) => {
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+            console.log(data, 'sukses')
+        })
+        .catch((err) => {
+            console.log(err, '<<error')
+        })
+    }
+}
+
 function reducer (state = initialState, action) {
     switch (action.type) {
         case 'SET_DATA_SHIPPER':
@@ -107,6 +145,9 @@ function reducer (state = initialState, action) {
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':
             return { ...state, showEdit: action.payload, shipper: {}}
+        case 'SET_TOKEN':
+        console.log(action.payload, '<<< ini dari reducer')
+            return {...state, access_token: action.payload}
         default:
             return state
     }

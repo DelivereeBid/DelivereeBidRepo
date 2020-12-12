@@ -37,6 +37,7 @@ _Response (201 - Created)_
     "id": <int>,
     "username": <string>,
     "email": <string>
+    "file" : <url>
 }
 ```
 
