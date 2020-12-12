@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc2MzE1MX0.Ec_6HLbO2fib0MWVASAC4Vt_d9EaF2z6vjpBq8gzhDI"
 
 const initialState = {
     dataShipper: [],
@@ -13,7 +14,10 @@ export const fetchShippers = () => {
     return (dispatch) => {
         axios({
             method: 'GET',
-            url: '/shipper'
+            url: '/bid',
+            headers: {
+              access_token: tokenShipper
+            }
           })
           .then(res => {
             dispatch({
@@ -67,9 +71,12 @@ export const createPostShipper = (payload) => {
     return (dispatch) => {
         // console.log(payload)
         axios({
-            url: '/shipper',
+            url: '/bid',
             method: 'POST',
-            data: payload
+            data: payload,
+            headers: {
+              access_token: tokenShipper
+            }
           })
             .then(({ data }) => {
                 console.log(data)
