@@ -32,6 +32,9 @@ function App() {
           <Route exact path='/transporter/wallet'>
             <Wallet/>
           </Route>
+          <Route exact path="/transporter/deliveryStatus">
+            <DeliveryStatus />
+          </Route>
           <Route path='/complaint'>
             <ComplaintPage/>
           </Route>
