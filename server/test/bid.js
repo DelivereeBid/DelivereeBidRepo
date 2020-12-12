@@ -294,7 +294,7 @@ const bid_data2 = {
 };
 
 async function getToken() {
-  let userData = {email: 'anto@mail.com', password: 'alhamdu', username: 'admin'}
+  let userData = {email: 'anto@awad.com', password: 'alhamdu', username: 'admin'}
   await Shipper.create(userData)
       .then((res) => {
           return Shipper.findOne({where:{email:userData.email}})
