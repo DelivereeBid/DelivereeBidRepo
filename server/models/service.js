@@ -45,7 +45,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {args: true, msg: "Price is required"},
-        notNull: {args: true, msg: "Price is required"}
+        notNull: {args: true, msg: "Price is required"},
+        min(value){
+          if(value < 0){
+            throw new Error ('Price cannot minus')
+          }
+        }
       }
     },
     tracking_log: {

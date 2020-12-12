@@ -18,21 +18,27 @@ module.exports = (sequelize, DataTypes) => {
   Shipper.init({
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notEmpty: {args: true, msg: "Username is required"}
+        notEmpty: {args: true, msg: "Username is required"},
+        notNull: {args: true, msg: "Username is required"}
       }
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        isEmail: true,
-        notEmpty: {args: true, msg: "Email is required"}
+        isEmail: {args: true, msg: "Invalid format email"},
+        notEmpty: {args: true, msg: "Email is required"},
+        notNull: {args: true, msg: "Email is required"}
       }
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty: {args: true, msg: "Password is required"},
+        notNull: {args: true, msg: "Password is required"},
         len: {
           args: [4, 10],
           msg: "Password length minimum 4 character and maximum 10 character"
@@ -40,12 +46,21 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     profile_picture: {
+      allowNull: false,
       type: DataTypes.STRING,
       defaultValue: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     },
     wallet: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       defaultValue: 0,
+      validate: {
+        minus(value){
+          if(value < 0){
+            throw new Error ('Wallet cannot minus')
+          }
+        }
+      }
     }
   }, {
     sequelize,
