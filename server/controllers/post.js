@@ -1,4 +1,4 @@
-const {Bid, Post} = require('../models')
+const {Bid, Post, Transporter} = require('../models')
 
 class PostController {
     static findAll(req, res, next){
@@ -23,7 +23,7 @@ class PostController {
                 exclude: ["createdAt", "updatedAt"]
             },
             include: {
-                model: Bid,
+                model: Transporter,
                 attributes: {
                     exclude: ["createdAt", "updatedAt"]
                 }
