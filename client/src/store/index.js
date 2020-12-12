@@ -91,11 +91,6 @@ export const createPostShipper = (payload) => {
     formData.append('from', payload.from)
     formData.append('to', payload.to)
     formData.append('description', payload.description)
-<<<<<<< HEAD
-    console.log(formData, 'fomdaata')
-    const {product_name, from, to, description} = payload
-=======
->>>>>>> 513d296509d5751e807863558d91a6b86668e613
     return (dispatch) => {
         // console.log(payload)
         axios({

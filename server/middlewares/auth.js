@@ -1,25 +1,25 @@
 const {verifyToken} =require('../helper/jwt')
 const {Transporter, Shipper, Post, Bid} = require('../models')
 
-// async function authenticationTransporter(req, res, next){
-//     let { access_token } = req.headers
-//     try{
-//         if(!access_token) throw {msg: "Authentication failed", code: 401}
-//         else{
-//             let decoded = verifyToken(access_token)
-//             let transporter = await Transporter.findOne({
-//                 where: { email: decoded.email }
-//             })
-//             if(!transporter) throw {msg: "Auhtentication failed", code: 401}
-//             else{
-//                 req.loggedIn = decoded
-//                 next()
-//             }
-//         }
-//     } catch(err){
-//         next(err)
-//     }
-// }
+async function authenticationTransporter(req, res, next){
+    let { access_token } = req.headers
+    try{
+        if(!access_token) throw {msg: "Authentication failed", code: 401}
+        else{
+            let decoded = verifyToken(access_token)
+            let transporter = await Transporter.findOne({
+                where: { email: decoded.email }
+            })
+            if(!transporter) throw {msg: "Auhtentication failed", code: 401}
+            else{
+                req.loggedIn = decoded
+                next()
+            }
+        }
+    } catch(err){
+        next(err)
+    }
+}
 async function authenticationShipper(req, res, next){
     let { access_token } = req.headers
     try{
@@ -61,8 +61,6 @@ async function authorizationBid(req, res, next){
         next(err)
     }
 }
-<<<<<<< HEAD
-module.exports = {authenticationShipper, authorizationService, authorizationBid}
-=======
+
 module.exports = {authenticationTransporter, authenticationShipper, authorizationPost, authorizationBid}
->>>>>>> 513d296509d5751e807863558d91a6b86668e613
+

@@ -26,10 +26,12 @@ const bid_data2 = {
 let decoded = {};
 
 async function getToken() {
-  let userData = {email: 'anto@23232.com', password: 'alhamdu', username: 'admin'}
+  let userData = {email: 'anto@23232.com', 
+  password: 'alhamdu', username: 'admin'}
   await Shipper.create(userData)
       .then((res) => {
-          return Shipper.findOne({where:{email:userData.email}})
+          return Shipper.findOne({where:
+            {email:userData.email}})
       })
       .then((res) => {
           access_token = generateToken({
@@ -192,7 +194,6 @@ describe ("POST /BID" , () => {
   it("401 Failed Post - should return error if user is not authorized", (done) => {
     request(app)
       .post("/bid")
-      .set('access_token', access_token + 'wew')
       .send({
         "product_name": 'product1',
         "product_picture": 'product.png',
@@ -334,6 +335,7 @@ describe ("PUT /BID" , () => {
         }
       });
   });
+
   it("404 Error PUT - should respond error if id is invalid", (done) => {
     request(app)
       .put(`/bid/999`)
@@ -350,6 +352,30 @@ describe ("PUT /BID" , () => {
         }
       });
   });
+
+  it("400 Error PUT - should respond error if product name is empty", (done) => {
+    request(app)
+      .put(`/bid/${idBid}`)
+      .set('access_token', access_token)
+      .send({
+        "product_name": '',
+        "product_picture": 'product.png',
+        "description": 'product_desc',
+        "from": 'lajeddah',
+        "to": 'BukaPedia'
+      })
+      .end((err, response) => {
+        if (err) {
+          throw err;
+        } else {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toEqual(['Product name is required'])
+          done();
+        }
+      });
+  });
+
   it("401 Error PUT - should respond error if access token is invalid/unauthorized", (done) => {
     request(app)
       .put(`/bid/999`)

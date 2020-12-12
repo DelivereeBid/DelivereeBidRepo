@@ -11,15 +11,12 @@ function errHandler(err, req, res, next){
                 }
             })
             code = 400
+            console.log(errors, code, 'masuk')
             msg = errors.join(', ')
             break;
         case 'SequelizeUniqueConstraintError':
             code = 400
             errors.push("Email must be unique")
-            break;
-        case 'SequelizeConnectionError':
-            code = 400;
-            errors.push("Connection failed")
             break;
         default:
             errors.push(err.msg)

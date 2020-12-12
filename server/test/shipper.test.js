@@ -1,9 +1,35 @@
 const request = require("supertest");
 const app = require("../app");
+const { generateToken, verifyToken } = require("../helper/jwt");
 const { Shipper, sequelize } = require("../models");
 const { queryInterface } = sequelize;
 
 describe("Shipper Router Test", () => {
+
+  let access_token = '';
+  let shipperId = 0;
+  let decoded = {};
+
+  async function getToken() {
+    let userData = {email: 'yanto@mail.com', password: 'alhamdu', username: 'admin'}
+    await Shipper.create(userData)
+        .then((res) => {
+            return Shipper.findOne({where:{email:userData.email}})
+        })
+        .then((res) => {
+          shipperId = res.id;
+            access_token = generateToken({
+                id: res.id,
+                email: res.email
+            })
+            decoded = verifyToken(access_token)
+        })
+        .catch(err => {
+            throw err;
+        })
+  }
+
+  
   const shipper_data = {
     username: "Zalada",
     email: "zalada@mail.com",
@@ -162,11 +188,7 @@ describe("Shipper Router Test", () => {
     it("400 Failed register - should return error if email already in used", (done) => {
       request(app)
         .post("/shipper/register")
-        .send({
-          username: "Zalada",
-          email: "zalada@mail.com",
-          password: "halo123456",
-        })
+        .send(shipper_data)
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
@@ -222,4 +244,106 @@ describe("Shipper Router Test", () => {
         });
     });
   });
+
+  describe("GET/shipper - shipper find all process", () => {
+    it("200 Success GET shipper - should return list of shippers", (done) => {
+      request(app)
+        .get("/shipper")
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(200);
+          done();
+        });
+    });
+  })
+
+  describe("PUT/shipper - update shipper data", () => {
+    
+    beforeAll(async (done) => {
+      await getToken();
+      done();     
+    })
+    
+    afterAll(async (done) => {
+      queryInterface.bulkDelete("Shippers")
+      .then(() => {
+        done();
+      });
+    })
+    
+    it("200 Success PUT shipper - should update shipper information", (done) => {
+      request(app)
+        .put(`/shipper/${shipperId}`)
+        .send({
+          username: 'Japra',
+          wallet: 0
+        })
+        .set('access_token', access_token)
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(200);
+          expect(body).toEqual({msg: "Success update profile"})
+          done();
+        });
+    });
+    it("400 Error PUT shipper wallet - should return error if wallet is less than zero", (done) => {
+      request(app)
+        .put(`/shipper/${shipperId}`)
+        .send({
+          username: 'Japra',
+          wallet: -69000
+        })
+        .set('access_token', access_token)
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toEqual(["Wallet cannot minus"])
+          done();
+        });
+    });
+    it("400 Error PUT username - should return error if username is empty string", (done) => {
+      request(app)
+        .put(`/shipper/${shipperId}`)
+        .set('access_token', access_token)
+        .send({
+          username: '',
+          wallet: 69000
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toEqual(["Username is required"])
+          done();
+        });
+    });
+    it("401 Error PUT authentication - should return error if access_token is empty", (done) => {
+      request(app)
+        .put(`/shipper/${shipperId}`)
+        .send({
+          username: 'Japra',
+          wallet: 69000
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(401);
+          expect(body).toEqual(["Authentication failed"])
+          done();
+        });
+    });
+    it("404 Error PUT id not found - should return error if shipper id is not authorized", (done) => {
+      request(app)
+        .put(`/shipper/69606069`)
+        .set('access_token', access_token)
+        .send({
+          username: 'Japra',
+          wallet: 69000
+        })
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(403);
+          expect(body).toEqual(["Not authorized"])
+          done();
+        });
+    });
+  })
 });

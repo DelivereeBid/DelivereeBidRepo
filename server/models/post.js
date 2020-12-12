@@ -45,16 +45,21 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     },
     price: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       validate: {
         min(value){
           if(value < 0) throw new Error ("Price cannot minus")
-        }
+        },
+        notNull: {args: true, msg: "Price is required"}
       }
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: "Pending"
+      defaultValue: "Pending",
+      validate: {
+        notEmpty: {args: true, msg: "Status cannot be empty"}
+      }
     },
     tracking_log: {
       type: DataTypes.INTEGER,
