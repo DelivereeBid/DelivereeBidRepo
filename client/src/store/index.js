@@ -34,8 +34,11 @@ export const fetchShippers = () => {
 export const fetchShippersById = (id) => {
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
-            method: 'GET'
+            url: `/bid/${id}`,
+            method: 'GET',
+            headers: {
+              access_token: tokenShipper
+            }
           })
             .then(({ data }) => {
                 // console.log(data, 'ini fetch id')
@@ -51,11 +54,25 @@ export const fetchShippersById = (id) => {
   }
 
   export const updateShipperPost = (id, payload) => {
+    const formData = new FormData();
+    if(payload.file) {
+        formData.append('file',payload.file)
+    } else {
+        formData.append('product_picture',payload.product_picture)
+    }
+    formData.append('product_name', payload.product_name)
+    formData.append('from', payload.from)
+    formData.append('to', payload.to)
+    formData.append('description', payload.description)
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
+            url: `/bid/${id}`,
             method: 'PUT',
-            data: payload
+            data: formData,
+            headers: {
+              access_token: tokenShipper,
+              'content-type': 'multipart/form-data'
+            }
           })
             .then(({ data }) => {
                 console.log(data)
@@ -74,8 +91,11 @@ export const createPostShipper = (payload) => {
     formData.append('from', payload.from)
     formData.append('to', payload.to)
     formData.append('description', payload.description)
+<<<<<<< HEAD
     console.log(formData, 'fomdaata')
     const {product_name, from, to, description} = payload
+=======
+>>>>>>> 513d296509d5751e807863558d91a6b86668e613
     return (dispatch) => {
         // console.log(payload)
         axios({
@@ -100,8 +120,11 @@ export const createPostShipper = (payload) => {
 export const postShipperRemove = (id) => {
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
-            method: 'DELETE'
+            url: `/bid/${id}`,
+            method: 'DELETE',
+            headers: {
+              access_token: tokenShipper
+            }
           })
             .then(({ data }) => {
                 console.log(data)

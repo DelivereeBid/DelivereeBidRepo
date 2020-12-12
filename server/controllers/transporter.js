@@ -1,6 +1,7 @@
 const {Transporter} = require('../models')
 const {comparePassword} = require('../helper/bcrypt')
 const {generateToken} = require('../helper/jwt')
+const transporter = require('../models/transporter')
 
 class TransporterController {
     static findAll(req, res, next){
@@ -42,6 +43,22 @@ class TransporterController {
                 })
     
                 res.status(200).json({access_token: access_token, email: transporter.email, id: transporter.id, username: transporter.username})
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static updateTransporter(req, res, next){
+        const {id} = req.params
+        const masuk = req.loggedIn.email
+        const {username, wallet} = req.body
+        Transporter.update({username, wallet}, { where: {id: id, email: masuk}})
+        .then(transporter => {
+            if(transporter[0] === 0) throw {msg: "Not authorized", code: 403}
+            else {
+                res.status(200).json({transporter, msg: "Success update profile"})
             }
         })
         .catch(err => {
