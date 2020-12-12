@@ -4,7 +4,9 @@ import axios from '../axios/axiosInstance'
 
 const initialState = {
     dataShipper: [],
-    show: false
+    show: false,
+    showEdit: false,
+    shipper: {}
 }
 
 export const fetchShippers = () => {
@@ -25,6 +27,42 @@ export const fetchShippers = () => {
     }
 }
 
+export const fetchShippersById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/shipper/${id}`,
+            method: 'GET'
+          })
+            .then(({ data }) => {
+                // console.log(data)
+                dispatch({
+                    type: 'SET_SHIPPER',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const updateShipperPost = (id, payload) => {
+    return (dispatch) => {
+        axios({
+            url: `/shipper/${id}`,
+            method: 'PUT',
+            data: payload
+          })
+            .then(({ data }) => {
+                console.log(data)
+                dispatch(fetchShippers())
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
 export const createPostShipper = (payload) => {
     return (dispatch) => {
         // console.log(payload)
@@ -43,12 +81,32 @@ export const createPostShipper = (payload) => {
     }
 }
 
+export const postShipperRemove = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/shipper/${id}`,
+            method: 'DELETE'
+          })
+            .then(({ data }) => {
+                console.log(data)
+                dispatch(fetchShippers())
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
 function reducer (state = initialState, action) {
     switch (action.type) {
         case 'SET_DATA_SHIPPER':
             return { ...state, dataShipper: action.payload}
+        case 'SET_SHIPPER':
+            return { ...state, shipper: action.payload}
         case 'SET_SHOW':
             return { ...state, show: action.payload}
+        case 'SET_SHOW_EDIT':
+            return { ...state, showEdit: action.payload}
         default:
             return state
     }

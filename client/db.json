@@ -1,112 +1,14 @@
 {
   "shipper": [
     {
-      "from": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "to": "bbbbbbb",
-      "date": "2021-01-01",
-      "items": "asdsdad",
-      "volume": "asddasdsa",
-      "budget": 213132,
-      "vechile": "Box Kecil",
-      "id": 1
-    },
-    {
-      "from": "tessss",
-      "to": "lalallala",
-      "date": "2020-12-25",
-      "items": "adscdsa",
-      "volume": "20cm 100cm 20cm",
-      "budget": 2000000,
-      "vechile": "Van",
-      "id": 2
-    },
-    {
-      "from": "cadscdsa",
-      "to": "cdascasdacdcda",
-      "date": "2020-12-18",
-      "items": "adscdsa",
-      "volume": "20cm 100cm 20cm",
-      "budget": 333333333333333300,
-      "vechile": "",
-      "id": 3
-    },
-    {
-      "from": "acdsdasc",
-      "to": "bbbbbbb",
-      "date": "2020-12-23",
-      "items": "asdsdad",
-      "volume": "20cm 100cm 20cm",
-      "budget": 1424421,
-      "vechile": "Van",
-      "id": 4
-    },
-    {
-      "from": "",
-      "to": "",
-      "date": "",
-      "items": "",
-      "volume": "",
-      "budget": 0,
-      "vechile": "",
-      "id": 5
-    },
-    {
-      "from": "",
-      "to": "",
-      "date": "",
-      "items": "",
-      "volume": "",
-      "budget": 0,
-      "vechile": "",
-      "id": 6
-    },
-    {
-      "from": "",
-      "to": "",
-      "date": "",
-      "items": "asdsdad",
-      "volume": "",
-      "budget": 0,
-      "vechile": "",
-      "id": 7
-    },
-    {
-      "from": "",
-      "to": "",
-      "date": "",
-      "items": "",
-      "volume": "",
-      "budget": 0,
-      "vechile": "",
-      "id": 8
-    },
-    {
-      "from": "",
-      "to": "",
-      "date": "",
-      "items": "",
-      "volume": "",
-      "budget": 0,
-      "vechile": "",
-      "id": 9
-    },
-    {
-      "from": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "to": "dsadadsa",
-      "date": "2020-12-24",
-      "items": "adsdsa",
-      "volume": "20cm 100cm 20cm",
-      "budget": 213213,
-      "vechile": "Fuso CDD",
-      "id": 10
-    },
-    {
+      "title": "halo",
       "from": "tes terakhir",
       "to": "dsadadsa",
       "date": "2020-12-24",
       "items": "adsdsa",
       "volume": "20cm 100cm 20cm",
       "budget": 213213,
+      "weight": 0,
       "vechile": "Fuso CDD",
       "id": 11
     },
