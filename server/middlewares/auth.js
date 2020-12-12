@@ -17,7 +17,6 @@ async function authenticationTransporter(req, res, next){
             }
         }
     } catch(err){
-        console.log(err, 'adjf;ldas;j')
         next(err)
     }
 }
