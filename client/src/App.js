@@ -8,17 +8,14 @@ import { CreatePostShipper, EditPostShipper } from './components'
 function App() {
   return (
     <Provider store={store}>
-      <form action="/upload-single" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-      </form>
       <Switch>
           <Route path='/shipper'>
             <HomeShipper/>
           </Route>
-          <Route exact path='/shipper/createPost'>
+          {/* <Route exact path='/shipper/createPost'>
             <CreatePostShipper/>
-          </Route>
-          <Route exact path='/shipper/payment'>
+          </Route> */}
+          <Route exact path='/payment/:id'>
             <PaymentMethod/>
           </Route>
           <Route exact path='/transporter'>
