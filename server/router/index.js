@@ -8,6 +8,6 @@ const serviceRouter = require('./service')
 router.use("/transporter", transporterRouter)
 router.use("/shipper", shipperRouter)
 router.use("/bid", bidRouter)
-router.use("/service", serviceRouter)
+// router.use("/service", serviceRouter)
 
 module.exports = router

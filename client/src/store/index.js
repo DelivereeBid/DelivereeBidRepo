@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc2MzE1MX0.Ec_6HLbO2fib0MWVASAC4Vt_d9EaF2z6vjpBq8gzhDI"
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJkaWVAbWFpbC5jb20iLCJpYXQiOjE2MDc3NDg1OTZ9.2fI5SGN5_bxNyEJLcr1yk63s-A2_uqHI4kjPe5vW10I"
 
 const initialState = {
     dataShipper: [],
@@ -68,14 +68,23 @@ export const fetchShippersById = (id) => {
   }
 
 export const createPostShipper = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('product_name', payload.product_name)
+    formData.append('from', payload.from)
+    formData.append('to', payload.to)
+    formData.append('description', payload.description)
+    console.log(formData, 'fomdaata')
+    const {product_name, from, to, description} = payload
     return (dispatch) => {
         // console.log(payload)
         axios({
             url: '/bid',
             method: 'POST',
-            data: payload,
+            data: formData,
             headers: {
-              access_token: tokenShipper
+              access_token: tokenShipper,
+              'content-type': 'multipart/form-data'
             }
           })
             .then(({ data }) => {

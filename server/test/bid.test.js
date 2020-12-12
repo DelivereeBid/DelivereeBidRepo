@@ -189,6 +189,28 @@ describe ("POST /BID" , () => {
         }
       });
   });
+  it("401 Failed Post - should return error if user is not authorized", (done) => {
+    request(app)
+      .post("/bid")
+      .set('access_token', access_token + 'wew')
+      .send({
+        "product_name": 'product1',
+        "product_picture": 'product.png',
+        "description": 'product_desc',
+        "from": 'A',
+        "to": ''
+      })
+      .end((err, response) => {
+        if (err) {
+          throw err;
+        } else {
+          const { body, status } = response;
+          expect(status).toBe(401);
+          expect(body).toEqual(["Authentication failed"]);
+          done();
+        }
+      });
+  });
   it("400 Failed Post - should return error if product form is missing", (done) => {
     request(app)
       .post("/bid")

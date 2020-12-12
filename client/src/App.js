@@ -8,9 +8,9 @@ import { CreatePostShipper, EditPostShipper } from './components'
 function App() {
   return (
     <Provider store={store}>
-      <form action="/upload-single" method="post" enctype="multipart/form-data">
+      {/* <form action="/upload-single" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
-      </form>
+      </form> */}
       <Switch>
           <Route path='/shipper'>
             <HomeShipper/>

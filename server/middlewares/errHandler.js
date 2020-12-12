@@ -18,10 +18,6 @@ function errHandler(err, req, res, next){
             code = 400
             errors.push("Email must be unique")
             break;
-        case 'SequelizeDatabaseError':
-            code = 400;
-            errors.push("Internal server error")
-            break;
         case 'SequelizeConnectionError':
             code = 400;
             errors.push("Connection failed")

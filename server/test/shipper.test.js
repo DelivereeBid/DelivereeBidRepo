@@ -159,12 +159,12 @@ describe("Shipper Router Test", () => {
         });
     });
 
-    it("400 Failed register - should return error if email already in used", (done) => [
+    it("400 Failed register - should return error if email already in used", (done) => {
       request(app)
         .post("/shipper/register")
         .send({
-          username: "Tutuplapak",
-          email: "tutuplapak@mail.com",
+          username: "Zalada",
+          email: "zalada@mail.com",
           password: "halo123456",
         })
         .then((response) => {
@@ -173,8 +173,8 @@ describe("Shipper Router Test", () => {
           console.log(body, 'www')
           expect(body).toEqual(["Email must be unique"]);
           done();
-        }),
-    ]);
+        })
+      });
   });
 
   describe("POST/login - shipper authentication process", () => {

@@ -54,12 +54,15 @@ class ServiceController {
       price,
       tracking_log,
       status: "Packing",
-      TransporterId: req.loggedIn.id,
+      TransporterId: req.loggedIn.id || req,
     })
       .then((service) => {
         res.status(201).json(service);
       })
-      .catch((err) => next(err));
+      .catch((err) => {
+        console.log(err);
+        next(err)
+      });
   }
 
   static updateService(req, res, next) {
