@@ -11,7 +11,6 @@ function errHandler(err, req, res, next){
                 }
             })
             code = 400
-            console.log(errors, code, 'masuk')
             msg = errors.join(', ')
             break;
         case 'SequelizeUniqueConstraintError':
