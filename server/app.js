@@ -30,6 +30,6 @@ upload.fields([{ name: 'file1' }, { name: 'file2' }]),
 )
 app.use(err)
 
-// app.listen(port, () => console.log(`server running: http://localhost:${port}`))
+app.listen(port, () => console.log(`server running: http://localhost:${port}`))
 
 module.exports = app

@@ -66,7 +66,7 @@ function CardPostShipper(props) {
                 </div>
 
             </div>
-            <img class="card-img-bottom" src={shipper.product_picture} alt="Card image cap"></img>
+            <img onClick={(e) => toBidder(e, shipper.id)} class="card-img-bottom" src={shipper.product_picture} alt="Card image cap"></img>
         </div>
     )
 }

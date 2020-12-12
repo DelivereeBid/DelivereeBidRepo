@@ -45,9 +45,9 @@ function HomeShipper (props) {
                 </div>
 
                 <Switch>
-                    {/* <Route path='/shipper/bidder/:id'>
+                    <Route path='/shipper/bidder/:id'>
                         <BidderForShipper/>
-                    </Route> */}
+                    </Route>
                     <Route path='/shipper/editPost/:id'>
                         <EditPostShipper/>
                     </Route>

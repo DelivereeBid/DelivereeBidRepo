@@ -4,25 +4,8 @@ import {useSelector, useDispatch } from 'react-redux'
 import { createPostShipper, fetchShippersById, updateShipperPost } from '../store/index'
 import { useHistory, useParams } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap';
-import FusoBerat from '../assets/vechile/2.png'
-import FusoRingan from '../assets/vechile/3.png'
-import FusoCDD from '../assets/vechile/4.png'
-import EngkelBox from '../assets/vechile/5.png'
-import BoxKecil from '../assets/vechile/6.png'
-import Pickup from '../assets/vechile/7.png'
-import Van from '../assets/vechile/8.png'
-import Ekonomi from '../assets/vechile/9.png'
 
 function EditPostShipper (props) {
-    // const [title, setTitle] = useState('')
-    // const [from, setFrom] = useState('')
-    // const [to, setTo] = useState('')
-    // const [date, setDate] = useState('')
-    // const [weight, setWeight] = useState(0)
-    // const [items, setItems] = useState('')
-    // const [volume, setVolume] = useState('')
-    // const [budget, setBudget] = useState(0)
-    // const [vechile, setVechile] = useState('')
     const [filename, setFilename] = useState('')
     const [file, setFile] = useState('')
     const dispatch = useDispatch()
@@ -35,26 +18,12 @@ function EditPostShipper (props) {
     let to = shipper.to
     let description = shipper.description
     let product_picture = shipper.product_picture
-    // console.log(title, 'ini title dari edit')
-    // console.log(shipper.title, 'ini dari shipper.title')
 
 
 
     // console.log(shipper)
     useEffect(() => {
         dispatch(fetchShippersById(id))
-
-        // setTitle(shipper.title)
-        // setFrom(shipper.from)
-        // setTo(shipper.to)
-        // setDate(shipper.date)
-        // setWeight(shipper.weight)
-        // setItems(shipper.items)
-        // setVolume(shipper.volume)
-        // setBudget(shipper.budget)
-        // setVechile(shipper.vechile)
-
-
     },[])
 
     function onName (e) {
