@@ -30,7 +30,7 @@ _Request Body_
 }
 ```
 
-_Response (200 - OK)_
+_Response (201 - Created)_
 
 ```
 {

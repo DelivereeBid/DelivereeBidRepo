@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Bid.init({
     product_picture: {
+      defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
       type: DataTypes.STRING,
       validate: {
         notEmpty: {args: true, msg: "Product picture is required"}

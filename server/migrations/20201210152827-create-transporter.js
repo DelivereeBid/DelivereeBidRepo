@@ -22,11 +22,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       profile_picture: {
-        defaultValue: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
         type: Sequelize.STRING
       },
       wallet: {
-        defaultValue: 0,
         type: Sequelize.INTEGER
       },
       createdAt: {
