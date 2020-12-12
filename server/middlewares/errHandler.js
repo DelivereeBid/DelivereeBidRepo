@@ -3,10 +3,6 @@ function errHandler(err, req, res, next){
     let msg = err.msg || 'Internal server error'
     let errors = []
 
-    console.log(err.name, 'masukaa');
-    console.log(code)
-    console.log(err.msg)
-
     switch(err.name){
         case 'SequelizeValidationError':
             err.errors.forEach(el => {
@@ -25,12 +21,16 @@ function errHandler(err, req, res, next){
         case 'SequelizeDatabaseError':
             code = 400;
             errors.push("Internal server error")
+            break;
+        case 'SequelizeConnectionError':
+            code = 400;
+            errors.push("Connection failed")
+            break;
         default:
             errors.push(err.msg)
             code = err.code
             break;
     }
-    console.log(errors)
     res.status(code).json(errors)
 }
 
