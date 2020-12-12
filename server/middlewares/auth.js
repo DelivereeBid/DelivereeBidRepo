@@ -4,13 +4,13 @@ const {Transporter, Shipper, Service, Bid} = require('../models')
 async function authenticationTransporter(req, res, next){
     let { access_token } = req.headers
     try{
-        if(!access_token) throw {msg: "Authentication failed", code: 400}
+        if(!access_token) throw {msg: "Authentication failed", code: 401}
         else{
             let decoded = verifyToken(access_token)
             let transporter = await Transporter.findOne({
                 where: { email: decoded.email }
             })
-            if(!transporter) throw {msg: "Auhtentication failed", code: 400}
+            if(!transporter) throw {msg: "Auhtentication failed", code: 401}
             else{
                 req.loggedIn = decoded
                 next()
@@ -23,13 +23,13 @@ async function authenticationTransporter(req, res, next){
 async function authenticationShipper(req, res, next){
     let { access_token } = req.headers
     try{
-        if(!access_token) throw {msg: "Authentication failed", code: 400}
+        if(!access_token) throw {msg: "Authentication failed", code: 401}
         else{
             let decoded = verifyToken(access_token)
             let shipper = await Shipper.findOne({
                 where: { email: decoded.email }
             })
-            if(!shipper) throw {msg: "Auhtentication failed", code: 400}
+            if(!shipper) throw {msg: "Auhtentication failed", code: 401}
             else{
                 req.loggedIn = decoded
                 next()
