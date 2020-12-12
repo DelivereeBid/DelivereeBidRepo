@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import { HomeShipper, HomeTransporter, CreatePostShipper, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation } from './pages'
+import { HomeShipper, HomeTransporter, CreatePostShipper, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation, DeliveryStatus } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
 
@@ -32,6 +32,9 @@ function App() {
           </Route>
           <Route exact path='/transporter/wallet'>
             <Wallet/>
+          </Route>
+          <Route exact path="/transporter/deliveryStatus">
+            <DeliveryStatus />
           </Route>
           <Route path='/complaint'>
             <ComplaintPage/>
