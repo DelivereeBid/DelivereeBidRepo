@@ -15,7 +15,7 @@ function App() {
           <Route path='/shipper'>
             <HomeShipper/>
           </Route>
-          <Route exact path='/shipper/createPost'>
+          {/* <Route exact path='/shipper/createPost'>
             <CreatePostShipper/>
           </Route>
           <Route exact path='/shipper/payment'>
@@ -53,7 +53,7 @@ function App() {
           </Route>
           <Route path='/vechileInformation'>
             <VechileInformation/>
-          </Route>
+          </Route> */}
         </Switch>
     </Provider>
   );

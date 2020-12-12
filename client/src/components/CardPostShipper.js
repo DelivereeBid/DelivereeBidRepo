@@ -34,9 +34,9 @@ function CardPostShipper(props) {
         <div  className="card" style={{cursor:'pointer'}}>
             <div className="card-body">
                 <h4 className="card-title">
-                    {shipper.title}
+                    {shipper.product_name}
                     <span className='float-right'>
-                    <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: {shipper.Transporters.length}</span>
+                    {/* <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: {shipper.Transporters.length}</span> */}
                         <div className="btn-group">
                             <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span className="sr-only">Toggle Dropdown</span>
@@ -58,30 +58,15 @@ function CardPostShipper(props) {
                                 <td>{shipper.from} - {shipper.to}</td>
                             </tr>
                             <tr>
-                                <td><i className="fas fa-clock mr-2 text-center"></i></td>
-                                <td>{shipper.date}</td>
-                            </tr>
-                            <tr>
-                                <td><i className="fas fa-balance-scale-right mr-2 text-center"></i></td>
-                                <td>{shipper.weight}</td>
-                            </tr>
-                            <tr>
-                                <td><i className="fas fa-box mr-2 text-center"></i></td>
-                                <td>{shipper.volume}</td>
-                            </tr>
-                            <tr>
-                                <td><i className="fas fa-truck"></i></td>
-                                <td>{shipper.vechile}</td>
-                            </tr>
-                            <tr>
-                                <td><i className="fas fa-dollar-sign mr-2 text-center"></i></td>
-                                <td>Rp {shipper.budget.toLocaleString(['ban', 'id'])}</td>
+                                <td><i class="fas fa-audio-description text-center"></i></td>
+                                <td>{shipper.description}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
             </div>
+            <img class="card-img-bottom" src={shipper.product_picture} alt="Card image cap"></img>
         </div>
     )
 }
