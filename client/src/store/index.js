@@ -34,7 +34,7 @@ export const fetchShippersById = (id) => {
             method: 'GET'
           })
             .then(({ data }) => {
-                // console.log(data)
+                // console.log(data, 'ini fetch id')
                 dispatch({
                     type: 'SET_SHIPPER',
                     payload: data
@@ -106,7 +106,7 @@ function reducer (state = initialState, action) {
         case 'SET_SHOW':
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':
-            return { ...state, showEdit: action.payload}
+            return { ...state, showEdit: action.payload, shipper: {}}
         default:
             return state
     }
