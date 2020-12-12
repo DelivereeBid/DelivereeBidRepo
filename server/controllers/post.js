@@ -11,6 +11,9 @@ class PostController {
                 attributes: {
                     exclude: ["createdAt", "updatedAt"]
                 }
+            },
+            where: {
+                TransporterId: req.loggedIn.id
             }
         }).then(post => {
             res.status(200).json(post)
@@ -18,7 +21,7 @@ class PostController {
     }
     static getPostById(req, res, next){
         const {id} = req.params
-        Post.findByPk(id, {
+        Post.findAll({
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
             },
@@ -27,9 +30,13 @@ class PostController {
                 attributes: {
                     exclude: ["createdAt", "updatedAt"]
                 }
+            },
+            where: {
+                id: id,
+                TransporterId: req.loggedIn.id
             }
         }).then(post => {
-            if(!post){
+            if(post.length === 0){
                 throw {msg: "Post not found", code: 404}
             } else {
                 res.status(200).json(post)
@@ -38,10 +45,8 @@ class PostController {
     }
     static createPost(req, res, next){
         const {BidId, price} = req.body
-        console.log(BidId, price, 'line 41')
         Post.create({TransporterId: req.loggedIn.id, BidId, price, status: 'Pending', tracking_log: 'Pending'})
         .then(post => {
-            console.log('masuk post')
             res.status(201).json(post)
         })
         .catch(err => {
@@ -57,7 +62,10 @@ class PostController {
                 id: id
             }
         }).then(post => {
-            res.status(200).json({msg: "Success update post"})
+            if(post[0] === 0) throw {msg: "Failed update post", code: 400}
+            else {
+                res.status(200).json({msg: "Success update post"})
+            }
         }).catch(err => {
             next(err)
         })
@@ -70,7 +78,10 @@ class PostController {
                 id: id
             }
         }).then(post => {
-            res.status(200).json({msg: "Success delete post"})
+            if(post[0] === 0) throw {msg: "Failed delete post", code: 400}
+            else {
+                res.status(200).json({msg: "Success delete post"})
+            }
         }).catch(err => next(err))
     }
 }
