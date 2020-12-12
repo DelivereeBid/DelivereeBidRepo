@@ -65,7 +65,7 @@ describe("Shipper Router Test", () => {
         });
     });
 
-    it("500 Failed Register - should return error if key is null", (done) => {
+    it("400 Failed Register - should return error if key is null", (done) => {
       request(app)
         .post("/shipper/register")
         .send({
@@ -74,8 +74,8 @@ describe("Shipper Router Test", () => {
         })
         .then((response) => {
           const { body, status } = response;
-          expect(status).toBe(500);
-          expect(body).toEqual({});
+          expect(status).toBe(400);
+          expect(body).toEqual(["Username is required"]);
           done();
         });
     });
@@ -89,8 +89,8 @@ describe("Shipper Router Test", () => {
         })
         .then((response) => {
           const { body, status } = response;
-          expect(status).toBe(500);
-          expect(body).toEqual({});
+          expect(status).toBe(400);
+          expect(body).toEqual(["Email is required"]);
           done();
         });
     });
@@ -106,7 +106,7 @@ describe("Shipper Router Test", () => {
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toEqual(["Validation isEmail on email failed", "Email is required"]);
+          expect(body).toEqual(["Invalid format email", "Email is required"]);
           done();
         });
     });
@@ -137,8 +137,8 @@ describe("Shipper Router Test", () => {
         })
         .then((response) => {
           const { body, status } = response;
-          expect(status).toBe(500);
-          expect(body).toEqual({});
+          expect(status).toBe(400);
+          expect(body).toEqual(["Password is required"]);
           done();
         });
     });
@@ -154,7 +154,7 @@ describe("Shipper Router Test", () => {
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toEqual(["Validation isEmail on email failed"]);
+          expect(body).toEqual(["Invalid format email"]);
           done();
         });
     });
