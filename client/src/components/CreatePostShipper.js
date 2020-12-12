@@ -53,7 +53,7 @@ function CreatePostShippers (props) {
             product_name,
             from,
             to,
-            file: file,
+            file,
             description
         }
         console.log(file)
