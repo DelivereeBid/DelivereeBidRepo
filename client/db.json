@@ -1,0 +1,27 @@
+{
+  "shipper": [
+    {
+      "title": "halo",
+      "from": "tes terakhir",
+      "to": "dsadadsa",
+      "date": "2020-12-24",
+      "items": "adsdsa",
+      "volume": "20cm 100cm 20cm",
+      "budget": 213213,
+      "weight": 0,
+      "vechile": "Fuso CDD",
+      "id": 11
+    },
+    {
+      "from": "dor",
+      "to": "dsadadsa",
+      "date": "2020-12-24",
+      "items": "adsdsa",
+      "volume": "20cm 100cm 20cm",
+      "budget": 213213,
+      "vechile": "Fuso CDD",
+      "id": 12
+    }
+  ],
+  "user": []
+}

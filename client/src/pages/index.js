@@ -1,5 +1,4 @@
 export { default as HomeShipper } from './shippers/HomeShipper'
-export { default as CreatePostShipper } from './shippers/CreatePostShipper'
 export { default as PaymentMethod } from './shippers/PaymentMethod'
 
 export { default as HomeTransporter } from './transporter/HomeTransporter'

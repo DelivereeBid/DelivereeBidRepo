@@ -11,14 +11,36 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Bid.belongsTo(models.Shipper)
     }
   };
   Bid.init({
-    product_picture: DataTypes.STRING,
-    product_name: DataTypes.STRING,
+    product_picture: {
+      defaultValue: "https://www.indosecuritysystem.com/image/blank_image.png",
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {args: true, msg: "Product picture is required"}
+      }
+    },
+    product_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {args: true, msg: "Product name is required"}
+      }
+    },
     description: DataTypes.STRING,
-    from: DataTypes.STRING,
-    to: DataTypes.STRING
+    from: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {args: true, msg: "From is required"}
+      }
+    },
+    to: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {args: true, msg: "To destination is required"}
+      }
+    },
   }, {
     sequelize,
     modelName: 'Bid',

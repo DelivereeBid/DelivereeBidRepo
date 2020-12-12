@@ -9,21 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       service_name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       service_picture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       vehicle: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       price: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       tracking_log: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       status: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
