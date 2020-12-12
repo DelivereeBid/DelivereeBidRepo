@@ -1,4 +1,4 @@
-const {Bid, Shipper} = require('../models')
+const {Bid, Shipper, Post} = require('../models')
 
 class BidController {
     static findAll(req, res, next){
@@ -7,7 +7,7 @@ class BidController {
                 exclude: ["createdAt", "updatedAt"]
             },
             include: {
-                model: Shipper,
+                model: Post,
                 attributes: {
                     exclude: ["password", "createdAt", "updatedAt", "wallet"]
                 }
@@ -23,7 +23,7 @@ class BidController {
                 exclude: ["createdAt", "updatedAt"]
             },
             include: {
-                model: Shipper,
+                model: Post,
                 attributes: {
                     exclude: ["password", "wallet", "createdAt", "updatedAt"]
                 }

@@ -28,18 +28,13 @@ function BidderForShipper (props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {shipper.Transporters !== undefined &&
-                                shipper.Transporters.map(bidder => {
+                            {shipper.Posts !== undefined &&
+                                shipper.Posts.map(post => {
                                     return (
-                                        <TableRowShipper key={bidder.id} bidder={bidder}/>
+                                        <TableRowShipper key={post.id} bidder={post}/>
                                     )
                                 })
-                            } */}
-
-                            <TableRowShipper/>
-                            <TableRowShipper/>
-                            <TableRowShipper/>
-                            <TableRowShipper/>
+                            }
 
                         </tbody>
                     </table>

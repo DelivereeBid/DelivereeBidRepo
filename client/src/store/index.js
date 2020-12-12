@@ -1,13 +1,15 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc2MzE1MX0.Ec_6HLbO2fib0MWVASAC4Vt_d9EaF2z6vjpBq8gzhDI"
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4NjgzMn0.4jN1A6guYKtGnLS67l9sWjyj0R6pIcsKPE7o8p71cq0"
+const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4Njk4NX0.3K82ErtuSGX1IJsNPcVLSDx-PjHeD5pu2DL72RUHuDA'
 
 const initialState = {
     dataShipper: [],
     show: false,
     showEdit: false,
-    shipper: {}
+    shipper: {},
+    post: {}
 }
 
 export const fetchShippers = () => {
@@ -44,6 +46,28 @@ export const fetchShippersById = (id) => {
                 // console.log(data, 'ini fetch id')
                 dispatch({
                     type: 'SET_SHIPPER',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const fetchPostById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/post/${id}`,
+            method: 'GET',
+            headers: {
+              access_token: tokenTransporter
+            }
+          })
+            .then(({ data }) => {
+                // console.log(data, 'ini fetch id')
+                dispatch({
+                    type: 'SET_POST',
                     payload: data
                 })
             })
@@ -137,6 +161,8 @@ function reducer (state = initialState, action) {
             return { ...state, dataShipper: action.payload}
         case 'SET_SHIPPER':
             return { ...state, shipper: action.payload}
+        case 'SET_POST':
+            return { ...state, post: action.payload}
         case 'SET_SHOW':
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':
