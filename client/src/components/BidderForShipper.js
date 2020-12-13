@@ -8,7 +8,7 @@ function BidderForShipper (props) {
     const dispatch = useDispatch()
     const {id} = useParams()
     const shipper = useSelector((state) => state.shipper)
-    console.log(shipper.Posts, 'ini bidderforshipper')
+    console.log(shipper, 'ini bidderforshipper')
 
     useEffect (() => {
         dispatch(fetchShippersById(id))
@@ -31,7 +31,7 @@ function BidderForShipper (props) {
                             {shipper.Posts !== undefined &&
                                 shipper.Posts.map(post => {
                                     return (
-                                        <TableRowShipper key={post.id} bidder={post}/>
+                                        <TableRowShipper key={post.id} bidder={post} postId={id}/>
                                     )
                                 })
                             }
@@ -39,7 +39,7 @@ function BidderForShipper (props) {
                         </tbody>
                     </table>
                 </div>
-                <button className='btn btn-primary float-right mr-5' style={{width: '150px'}}>Deal</button>
+                {/* <button className='btn btn-primary float-right mr-5' style={{width: '150px'}}>Deal</button> */}
         </div>
     )
 

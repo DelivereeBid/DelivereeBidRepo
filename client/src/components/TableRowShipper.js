@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 function TableRowShipper(props) {
-    const {bidder} = props
+    const {bidder, postId} = props
     const history = useHistory()
+    const dispatch = useDispatch()
 
     console.log(bidder, 'ini bidder dari table row shipper')
 
@@ -21,17 +23,15 @@ function TableRowShipper(props) {
             confirmButtonText: 'Deal'
           }).then((result) => {
             if (result.isConfirmed) {
-                history.push(`/payment/${bidder.id}`)
+                history.push(`/payment/${postId}`)
+                dispatch({
+                    type: 'SET_DEAL',
+                    payload: bidder
+                })
             }
           })
     }
 
-    const temp = {
-        name: 'Robert',
-        vechile: 'Truck',
-        bid: 3000,
-        id: 5
-    }
     return (
         <tr onClick={(e) => selectedBid(e, bidder)} style={{cursor:'pointer'}}>
             <th scope="row">{bidder.id}</th>
