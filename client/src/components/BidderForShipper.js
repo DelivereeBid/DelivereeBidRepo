@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 function BidderForShipper (props) {
     const dispatch = useDispatch()
     const {id} = useParams()
+
     const shipper = useSelector((state) => state.shipper)
     console.log(shipper, 'ini bidderforshipper')
 

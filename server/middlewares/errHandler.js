@@ -19,8 +19,8 @@ function errHandler(err, req, res, next){
             errors.push("Email must be unique")
             break;
         default:
-            errors.push(err.msg)
-            code = err.code
+            errors.push(err.message)
+            code = err.code || 500
             break;
     }
     res.status(code).json(errors)

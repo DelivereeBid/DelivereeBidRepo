@@ -23,7 +23,7 @@ function TableRowShipper(props) {
             confirmButtonText: 'Deal'
           }).then((result) => {
             if (result.isConfirmed) {
-                history.push(`/payment/${postId}`)
+                history.push(`/payment/${postId}_${bidder.id}_${bidder.TransporterId}`)
                 dispatch({
                     type: 'SET_DEAL',
                     payload: bidder

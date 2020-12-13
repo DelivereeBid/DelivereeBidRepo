@@ -25,7 +25,8 @@ const initialState = {
     access_token: '',
     post: {},
     transporter: {},
-    deal: {}
+    deal: {},
+    transporterId: {}
 }
 
 export const fetchShippers = () => {
@@ -83,6 +84,63 @@ export const fetchShippersById = (id) => {
                     type: 'SET_POST',
                     payload: data
                 })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+
+export const updateWalletShipper = (id, payload) => {
+  return (dispatch) => {
+      axios({
+          method: 'PUT',
+          url: `/shipper/${id}`,
+          headers: {
+            access_token: tokenShipper
+          },
+          data: payload
+        })
+        .then(({data}) => {
+          console.log(data, 'ini updateWalletShipper')
+          //fetch ulang akun shipper
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
+}
+
+  export const transporterById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/transporter/${id}`,
+            method: 'GET'
+          })
+            .then(({ data }) => {
+                dispatch({
+                    type: 'SET_TRANSPORTER_ID',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const patchWalletTransporter = (id, payload) => {
+    return (dispatch) => {
+        console.log(id, 'ini id', payload, 'ini payload')
+        axios({
+            url: `/transporter/${id}`,
+            method: 'PATCH',
+            data: payload
+          })
+            .then(({ data }) => {
+                console.log(data, 'ini patchWalletTransporter')
+                //fetch ulang transporter disini
             })
             .catch(err => {
                 console.log('Error:', err)
@@ -215,6 +273,8 @@ function reducer (state = initialState, action) {
             return { ...state, shipper: action.payload}
         case 'SET_TRANSPORTER':
             return { ...state, transporter: action.payload}
+        case 'SET_TRANSPORTER_ID':
+            return { ...state, transporterId: action.payload}
         case 'SET_POST':
             return { ...state, post: action.payload}
         case 'SET_DEAL':

@@ -15,6 +15,15 @@ class TransporterController {
         })
         .catch(err => next(err))
     }
+    static findById(req, res, next){
+
+        const {id} = req.params
+        Transporter.findByPk(id)
+        .then(transporter => {
+            res.status(200).json(transporter)
+        })
+        .catch(err => next(err))
+    }
     static register(req, res, next){
         const {username, email, password, file, vehicle} = req.body
         Transporter.create({
@@ -47,6 +56,18 @@ class TransporterController {
 
                 res.status(200).json({access_token: access_token, email: transporter.email, id: transporter.id, username: transporter.username})
             }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static patchTransporter(req, res, next){
+        const {id} = req.params
+        const {wallet} = req.body
+        Transporter.update({wallet}, { where: {id: id}})
+        .then(transporter => {
+            res.status(200).json({transporter, msg: "Success update profile"})
         })
         .catch(err => {
             next(err)
