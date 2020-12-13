@@ -71,6 +71,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {args: true, msg: "Tracking log is required"},
         notNull: {args: true, msg: "Tracking log is required"}
       }
+    },
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    vehicle: {
+      allowNull: false,
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
