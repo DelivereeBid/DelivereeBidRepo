@@ -55,7 +55,7 @@ function App() {
           <Route path='/ratingPage'>
             <RatingPage/>
           </Route>
-          <Route path='/vechileInformation'>
+          <Route path='/vehicleInformation'>
             <VechileInformation/>
           </Route>
         </Switch>

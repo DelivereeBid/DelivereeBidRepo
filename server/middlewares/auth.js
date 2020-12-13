@@ -62,4 +62,6 @@ async function authorizationBid(req, res, next){
         next(err)
     }
 }
+
 module.exports = {authenticationTransporter, authenticationShipper, authorizationPost, authorizationBid}
+
