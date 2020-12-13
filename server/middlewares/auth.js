@@ -10,7 +10,7 @@ async function authenticationTransporter(req, res, next){
             let transporter = await Transporter.findOne({
                 where: { email: decoded.email }
             })
-            if(!transporter) throw {msg: "Auhtentication failed", code: 401}
+            if(!transporter) throw {msg: "Authentication failed", code: 401}
             else{
                 console.log(decoded)
                 req.loggedIn = decoded
@@ -30,7 +30,7 @@ async function authenticationShipper(req, res, next){
             let shipper = await Shipper.findOne({
                 where: { email: decoded.email }
             })
-            if(!shipper) throw {msg: "Auhtentication failed", code: 401}
+            if(!shipper) throw {msg: "Authentication failed", code: 401}
             else{
                 req.loggedIn = decoded
                 next()

@@ -9,11 +9,8 @@ class BidController {
             include: {
                 model: Post,
                 attributes: {
-                    exclude: ["password", "createdAt", "updatedAt", "wallet"]
+                    exclude: ["createdAt", "updatedAt"]
                 }
-            },
-            where: {
-                ShipperId: req.loggedIn.id
             }
         }).then(bid => {
             res.status(200).json(bid)
@@ -28,11 +25,10 @@ class BidController {
             include: {
                 model: Post,
                 attributes: {
-                    exclude: ["password", "wallet", "createdAt", "updatedAt"]
+                    exclude: ["createdAt", "updatedAt"]
                 }
             },
             where: {
-                ShipperId: req.loggedIn.id,
                 id: id
             }
         }).then(bid => {
