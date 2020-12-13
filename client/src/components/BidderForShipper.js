@@ -8,7 +8,7 @@ function BidderForShipper (props) {
     const dispatch = useDispatch()
     const {id} = useParams()
     const shipper = useSelector((state) => state.shipper)
-    // console.log(shipper.Transporters)
+    console.log(shipper.Posts, 'ini bidderforshipper')
 
     useEffect (() => {
         dispatch(fetchShippersById(id))

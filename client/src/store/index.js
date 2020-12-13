@@ -1,15 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4NjgzMn0.4jN1A6guYKtGnLS67l9sWjyj0R6pIcsKPE7o8p71cq0"
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4Njk4NX0.3K82ErtuSGX1IJsNPcVLSDx-PjHeD5pu2DL72RUHuDA'
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjM5MH0.bp4fDnrgU3b6COtEUtA6v2NThrQIe_xzVcLhbCfUuLM"
+const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
 
 const initialState = {
     dataShipper: [],
     show: false,
     showEdit: false,
     shipper: {},
-    post: {}
+    post: {},
+    transporter: {}
 }
 
 export const fetchShippers = () => {
@@ -46,7 +47,26 @@ export const fetchShippersById = (id) => {
                 // console.log(data, 'ini fetch id')
                 dispatch({
                     type: 'SET_SHIPPER',
-                    payload: data
+                    payload: data[0]
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const transporterById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/transporter/${id}`,
+            method: 'GET'
+          })
+            .then(({ data }) => {
+                // console.log(data, 'ini fetch id')
+                dispatch({
+                    type: 'SET_TRANSPORTER',
+                    payload: data[0]
                 })
             })
             .catch(err => {
@@ -161,6 +181,8 @@ function reducer (state = initialState, action) {
             return { ...state, dataShipper: action.payload}
         case 'SET_SHIPPER':
             return { ...state, shipper: action.payload}
+        case 'SET_TRANSPORTER':
+            return { ...state, transporter: action.payload}
         case 'SET_POST':
             return { ...state, post: action.payload}
         case 'SET_SHOW':

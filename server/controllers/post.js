@@ -45,7 +45,8 @@ class PostController {
     }
     static createPost(req, res, next){
         const {BidId, price} = req.body
-        Post.create({TransporterId: req.loggedIn.id, BidId, price, status: 'Pending', tracking_log: 'Pending'})
+        console.log(req.loggedIn)
+        Post.create({TransporterId: req.loggedIn.id, BidId, price, status: 'Pending', tracking_log: 'Pending', name: req.loggedIn.username, vehicle: req.loggedIn.vehicle})
         .then(post => {
             res.status(201).json(post)
         })
