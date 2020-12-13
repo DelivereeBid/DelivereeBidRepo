@@ -126,6 +126,7 @@ describe ("POST /BID" , () => {
         }
       });
   });
+
   it("400 Failed Post - should return error if From is empty string", (done) => {
     request(app)
       .post("/bid")
@@ -266,20 +267,6 @@ describe ("GET /BID" , () => {
         } else {
           const { body, status } = response;
           expect(status).toBe(200);
-          done();
-        }
-      });
-  });
-  it("401 Authentication Failed - should return error if access token is empty or invalid", (done) => {
-    request(app)
-      .get("/bid")
-      .end((err, response) => {
-        if (err) {
-          throw err;
-        } else {
-          const { body, status } = response;
-          expect(status).toBe(401);
-          expect(body).toEqual(["Authentication failed"])
           done();
         }
       });

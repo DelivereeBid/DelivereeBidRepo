@@ -36,6 +36,7 @@ class BidController {
                 id: id
             }
         }).then(bid => {
+            console.log(bid, 'bidinz');
             if(bid.length == 0) throw {msg: "Bid not found", code: 404}
             else {
                 res.status(200).json(bid)

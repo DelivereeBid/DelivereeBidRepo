@@ -1,11 +1,12 @@
 const request = require('supertest');
 const app = require('../app');
-const {sequelize, Transporter, Post} = require('../models/index');
+const {sequelize, Transporter, Post, Bid, Shipper} = require('../models/index');
 const {queryInterface, Sequelize} = sequelize;
 const {generateToken, verifyToken} = require('../helper/jwt');
 
-const post_data = {
-    "BidId": '1',
+
+let post_data = {
+    "BidId": 0,
     "price": 15000
 };
 
@@ -17,37 +18,37 @@ let access_token2 = '';
 let decoded2 = {};
 
 async function getToken(email) {
-    let userData = {email, password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
-    await Transporter.create(userData)
-        .then((res) => {
-            return Transporter.findOne({where:{email:userData.email}})
-        })
-        .then((res) => {
-          console.log(res.username, 'uuzer');
-            access_token = generateToken({
-                id: res.id,
-                email: res.email,
-                username: res.username,
-                vehicle: res.vehicle
-            })
-            decoded = verifyToken(access_token)
-        })
-        .catch(err => {
-            throw err;
-        })
+  let userData = {email, password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
+  await Transporter.create(userData)
+  .then((res) => {
+    return Transporter.findOne({where:{email:userData.email}})
+  })
+  .then((res) => {
+    console.log(res.username, 'uuzer');
+    access_token = generateToken({
+      id: res.id,
+      email: res.email,
+      username: res.username,
+      vehicle: res.vehicle
+    })
+    decoded = verifyToken(access_token)
+  })
+  .catch(err => {
+    throw err;
+  })
 }
 
 async function getToken2(email) {
   let userData = {email, password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
   await Transporter.create(userData)
-      .then((res) => {
-          return Transporter.findOne({where:{email:userData.email}})
-      })
-      .then((res) => {
-          access_token2 = generateToken({
-              id: res.id,
-              email: res.email,
-              username: res.username,
+  .then((res) => {
+    return Transporter.findOne({where:{email:userData.email}})
+  })
+  .then((res) => {
+    access_token2 = generateToken({
+      id: res.id,
+      email: res.email,
+      username: res.username,
               vehicle: res.vehicle
           })
           decoded2 = verifyToken(access_token)
@@ -66,6 +67,55 @@ async function createInitialPost() {
     price, status: 'Pending', tracking_log: 'Pending', name: decoded.username, vehicle: decoded.vehicle})
     .then(res => {
         postId = res.id
+        console.log(res, 'race')
+    })
+    .catch(err => {
+        throw err;
+    })
+}
+
+let bid_token = '';
+let decoded_bid = {};
+
+async function getBidToken() {
+  let userData = {email: 'anto@232.com', 
+  password: 'alhamdu', username: 'admin'}
+  await Shipper.create(userData)
+      .then((res) => {
+          return Shipper.findOne({where:
+            {email:userData.email}})
+      })
+      .then((res) => {
+          bid_token = generateToken({
+              id: res.id,
+              email: res.email
+          })
+          decoded_bid = verifyToken(access_token)
+      })
+      .catch(err => {
+          throw err;
+      })
+}
+
+const bid_data = {
+  "product_name": 'product_1',
+  "product_picture": 'product.png',
+  "description": 'product_desc',
+  "from": 'lajeddah',
+  "to": 'BukaPedia'
+};
+
+async function createInitialBid() {
+  const {
+    product_name,
+    product_picture,
+    description,
+    from,
+    to
+  } = bid_data
+  await Bid.create({product_name, product_picture, description, from, to, ShipperId: decoded_bid.id})
+    .then(bid => {
+      post_data.BidId = bid.id
     })
     .catch(err => {
         throw err;
@@ -73,53 +123,17 @@ async function createInitialPost() {
 }
 
 beforeAll(async (done) => {
-  await queryInterface.bulkDelete("Transporters")
   await getToken('anto@mail.ac');
-  await getToken2('danang@mail.ac')
+  await getToken2('danang@mail.ac');
+  await getBidToken();
+  await createInitialBid();
   await createInitialPost();
   done();     
 })
 
 afterAll(async (done) => {
-    await queryInterface.dropTable("Posts");
-    await queryInterface.createTable("Posts", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      TransporterId: {
-        type: Sequelize.INTEGER
-      },
-      BidId: {
-        type: Sequelize.INTEGER
-      },
-      price: {
-        type: Sequelize.INTEGER
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      tracking_log: {
-        type: Sequelize.STRING
-      },
-      name: {
-        type: Sequelize.STRING
-      },
-      vehicle: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-    });
+    await queryInterface.bulkDelete("Transporters")
+    await queryInterface.bulkDelete("Shippers")
     done();
   })
 
@@ -252,7 +266,6 @@ describe("GET /post", () => {
   it("200 Success GET - should return post by id", (done) => {
     request(app)
       .get(`/post/${postId}`)
-      .set('access_token', access_token)
       .end((err, response) => {
         if(err) {
           throw err;
@@ -264,20 +277,7 @@ describe("GET /post", () => {
       }
       })
   })
-  it("401 Failed GET - should return error if not authorized", (done) => {
-    request(app)
-      .get("/post")
-      .end((err, response) => {
-        if(err) {
-          throw err;
-      } else {
-          const { body, status } = response;
-          expect(status).toBe(401);
-          expect(body).toEqual(["Authentication failed"])
-          done();
-      }
-      })
-  })
+
   it("404 Failed GET - should return error if post not found", (done) => {
     request(app)
       .get(`/post/595959`)
@@ -310,7 +310,9 @@ describe("PUT /post", () => {
           throw err;
       } else {
           const { body, status } = response;
+          console.log(body, 'responzi')
           expect(status).toBe(200);
+          // expect(body).toEqual()
           done();
       }
       })

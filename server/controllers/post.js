@@ -38,6 +38,7 @@ class PostController {
                 id: id
             }
         }).then(post => {
+            console.log(post, 'poszi')
             if(post.length === 0){
                 throw {msg: "Post not found", code: 404}
             } else {
@@ -66,6 +67,7 @@ class PostController {
                 id: id
             }
         }).then(post => {
+            console.log(post, 'poszz')
             if(post[0] === 0) throw {msg: "Failed update post", code: 400}
             else {
                 res.status(200).json({msg: "Success update post"})
