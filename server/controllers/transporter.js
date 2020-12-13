@@ -39,9 +39,11 @@ class TransporterController {
             else {
                 const access_token = generateToken({
                     id: transporter.id,
-                    email: transporter.email
+                    email: transporter.email,
+                    username: transporter.username,
+                    vehicle: transporter.vehicle
                 })
-    
+
                 res.status(200).json({access_token: access_token, email: transporter.email, id: transporter.id, username: transporter.username})
             }
         })
