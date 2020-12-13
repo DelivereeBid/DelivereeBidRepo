@@ -8,7 +8,6 @@ const upload = require('./middlewares/upload');
 const http = require("http").createServer(app);
 const io = require('socket.io')(http)
 
-
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
