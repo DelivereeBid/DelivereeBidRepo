@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Navbar} from '../../components'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {fetchShippersById, fetchPostById, transporterById, patchWalletTransporter, updateWalletShipper} from '../../store/index.js'
+import {fetchShippersById, fetchPostById, transporterById, patchWalletTransporter, updateWalletShipper, patchPostById} from '../../store/index.js'
 
 function PaymentMethod (props) {
     const dispatch = useDispatch()
@@ -44,7 +44,15 @@ function PaymentMethod (props) {
         console.log(payloadShipper)
 
         dispatch(updateWalletShipper(shipper.Shipper.id, payloadShipper))
-        history.push('/controlPage')
+
+        const payloadUpdatePost = {
+            status: 'accepted'
+        }
+
+
+        dispatch(patchPostById(+arrId[1], payloadUpdatePost))
+
+        history.push(`/controlPage/shipper_${shipper.Shipper.username}_${shipper.Shipper.id}_${shipper.Shipper.email}`)
     }
 
 
