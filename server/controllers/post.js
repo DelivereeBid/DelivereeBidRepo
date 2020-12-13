@@ -1,4 +1,6 @@
 const {Bid, Post, Transporter} = require('../models')
+const { sequelize } = require('../models/index')
+const { queryInterface } = sequelize
 
 class PostController {
     static findAll(req, res, next){
@@ -76,6 +78,50 @@ class PostController {
             next(err)
         })
     }
+
+    static async patchPost(req, res, next){
+        const {id} = req.params
+        const {status} = req.body
+
+        try {
+
+            const postList = await Post.findAll({
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                },
+                include: [
+                    {
+                    model: Bid,
+                    required: true,
+                    attributes: {
+                        exclude: ["createdAt", "updatedAt"]
+                    }
+                }
+            ]
+            })
+
+            const filterPost = postList.filter(el => el.id !== id)
+
+            filterPost.forEach(el => {
+                    queryInterface.bulkUpdate('Posts', {status: 'rejected'})
+                })
+
+            const patchPost = await Post.update({status}, {
+                where: {
+                    id: id
+                }
+            })
+            if(patchPost[0] === 0) throw {msg: "Failed update post", code: 400}
+            else {
+                res.status(200).json({msg: "Success update post"})
+            }
+
+        } catch(err) {
+            next(err)
+        }
+
+    }
+
 
     static deletePost(req,res, next){
         const {id} = req.params

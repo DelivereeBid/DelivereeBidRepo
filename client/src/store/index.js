@@ -78,6 +78,23 @@ export const fetchShippersById = (id) => {
     }
   }
 
+  export const patchPostById = (id, payload) => {
+    return (dispatch) => {
+        axios({
+            url: `/post/${id}`,
+            method: 'PATCH',
+            data: payload
+          })
+            .then(({ data }) => {
+                console.log(data, 'ini patch post id')
+
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
 
 export const updateWalletShipper = (id, payload) => {
   return (dispatch) => {
