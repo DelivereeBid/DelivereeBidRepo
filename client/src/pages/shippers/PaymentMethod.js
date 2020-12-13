@@ -2,26 +2,51 @@ import React, {useEffect} from 'react'
 import {Navbar} from '../../components'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {fetchShippersById} from '../../store/index.js'
+import {fetchShippersById, fetchPostById, transporterById, patchWalletTransporter, updateWalletShipper} from '../../store/index.js'
 
 function PaymentMethod (props) {
     const dispatch = useDispatch()
     const history = useHistory()
     const {id} = useParams()
-    const deal = useSelector((state) => state.deal)
-    console.log(deal, 'ini deal')
+    const arrId = id.split('_')
+    // console.log(arrId, 'id di payment')
+    // const deal = useSelector((state) => state.deal)
+    // console.log(deal, 'ini deal')
 
     const shipper = useSelector((state) => state.shipper)
-    console.log(shipper, 'ini payment')
+    console.log(shipper, 'ini shipper payment')
+
+    const post = useSelector((state) => state.post)
+    console.log(post[0], 'ini post payment')
+
+    const transporterId = useSelector((state) => state.transporterId)
+    console.log(transporterId, 'ini transporterId payment')
 
     useEffect (() => {
-        dispatch(fetchShippersById(id))
-    }, [id])
+        dispatch(fetchShippersById(+arrId[0]))
+        dispatch(fetchPostById(+arrId[1]))
+        dispatch(transporterById(+arrId[2]))
+    }, [])
 
-    function toControlPage (e) {
+    function toControlPage (e, total) {
         e.preventDefault()
+        const updatedWallet = transporterId.wallet + total
+        const payload = {
+            wallet: updatedWallet
+        }
+        console.log(payload)
+        dispatch(patchWalletTransporter(+arrId[2], payload))
+
+        const updatedWalletShipper = shipper.Shipper.wallet - total
+        const payloadShipper = {
+            wallet: updatedWalletShipper
+        }
+        console.log(payloadShipper)
+
+        dispatch(updateWalletShipper(shipper.Shipper.id, payloadShipper))
         history.push('/controlPage')
     }
+
 
     return (
         <div>
@@ -38,7 +63,14 @@ function PaymentMethod (props) {
                                                 {/* <li><strong>Invoice</strong> #936988</li>
                                                 <li><strong>Invoice Date:</strong> Monday, October 10th, 2015</li>
                                                 <li><strong>Due Date:</strong> Thursday, December 1th, 2015</li> */}
-                                                <li><strong>Status:</strong> <span class="label label-danger">UNPAID</span></li>
+                                                <li>
+                                                    <strong>Status:</strong>
+                                                    <span class="label label-danger">
+                                                        { post[0] &&
+                                                            <td class="text-center">{post[0].status}</td>
+                                                        }
+                                                    </span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -70,13 +102,18 @@ function PaymentMethod (props) {
                                                 <tbody>
                                                     <tr>
                                                         <td>{shipper.product_name} | {shipper.from} - {shipper.to}</td>
-                                                        {/* <td class="text-center">Rp {deal.price.toLocaleString(['ban', 'id'])}</td> */}
+                                                        { post[0] &&
+                                                            <td class="text-center">Rp {post[0].price.toLocaleString(['ban', 'id'])}</td>
+                                                        }
+
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th colspan="1" class="text-right">Total:</th>
-                                                        {/* <th class="text-center">Rp {deal.price.toLocaleString(['ban', 'id'])}</th> */}
+                                                        { post[0] &&
+                                                            <td class="text-center">Rp {post[0].price.toLocaleString(['ban', 'id'])}</td>
+                                                        }
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -153,9 +190,9 @@ function PaymentMethod (props) {
                                     }
 
                                     <p>
-                                        <button onClick={(e) => toControlPage(e)} type="button" className="btn btn-primary"> <i class="fas fa-wallet"></i> Pay with Wallet </button>
+                                        <button onClick={(e) => toControlPage(e, post[0].price)} type="button" className="btn btn-primary"> <i class="fas fa-wallet"></i> Pay with Wallet </button>
                                     </p>
-                                    <p><strong>Note:</strong> Your paid will be automatically received by the bidder. </p>
+                                    <p><strong>Note:</strong> Your paid will be automatically received to the bidder. </p>
                                     </div>
                                 <div className="tab-pane fade" id="nav-tab-bank">
                                     <p>Bank accaunt details</p>
