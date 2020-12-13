@@ -302,7 +302,7 @@ describe ("GET /BID" , () => {
   });
   it("404 Error GET by Id - should return error if id is invalid", (done) => {
     request(app)
-      .get(`/bid/9999`)
+      .get(`/bid/5656575`)
       .set('access_token', access_token)
       .end((err, response) => {
         if (err) {

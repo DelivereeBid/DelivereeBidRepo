@@ -28,7 +28,8 @@ class BidController {
             include: {
                 model: Post,
                 attributes: {
-                    exclude: ["password", "wallet", "createdAt", "updatedAt"]
+                    exclude: ["password", "wallet", 
+                    "createdAt", "updatedAt"]
                 }
             },
             where: {
@@ -36,11 +37,13 @@ class BidController {
                 id: id
             }
         }).then(bid => {
-            if(!bid) throw {msg: "Bid not found", code: 404}
+            if(bid.length == 0) throw {msg: "Bid not found", code: 404}
             else {
                 res.status(200).json(bid)
             }
-        }).catch(err => next(err))
+        }).catch(err => {
+            console.log(err);
+            next(err)})
     }
     static createBid(req, res, next){
         const {product_name, file, description, from, to} = req.body

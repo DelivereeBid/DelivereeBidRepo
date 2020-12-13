@@ -17,7 +17,7 @@ let access_token2 = '';
 let decoded2 = {};
 
 async function getToken(email) {
-    let userData = {email, password: 'alhamdu', username: 'admin'}
+    let userData = {email, password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
     await Transporter.create(userData)
         .then((res) => {
             return Transporter.findOne({where:{email:userData.email}})
@@ -35,7 +35,7 @@ async function getToken(email) {
 }
 
 async function getToken2(email) {
-  let userData = {email, password: 'alhamdu', username: 'admin'}
+  let userData = {email, password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
   await Transporter.create(userData)
       .then((res) => {
           return Transporter.findOne({where:{email:userData.email}})
@@ -104,7 +104,6 @@ describe("POST /post", () => {
       it("401 Failed Post - should return error if not authorized", (done) => {
           request(app)
             .post("/post")
-            // .set('access_token', access_token)
             .send(post_data)
             .end((err, response) => {
                 if(err) {
@@ -348,7 +347,7 @@ describe("PUT /post", () => {
       } else {
           const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toEqual(["Tracking loc is required"])
+          expect(body).toEqual(["Tracking log is required"])
           done();
       }
       })

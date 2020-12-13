@@ -9,6 +9,7 @@ const transporter_data = {
   username: "HDLA",
   email: "asdf@mail.com",
   password: "halo123456",
+  vehicle: 'xenia'
 };
 
   let access_token = '';
@@ -16,7 +17,7 @@ const transporter_data = {
   let decoded = {};
 
   async function getToken() {
-    let userData = {email: 'japri@mail.com', password: 'alhamdu', username: 'admin'}
+    let userData = {email: 'japri@mail.com', password: 'alhamdu', username: 'admin', vehicle: 'avanza'}
     await Transporter.create(userData)
         .then((res) => {
             return Transporter.findOne({where:{email:userData.email}})
@@ -63,6 +64,9 @@ afterAll(async (done) => {
       wallet: {
         type: Sequelize.INTEGER,
       },
+      vehicle: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -89,6 +93,7 @@ describe("Transporter Router Test", () => {
           expect(body).toHaveProperty("id", expect.any(Number));
           expect(body).toHaveProperty("username", transporter_data.username);
           expect(body).toHaveProperty("email", transporter_data.email);
+          expect(body).toHaveProperty("vehicle", transporter_data.vehicle);
           done();
         });
     });
@@ -101,6 +106,7 @@ describe("Transporter Router Test", () => {
           username: "",
           email: "hdl@mail.com",
           password: "halo123456",
+          vehicle: 'xenia'
         })
         .then((response) => {
           const { body, status } = response;
@@ -117,6 +123,7 @@ describe("Transporter Router Test", () => {
         .send({
           email: "hdlad@mail.com",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -133,6 +140,7 @@ describe("Transporter Router Test", () => {
         .send({
           username: "HDL",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -150,6 +158,7 @@ describe("Transporter Router Test", () => {
           username: "HDL",
           email: "",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -167,6 +176,7 @@ describe("Transporter Router Test", () => {
           username: "HDL",
           email: "hdl@mail.com",
           name: "",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -183,6 +193,7 @@ describe("Transporter Router Test", () => {
         .send({
           username: "HDL",
           email: "hdl@mail.com",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -199,6 +210,7 @@ describe("Transporter Router Test", () => {
           username: "HDL",
           email: "hdl.com",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -215,6 +227,7 @@ describe("Transporter Router Test", () => {
           username: "PUS",
           email: "asdf@mail.com",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -233,6 +246,7 @@ describe("Transporter Router Test", () => {
           username: "HDLA",
           email: "asdf@mail.com",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -248,6 +262,7 @@ describe("Transporter Router Test", () => {
         .send({
           email: "asd@mail.com",
           password: "halo123456",
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -259,7 +274,9 @@ describe("Transporter Router Test", () => {
     it("400 Failed Login - should return error if email/password null", (done) => {
       request(app)
         .post("/transporter/login")
-        .send()
+        .send({
+          vehicle: 'subaru'
+        })
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(400);
@@ -300,7 +317,8 @@ describe("Transporter Router Test", () => {
         .put(`/transporter/${transporterId}`)
         .send({
           username: 'Japra',
-          wallet: 0
+          wallet: 0,
+          vehicle: 'subaru'
         })
         .set('access_token', access_token)
         .then((response) => {
@@ -315,7 +333,8 @@ describe("Transporter Router Test", () => {
         .put(`/transporter/${transporterId}`)
         .send({
           username: 'Japra',
-          wallet: -69000
+          wallet: -69000,
+          vehicle: 'subaru'
         })
         .set('access_token', access_token)
         .then((response) => {
@@ -332,7 +351,8 @@ describe("Transporter Router Test", () => {
         .set('access_token', access_token)
         .send({
           username: '',
-          wallet: 69000
+          wallet: 69000,
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -347,7 +367,8 @@ describe("Transporter Router Test", () => {
         .put(`/transporter/${transporterId}`)
         .send({
           username: 'Japra',
-          wallet: 69000
+          wallet: 69000,
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
@@ -363,7 +384,8 @@ describe("Transporter Router Test", () => {
         .set('access_token', access_token)
         .send({
           username: 'Japra',
-          wallet: 69000
+          wallet: 69000,
+          vehicle: 'subaru'
         })
         .then((response) => {
           const { body, status } = response;
