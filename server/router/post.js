@@ -4,8 +4,10 @@ const {authenticationTransporter, authorizationPost} = require('../middlewares/a
 
 router.get("/", PostController.findAll)
 router.get("/:id", PostController.getPostById)
+router.patch("/:id", PostController.patchPost)
 router.use(authenticationTransporter)
 router.post("/", PostController.createPost)
+
 router.put("/:id", authorizationPost, PostController.updatePost)
 router.delete("/:id", authorizationPost, PostController.deletePost)
 

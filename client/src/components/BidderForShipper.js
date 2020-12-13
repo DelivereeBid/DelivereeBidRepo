@@ -32,7 +32,7 @@ function BidderForShipper (props) {
                             {shipper.Posts !== undefined &&
                                 shipper.Posts.map(post => {
                                     return (
-                                        <TableRowShipper key={post.id} bidder={post} postId={id}/>
+                                        <TableRowShipper key={post.id} bidder={post} postId={id} shipperUser={shipper.Shipper}/>
                                     )
                                 })
                             }
