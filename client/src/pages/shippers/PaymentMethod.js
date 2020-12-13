@@ -1,15 +1,52 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Navbar} from '../../components'
 import { useHistory, useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {fetchShippersById, fetchPostById, transporterById, patchWalletTransporter, updateWalletShipper} from '../../store/index.js'
 
 function PaymentMethod (props) {
+    const dispatch = useDispatch()
     const history = useHistory()
     const {id} = useParams()
+    const arrId = id.split('_')
+    // console.log(arrId, 'id di payment')
+    // const deal = useSelector((state) => state.deal)
+    // console.log(deal, 'ini deal')
 
-    function toControlPage (e) {
+    const shipper = useSelector((state) => state.shipper)
+    console.log(shipper, 'ini shipper payment')
+
+    const post = useSelector((state) => state.post)
+    console.log(post[0], 'ini post payment')
+
+    const transporterId = useSelector((state) => state.transporterId)
+    console.log(transporterId, 'ini transporterId payment')
+
+    useEffect (() => {
+        dispatch(fetchShippersById(+arrId[0]))
+        dispatch(fetchPostById(+arrId[1]))
+        dispatch(transporterById(+arrId[2]))
+    }, [])
+
+    function toControlPage (e, total) {
         e.preventDefault()
+        const updatedWallet = transporterId.wallet + total
+        const payload = {
+            wallet: updatedWallet
+        }
+        console.log(payload)
+        dispatch(patchWalletTransporter(+arrId[2], payload))
+
+        const updatedWalletShipper = shipper.Shipper.wallet - total
+        const payloadShipper = {
+            wallet: updatedWalletShipper
+        }
+        console.log(payloadShipper)
+
+        dispatch(updateWalletShipper(shipper.Shipper.id, payloadShipper))
         history.push('/controlPage')
     }
+
 
     return (
         <div>
@@ -23,20 +60,34 @@ function PaymentMethod (props) {
                                     <div class="invoice-details mt25">
                                         <div class="well">
                                             <ul class="list-unstyled mb0">
-                                                <li><strong>Invoice</strong> #936988</li>
+                                                {/* <li><strong>Invoice</strong> #936988</li>
                                                 <li><strong>Invoice Date:</strong> Monday, October 10th, 2015</li>
-                                                <li><strong>Due Date:</strong> Thursday, December 1th, 2015</li>
-                                                <li><strong>Status:</strong> <span class="label label-danger">UNPAID</span></li>
+                                                <li><strong>Due Date:</strong> Thursday, December 1th, 2015</li> */}
+                                                <li>
+                                                    <strong>Status:</strong>
+                                                    <span class="label label-danger">
+                                                        { post[0] &&
+                                                            <td class="text-center">{post[0].status}</td>
+                                                        }
+                                                    </span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="invoice-to mt25">
                                         <ul class="list-unstyled">
                                             <li><strong>Invoiced To</strong></li>
-                                            <li>Jakob Smith</li>
-                                            <li>Roupark 37</li>
-                                            <li>New York, NY, 2014</li>
-                                            <li>USA</li>
+                                            {
+                                                shipper.Shipper &&
+                                                <li>{shipper.Shipper.username}</li>
+                                            }
+
+                                             {
+                                                shipper.Shipper &&
+                                                <li>{shipper.Shipper.email}</li>
+                                            }
+
+
                                         </ul>
                                     </div>
                                     <div class="invoice-items">
@@ -50,14 +101,19 @@ function PaymentMethod (props) {
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>1024MB Cloud 2.0 Server - elisium.dynamic.com (12/04/2014 - 01/03/2015)</td>
-                                                        <td class="text-center">$25.00 USD</td>
+                                                        <td>{shipper.product_name} | {shipper.from} - {shipper.to}</td>
+                                                        { post[0] &&
+                                                            <td class="text-center">Rp {post[0].price.toLocaleString(['ban', 'id'])}</td>
+                                                        }
+
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th colspan="1" class="text-right">Total:</th>
-                                                        <th class="text-center">$284.4.40 USD</th>
+                                                        { post[0] &&
+                                                            <td class="text-center">Rp {post[0].price.toLocaleString(['ban', 'id'])}</td>
+                                                        }
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -128,11 +184,15 @@ function PaymentMethod (props) {
                                 </div>
                                 <div className="tab-pane fade text-center justify-content-center align-items-center" id="nav-tab-paypal">
                                     <p>Wallet is easiest way to pay online</p>
-                                    <h3>Saldo: Rp. 3000000</h3>
+                                    {
+                                        shipper.Shipper &&
+                                        <h3>Saldo: Rp. {shipper.Shipper.wallet.toLocaleString(['ban', 'id'])}</h3>
+                                    }
+
                                     <p>
-                                        <button onClick={(e) => toControlPage(e)} type="button" className="btn btn-primary"> <i class="fas fa-wallet"></i> Pay with Wallet </button>
+                                        <button onClick={(e) => toControlPage(e, post[0].price)} type="button" className="btn btn-primary"> <i class="fas fa-wallet"></i> Pay with Wallet </button>
                                     </p>
-                                    <p><strong>Note:</strong> Your paid will be automatically received by the bidder. </p>
+                                    <p><strong>Note:</strong> Your paid will be automatically received to the bidder. </p>
                                     </div>
                                 <div className="tab-pane fade" id="nav-tab-bank">
                                     <p>Bank accaunt details</p>

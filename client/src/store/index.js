@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
 const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjM5MH0.bp4fDnrgU3b6COtEUtA6v2NThrQIe_xzVcLhbCfUuLM"
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
+// const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
 
 const initialState = {
     dataShipper: [],
@@ -11,7 +11,9 @@ const initialState = {
     shipper: {},
     access_token: '',
     post: {},
-    transporter: {}
+    transporter: {},
+    deal: {},
+    transporterId: {}
 }
 
 export const fetchShippers = () => {
@@ -57,33 +59,11 @@ export const fetchShippersById = (id) => {
     }
   }
 
-  export const transporterById = (id) => {
-    return (dispatch) => {
-        axios({
-            url: `/transporter/${id}`,
-            method: 'GET'
-          })
-            .then(({ data }) => {
-                // console.log(data, 'ini fetch id')
-                dispatch({
-                    type: 'SET_TRANSPORTER',
-                    payload: data[0]
-                })
-            })
-            .catch(err => {
-                console.log('Error:', err)
-            })
-    }
-  }
-
   export const fetchPostById = (id) => {
     return (dispatch) => {
         axios({
             url: `/post/${id}`,
-            method: 'GET',
-            headers: {
-              access_token: tokenTransporter
-            }
+            method: 'GET'
           })
             .then(({ data }) => {
                 // console.log(data, 'ini fetch id')
@@ -97,6 +77,65 @@ export const fetchShippersById = (id) => {
             })
     }
   }
+
+
+export const updateWalletShipper = (id, payload) => {
+  return (dispatch) => {
+      axios({
+          method: 'PUT',
+          url: `/shipper/${id}`,
+          headers: {
+            access_token: tokenShipper
+          },
+          data: payload
+        })
+        .then(({data}) => {
+          console.log(data, 'ini updateWalletShipper')
+          //fetch ulang akun shipper
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
+}
+
+  export const transporterById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/transporter/${id}`,
+            method: 'GET'
+          })
+            .then(({ data }) => {
+                dispatch({
+                    type: 'SET_TRANSPORTER_ID',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const patchWalletTransporter = (id, payload) => {
+    return (dispatch) => {
+        console.log(id, 'ini id', payload, 'ini payload')
+        axios({
+            url: `/transporter/${id}`,
+            method: 'PATCH',
+            data: payload
+          })
+            .then(({ data }) => {
+                console.log(data, 'ini patchWalletTransporter')
+                //fetch ulang transporter disini
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+
 
   export const updateShipperPost = (id, payload) => {
     const formData = new FormData();
@@ -221,8 +260,12 @@ function reducer (state = initialState, action) {
             return { ...state, shipper: action.payload}
         case 'SET_TRANSPORTER':
             return { ...state, transporter: action.payload}
+        case 'SET_TRANSPORTER_ID':
+            return { ...state, transporterId: action.payload}
         case 'SET_POST':
             return { ...state, post: action.payload}
+        case 'SET_DEAL':
+            return { ...state, deal: action.payload}
         case 'SET_SHOW':
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':
