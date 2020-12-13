@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const {sequelize, Transporter, Post} = require('../models/index');
-const {queryInterface} = sequelize;
+const {queryInterface, Sequelize} = sequelize;
 const {generateToken, verifyToken} = require('../helper/jwt');
 
 const post_data = {
@@ -23,9 +23,12 @@ async function getToken(email) {
             return Transporter.findOne({where:{email:userData.email}})
         })
         .then((res) => {
+          console.log(res.username, 'uuzer');
             access_token = generateToken({
                 id: res.id,
-                email: res.email
+                email: res.email,
+                username: res.username,
+                vehicle: res.vehicle
             })
             decoded = verifyToken(access_token)
         })
@@ -43,7 +46,9 @@ async function getToken2(email) {
       .then((res) => {
           access_token2 = generateToken({
               id: res.id,
-              email: res.email
+              email: res.email,
+              username: res.username,
+              vehicle: res.vehicle
           })
           decoded2 = verifyToken(access_token)
       })
@@ -58,7 +63,7 @@ async function createInitialPost() {
     price
   } = post_data
   await Post.create({TransporterId: decoded.id, BidId, 
-    price, status: 'Pending', tracking_log: 'Pending'})
+    price, status: 'Pending', tracking_log: 'Pending', name: decoded.username, vehicle: decoded.vehicle})
     .then(res => {
         postId = res.id
     })
@@ -68,17 +73,54 @@ async function createInitialPost() {
 }
 
 beforeAll(async (done) => {
-    await getToken('anto@mail.ac');
-    await getToken2('danang@mail.ac')
-    await createInitialPost();
-    done();     
-  })
-  
-  afterAll(async (done) => {
-    queryInterface.bulkDelete("Transporters")
-    .then(() => {
-      done();
+  await queryInterface.bulkDelete("Transporters")
+  await getToken('anto@mail.ac');
+  await getToken2('danang@mail.ac')
+  await createInitialPost();
+  done();     
+})
+
+afterAll(async (done) => {
+    await queryInterface.dropTable("Posts");
+    await queryInterface.createTable("Posts", {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      TransporterId: {
+        type: Sequelize.INTEGER
+      },
+      BidId: {
+        type: Sequelize.INTEGER
+      },
+      price: {
+        type: Sequelize.INTEGER
+      },
+      status: {
+        type: Sequelize.STRING
+      },
+      tracking_log: {
+        type: Sequelize.STRING
+      },
+      name: {
+        type: Sequelize.STRING
+      },
+      vehicle: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
+    done();
   })
 
 describe("POST /post", () => {
