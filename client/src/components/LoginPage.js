@@ -20,7 +20,7 @@ function LoginPage (props) {
   }
 
   const handleRegister = () => {
-    history.push('/register')
+    history.push('/transporter-register')
   }
     return (
         <>
