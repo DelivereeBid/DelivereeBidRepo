@@ -6,18 +6,20 @@ class PostController {
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
             },
-            include: {
+            include: [
+                {
                 model: Bid,
+                required: true,
                 attributes: {
                     exclude: ["createdAt", "updatedAt"]
                 }
-            },
-            where: {
-                TransporterId: req.loggedIn.id
             }
+        ]
         }).then(post => {
             res.status(200).json(post)
-        }).catch(err => next(err))
+        }).catch(err => {
+            next(err)
+        })
     }
     static getPostById(req, res, next){
         const {id} = req.params
@@ -25,15 +27,15 @@ class PostController {
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
             },
-            include: {
-                model: Transporter,
+            include: [{
+                model: Bid,
+                required: true,
                 attributes: {
                     exclude: ["createdAt", "updatedAt"]
                 }
-            },
+            }],
             where: {
-                id: id,
-                TransporterId: req.loggedIn.id
+                id: id
             }
         }).then(post => {
             if(post.length === 0){
