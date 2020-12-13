@@ -256,11 +256,17 @@ export const setLogin = (payload) => {
 }
 
 export const setSignUp = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('username', payload.username)
+    formData.append('email', payload.email)
+    formData.append('password', payload.password)
+    formData.append('vehicle', payload.vehicle)
     return (dispatch) => {
         axios({
             url: '/transporter/register',
             method: 'POST',
-            data: payload
+            data: formData
         })
         .then(({data}) => {
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
