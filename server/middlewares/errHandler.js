@@ -26,8 +26,8 @@ function errHandler(err, req, res, next){
             errors.push("Connection failed")
             break;
         default:
-            errors.push(err.msg)
-            code = err.code
+            errors.push(err.message)
+            code = err.code || 500
             break;
     }
     res.status(code).json(errors)
