@@ -3,11 +3,16 @@ import {Nav, Table, Button} from 'react-bootstrap';
 import cdd_box from '../../images/cdd_box.jpg';
 import cdd_bak from '../../images/cdd_bak.jpg';
 import cdd_los_bak from '../../images/cdd_los_bak.jpg';
+import { useHistory } from 'react-router-dom';
 
 export default function VehicleCDD () {
+  const history = useHistory();
+    function handleBackButton () {
+      history.push('/shipper')
+    }
     return (
       <div className="tronton-content border px-5 py-4">
-      <p className="text-right"><Button className="mt-2 mb-4" variant="primary">Back to Post</Button></p>
+      <p className="text-right"><Button onClick={handleBackButton} className="mt-2 mb-4" variant="primary">Back to Post</Button></p>
       <div className="row d-flex justify-content-between">
         <div className="col-md-3">
           <img src={cdd_box}
@@ -16,6 +21,7 @@ export default function VehicleCDD () {
         <div className="col-md-9">
           <Table striped bordered hover>
             <thead class="thead-inverse">
+            <th colspan="5"><center>Colt Diesel Double (CDD) Box</center></th>
             <tr>
                 <th>Ukuran Karoseri</th>
                 <th>Berat</th>
@@ -63,6 +69,7 @@ export default function VehicleCDD () {
         <div className="col-md-9">
           <Table striped bordered hover>
             <thead class="thead-inverse">
+            <th colspan="5"><center>Colt Diesel Double (CDD) Bak</center></th>
             <tr>
                 <th>Ukuran Karoseri</th>
                 <th>Berat</th>
