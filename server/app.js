@@ -17,8 +17,18 @@ app.use(router)
 app.use(err)
 
 io.on("connection", socket => {
-    socket.emit("your id", socket.id);
+    // socket.emit("your id", socket.id);
+
+    socket.on("your id", id => {
+        console.log(id, 'ini id dari server')
+        socket.emit("your id", id);
+    })
+    socket.on("your username", username => {
+        console.log(username, 'ini id dari server')
+        socket.emit("your username", username);
+    })
     socket.on("send message", body => {
+        console.log(body, 'ini dari server')
         io.emit("message", body)
     })
 })
