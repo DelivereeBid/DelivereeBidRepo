@@ -24,6 +24,7 @@ class TransporterController {
             res.status(201).json({id: transporter.id, username: transporter.username, email: transporter.email, vehicle: transporter.vehicle})
         })
         .catch(err => {
+            console.log(err, '<<< ini eror')
             next(err)
         })
     }
