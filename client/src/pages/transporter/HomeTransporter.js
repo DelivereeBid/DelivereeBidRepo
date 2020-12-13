@@ -1,14 +1,14 @@
-import React from 'react'
-import {Navbar} from '../../components'
-import {Card, Button} from 'react-bootstrap'
+import React, {useEffect} from 'react'
+import {useSelector} from 'react-redux'
+
 
 function HomeTransporter (props) {
 
-  return (
-    <>
-      <h1>ini home Transporter</h1>
-    </>
-  )
+    return (
+        <>
+            <h1 className="text-center">Find the right order for you!</h1>
+        </>
+    )
 }
 
 export default HomeTransporter
