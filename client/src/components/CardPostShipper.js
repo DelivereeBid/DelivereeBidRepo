@@ -9,6 +9,9 @@ function CardPostShipper(props) {
     const showEdit = useSelector((state) => state.showEdit)
     const history = useHistory()
 
+    const filterShipperPost = shipper.Posts.filter(el => el.status === 'accepted')
+    console.log(filterShipperPost, 'filter')
+
     const handleShow = (e, id) => {
         e.preventDefault()
         dispatch({
@@ -36,7 +39,13 @@ function CardPostShipper(props) {
                 <h4 className="card-title">
                     {shipper.product_name}
                     <span className='float-right'>
-                    {/* <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: {shipper.Transporters.length}</span> */}
+
+                    { filterShipperPost.length !== 0
+                       ? <span class="badge badge-success" style={{fontSize: '13px'}}>Deal</span>
+                       : <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: { shipper.Posts.length}</span>
+                    }
+
+
                         <div className="btn-group">
                             <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span className="sr-only">Toggle Dropdown</span>

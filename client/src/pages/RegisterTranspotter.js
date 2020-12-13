@@ -7,11 +7,13 @@ import { setSignUp } from '../store'
 function RegisterTranspotter (props) {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [fileee, setFileee] = useState('');
   const [user, setUser] = useState ({
     username : '',
     email : '',
     password : '',
-    file : ''
+    vehicle: '',
+    file: ''
   }) 
 
   const changeInput = (e) => {
@@ -20,10 +22,18 @@ function RegisterTranspotter (props) {
     }
     newInput[e.target.name] = e.target.value
     setUser(newInput)
-    console.log(user, '<<< ini suer')
   }
 
-  const handleRegister = (e) => {
+  const changeInputFile = (e) => {
+    const newInput = {
+      ...user
+    }
+    setFileee(e.target)
+    newInput.file = e.target.files[0]
+    setUser(newInput)
+  }
+
+  const handleRegister = () => {
     dispatch(setSignUp(user))
     history.push('/transporter-login')
   }
@@ -34,7 +44,7 @@ function RegisterTranspotter (props) {
         <div class="row justify-content-center">
           <div class="col-md-6 mb-3">
             <h3 class="signin-text mb-3">Register</h3>
-            <form onSubmit={(e) => handleRegister(e)}>
+            <form onSubmit={(e) => handleRegister()}>
               <div class="form-group">
                 <label for="email">Email</label>
                 <input onChange={(e) => changeInput(e)} type="email" name="email" class="form-control" />
@@ -49,7 +59,11 @@ function RegisterTranspotter (props) {
               </div>
               <div class="form-group">
                 <label for="username">Picture</label>
-                <input onChange={(e) => changeInput(e)} type="file" name="file" class="form-control" />
+                <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="vehicle">Vehicle</label>
+                <input onChange={(e) => changeInput(e)} type="text" name="vehicle" class="form-control" />
               </div>
               {/* <div className="form-group">
               <label for="text">Role</label>

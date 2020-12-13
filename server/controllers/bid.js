@@ -36,14 +36,18 @@ class BidController {
                 id: id
             }
         }).then(bid => {
-            if(!bid) throw {msg: "Bid not found", code: 404}
+            console.log(bid, 'bidinz');
+            if(bid.length == 0) throw {msg: "Bid not found", code: 404}
             else {
                 res.status(200).json(bid)
             }
-        }).catch(err => next(err))
+        }).catch(err => {
+            console.log(err);
+            next(err)})
     }
     static createBid(req, res, next){
         const {product_name, file, description, from, to} = req.body
+        console.log(file, 'ngga')
         Bid.create({product_name, product_picture: file, description, from, to, ShipperId: req.loggedIn.id})
         .then(bid => {
             res.status(201).json(bid)
