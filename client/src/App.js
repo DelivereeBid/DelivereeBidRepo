@@ -1,9 +1,10 @@
 import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import { HomeShipper, HomeTransporter, PaymentMethod, DetailPostShipper, Wallet, ComplaintPage, ControlPage, Login, RatingPage, Register, VechileInformation, DeliveryStatus } from './pages'
+import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
 import { CreatePostShipper, EditPostShipper } from './components'
+import './App.css'
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
           <Route exact path='/transporter'>
             <HomeTransporter/>
           </Route>
-          <Route exact path='/transporter'>
-            <HomeTransporter/>
+          <Route exact path='/'>
+            <HomePage/>
           </Route>
           <Route exact path='/transporter/detailPost'>
             <DetailPostShipper/>
@@ -33,17 +34,23 @@ function App() {
           <Route exact path="/transporter/deliveryStatus">
             <DeliveryStatus />
           </Route>
-          <Route path='/complaint'>
+          <Route exact path='/complaint'>
             <ComplaintPage/>
           </Route>
-          <Route path='/controlPage'>
+          <Route exact path='/controlPage'>
             <ControlPage/>
           </Route>
-          <Route path='/login'>
-            <Login/>
+          <Route exact path='/shipper-login'>
+            <LoginShipper/>
           </Route>
-          <Route path='/register'>
-            <Register/>
+          <Route exact path='/transporter-login'>
+            <LoginTransporter/>
+          </Route>
+          <Route exact path='/shipper-register'>
+            <RegisterShipper/>
+          </Route>
+          <Route path='/transporter-register'>
+            <RegisterTranspotter/>
           </Route>
           <Route path='/ratingPage'>
             <RatingPage/>
