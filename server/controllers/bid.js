@@ -25,12 +25,16 @@ class BidController {
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
             },
-            include: {
-                model: Post,
-                attributes: {
-                    exclude: ["password", "wallet", "createdAt", "updatedAt"]
-                }
+            include: [{
+                model: Post
             },
+             {
+                model: Shipper,
+                attributes: {
+                    exclude: ["password", "createdAt", "updatedAt"]
+                }
+            }
+            ],
             where: {
                 ShipperId: req.loggedIn.id,
                 id: id
