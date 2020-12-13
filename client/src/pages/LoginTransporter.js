@@ -1,7 +1,7 @@
 import React from 'react'
 import  {LoginPage}  from '../components'
 
-function Login (props) {
+function LoginTransporter (props) {
 
     return (
         <>
@@ -11,4 +11,4 @@ function Login (props) {
     )
 }
 
-export default Login
+export default LoginTransporter
