@@ -1,21 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-<<<<<<< HEAD
-<<<<<<< HEAD
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJkaWVAbWFpbC5jb20iLCJpYXQiOjE2MDc3NDg1OTZ9.2fI5SGN5_bxNyEJLcr1yk63s-A2_uqHI4kjPe5vW10I"
-=======
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4NjgzMn0.4jN1A6guYKtGnLS67l9sWjyj0R6pIcsKPE7o8p71cq0"
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzc4Njk4NX0.3K82ErtuSGX1IJsNPcVLSDx-PjHeD5pu2DL72RUHuDA'
->>>>>>> ba8db3dcc122921e1d094a04b39d3b1ce182038f
-=======
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjM5MH0.bp4fDnrgU3b6COtEUtA6v2NThrQIe_xzVcLhbCfUuLM"
-<<<<<<< HEAD
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
->>>>>>> e07121ccb9542773ad5c7bf4e7b6161ec43cacc1
-=======
-// const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
->>>>>>> 1caa4dc2a48b3b95de7e97e156c905cdcb2aa81a
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzg0OTkwMn0.30iqKE7HetBjJWQSDB-78W9SOgn7nPK-VOC0psykC_8"
+const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
 
 const initialState = {
     dataShipper: [],
