@@ -11,7 +11,8 @@ function RegisterTranspotter (props) {
     username : '',
     email : '',
     password : '',
-    file : ''
+    file : '',
+    vehicle: ''
   }) 
 
   const changeInput = (e) => {
@@ -23,7 +24,7 @@ function RegisterTranspotter (props) {
     console.log(user, '<<< ini suer')
   }
 
-  const handleRegister = (e) => {
+  const handleRegister = () => {
     dispatch(setSignUp(user))
     history.push('/transporter-login')
   }
@@ -34,7 +35,7 @@ function RegisterTranspotter (props) {
         <div class="row justify-content-center">
           <div class="col-md-6 mb-3">
             <h3 class="signin-text mb-3">Register</h3>
-            <form onSubmit={(e) => handleRegister(e)}>
+            <form onSubmit={(e) => handleRegister()}>
               <div class="form-group">
                 <label for="email">Email</label>
                 <input onChange={(e) => changeInput(e)} type="email" name="email" class="form-control" />
@@ -50,6 +51,10 @@ function RegisterTranspotter (props) {
               <div class="form-group">
                 <label for="username">Picture</label>
                 <input onChange={(e) => changeInput(e)} type="file" name="file" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="vehicle">Vehicle</label>
+                <input onChange={(e) => changeInput(e)} type="text" name="vehicle" class="form-control" />
               </div>
               {/* <div className="form-group">
               <label for="text">Role</label>
