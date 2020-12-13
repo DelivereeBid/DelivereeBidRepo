@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import { setSignUp } from '../store'
 
-function Register (props) {
+function RegisterShipper (props) {
   const history = useHistory()
   const dispatch = useDispatch()
   const [user, setUser] = useState ({
@@ -26,7 +26,7 @@ function Register (props) {
   const handleRegister = (e) => {
     e.preventDefault()
     dispatch(setSignUp(user))
-    history.push('/login')
+    history.push('/shipper-login')
   }
 
     return (
@@ -74,7 +74,7 @@ function Register (props) {
                 <label for="text">Vehicle 4</label>
               </div> */}
               <button type="submit" class="btn btn-primary">Register</button>
-              <p className="mt-3" role="button">Have an account ?</p>
+              <p className="mt-3" role="button" onClick={() => handleRegister()}>Have an account ?</p>
             </form>
           </div>
         </div>
@@ -83,4 +83,4 @@ function Register (props) {
     )
 }
 
-export default Register
+export default RegisterShipper
