@@ -56,7 +56,6 @@ function HomeShipper (props) {
 
             </div>
             <CreatePostShipper/>
-            {/* <EditPostShipper/> */}
         </div>
     )
 }

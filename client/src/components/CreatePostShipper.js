@@ -14,23 +14,21 @@ import Van from '../assets/vechile/8.png'
 import Ekonomi from '../assets/vechile/9.png'
 
 function CreatePostShippers (props) {
-    const [title, setTitle] = useState('')
+    const [product_name, setName] = useState('')
     const [from, setFrom] = useState('')
     const [to, setTo] = useState('')
-    const [date, setDate] = useState('')
-    const [weight, setWeight] = useState(0)
-    const [items, setItems] = useState('')
-    const [volume, setVolume] = useState('')
-    const [budget, setBudget] = useState(0)
-    const [vechile, setVechile] = useState('')
+    const [description, setDescription] = useState('')
+    // const [product_picture, setPicture] = useState(0)
+    const [filename, setFilename] = useState('')
+    const [file, setFile] = useState('')
     const dispatch = useDispatch()
     const history = useHistory()
 
     const show = useSelector((state) => state.show)
 
-    function onTitle (e) {
+    function onName (e) {
         e.preventDefault()
-        setTitle(e.target.value)
+        setName(e.target.value)
     }
 
     function onFrom (e) {
@@ -43,49 +41,22 @@ function CreatePostShippers (props) {
         setTo(e.target.value)
     }
 
-    function onWeight (e) {
+    function onDescription (e) {
         e.preventDefault()
-        setWeight(e.target.value)
+        setDescription(e.target.value)
     }
 
-    function onDate (e) {
-        e.preventDefault()
-        setDate(e.target.value)
-    }
-
-    function onItems (e) {
-        e.preventDefault()
-        setItems(e.target.value)
-    }
-
-    function onVolume (e) {
-        e.preventDefault()
-        setVolume(e.target.value)
-    }
-
-    function onBudget (e) {
-        e.preventDefault()
-        setBudget(e.target.value)
-    }
-
-    function onVechile (e) {
-        e.preventDefault()
-        setVechile(e.target.value)
-    }
 
     function submitPost (e) {
         e.preventDefault()
         const payload = {
-            title,
+            product_name,
             from,
             to,
-            date,
-            items,
-            volume,
-            budget: +budget,
-            weight: +weight,
-            vechile
+            file,
+            description
         }
+        console.log(file)
         dispatch(createPostShipper(payload))
         history.push('/shipper')
         // $('#close-modal').trigger('click')
@@ -96,6 +67,10 @@ function CreatePostShippers (props) {
         payload: false
     });
 
+    const onChange = e => {
+        setFile(e.target.files[0]);
+        setFilename(e.target.files[0].name);
+      };
 
 
     return (
@@ -108,11 +83,11 @@ function CreatePostShippers (props) {
                 </Modal.Header>
                 <Modal.Body>
 
-                <form onSubmit={(e) => submitPost(e)}>
+                <form onSubmit={(e) => submitPost(e)} method="post" encType="multipart/form-data">
                         <div class="form-group row">
-                            <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                            <label for="inputTitle" class="col-sm-2 col-form-label">Product Name</label>
                             <div class="col-sm-10">
-                                <input onChange={(e) => onTitle(e)} type="text" class="form-control" id="inputTitle" placeholder="Kirim barang ke jakarta | makanan"/>
+                                <input onChange={(e) => onName(e)} type="text" class="form-control" id="inputTitle" placeholder="Laptop"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -128,49 +103,27 @@ function CreatePostShippers (props) {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <input onChange={(e) => onDate(e)}  type="date" class="form-control" id="inputDate"/>
+                                <input onChange={(e) => onDescription(e)}  type="text" class="form-control" id="inputDescription" placeholder="Ada 5 laptop, tolong hati-hati"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputItems" class="col-sm-2 col-form-label">Items</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onItems(e)}  type="text" class="form-control" id="inputItems" placeholder="Makanan, Baju"/>
+                            <label for="customFile" class="col-sm-2 col-form-label">Product Picture</label>
+                            <div className='custom-file col-sm-10'>
+                                <input
+                                    type='file'
+                                    className='custom-file-input'
+                                    id='customFile'
+                                    onChange={onChange}
+                                />
+                                <label className='custom-file-label' htmlFor='customFile'>
+                                    {filename}
+                                </label>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputVolume" class="col-sm-2 col-form-label">Volume</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onVolume(e)}  type="text" class="form-control" id="inputVolume" placeholder="20cm x 30cm x 100cm"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputBudget" class="col-sm-2 col-form-label">Budget</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onBudget(e)}  type="number" class="form-control" id="inputBudget" placeholder="Rp. 3000000"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputWeight" class="col-sm-2 col-form-label">Weight</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onWeight(e)}  type="number" class="form-control" id="inputWeight" placeholder="kg"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label"><Link to='/vechileInformation'>Vechile</Link></label>
-                            <div class="col-sm-10" id="inputEmail3">
-                                <select onChange={(e) => onVechile(e)}  class="custom-select">
-                                    <option> Fuso Berat</option>
-                                    <option> Fuso Ringan</option>
-                                    <option> Fuso CDD</option>
-                                    <option> Engkel Box</option>
-                                    <option> Box Kecil</option>
-                                    <option> Pickup</option>
-                                    <option> Van</option>
-                                    <option> Ekonomi</option>
-                                </select >
-                            </div>
+
+                            {/* <Progress percentage={uploadPercentage} /> */}
+
                         </div>
                         <Button  type="submit"  onClick={handleClose}>Request</Button>
                         <Button variant='secondary' onClick={handleClose}>Close</Button>

@@ -1,17 +1,18 @@
 const {verifyToken} =require('../helper/jwt')
-const {Transporter, Shipper, Service, Bid} = require('../models')
+const {Transporter, Shipper, Post, Bid} = require('../models')
 
 async function authenticationTransporter(req, res, next){
     let { access_token } = req.headers
     try{
-        if(!access_token) throw {msg: "Authentication failed", code: 400}
+        if(!access_token) throw {msg: "Authentication failed", code: 401}
         else{
             let decoded = verifyToken(access_token)
             let transporter = await Transporter.findOne({
                 where: { email: decoded.email }
             })
-            if(!transporter) throw {msg: "Auhtentication failed", code: 400}
+            if(!transporter) throw {msg: "Auhtentication failed", code: 401}
             else{
+                console.log(decoded)
                 req.loggedIn = decoded
                 next()
             }
@@ -23,13 +24,13 @@ async function authenticationTransporter(req, res, next){
 async function authenticationShipper(req, res, next){
     let { access_token } = req.headers
     try{
-        if(!access_token) throw {msg: "Authentication failed", code: 400}
+        if(!access_token) throw {msg: "Authentication failed", code: 401}
         else{
             let decoded = verifyToken(access_token)
             let shipper = await Shipper.findOne({
                 where: { email: decoded.email }
             })
-            if(!shipper) throw {msg: "Auhtentication failed", code: 400}
+            if(!shipper) throw {msg: "Auhtentication failed", code: 401}
             else{
                 req.loggedIn = decoded
                 next()
@@ -39,11 +40,11 @@ async function authenticationShipper(req, res, next){
         next(err)
     }
 }
-async function authorizationService(req, res, next){
+async function authorizationPost(req, res, next){
     try {
-        let service = await Service.findByPk(req.params.id)
-        if(!service) throw {msg: "Service not found", code: 404}
-        if(req.loggedIn.id === service.TransporterId){
+        let post = await Post.findByPk(req.params.id)
+        if(!post) throw {msg: "Post not found", code: 404}
+        if(req.loggedIn.id === post.TransporterId){
             next()
         } else throw {msg: "Not authorized", code: 403}
     } catch (err) {
@@ -61,4 +62,4 @@ async function authorizationBid(req, res, next){
         next(err)
     }
 }
-module.exports = {authenticationTransporter, authenticationShipper, authorizationService, authorizationBid}
+module.exports = {authenticationTransporter, authenticationShipper, authorizationPost, authorizationBid}

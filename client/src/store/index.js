@@ -1,20 +1,27 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjM5MH0.bp4fDnrgU3b6COtEUtA6v2NThrQIe_xzVcLhbCfUuLM"
+const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJyYWZpQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjQ4NH0.viec-wCUo-UlWoyo974i3YP-arzB7eQ5q3VymsVQfh4'
 
 const initialState = {
     dataShipper: [],
     show: false,
     showEdit: false,
     shipper: {},
-    access_token: ''
+    access_token: '',
+    post: {},
+    transporter: {}
 }
 
 export const fetchShippers = () => {
     return (dispatch) => {
         axios({
             method: 'GET',
-            url: '/shipper'
+            url: '/bid',
+            headers: {
+              access_token: tokenShipper
+            }
           })
           .then(res => {
             dispatch({
@@ -31,13 +38,57 @@ export const fetchShippers = () => {
 export const fetchShippersById = (id) => {
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
-            method: 'GET'
+            url: `/bid/${id}`,
+            method: 'GET',
+            headers: {
+              access_token: tokenShipper
+            }
           })
             .then(({ data }) => {
                 // console.log(data, 'ini fetch id')
                 dispatch({
                     type: 'SET_SHIPPER',
+                    payload: data[0]
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const transporterById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/transporter/${id}`,
+            method: 'GET'
+          })
+            .then(({ data }) => {
+                // console.log(data, 'ini fetch id')
+                dispatch({
+                    type: 'SET_TRANSPORTER',
+                    payload: data[0]
+                })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const fetchPostById = (id) => {
+    return (dispatch) => {
+        axios({
+            url: `/post/${id}`,
+            method: 'GET',
+            headers: {
+              access_token: tokenTransporter
+            }
+          })
+            .then(({ data }) => {
+                // console.log(data, 'ini fetch id')
+                dispatch({
+                    type: 'SET_POST',
                     payload: data
                 })
             })
@@ -48,11 +99,25 @@ export const fetchShippersById = (id) => {
   }
 
   export const updateShipperPost = (id, payload) => {
+    const formData = new FormData();
+    if(payload.file) {
+        formData.append('file',payload.file)
+    } else {
+        formData.append('product_picture',payload.product_picture)
+    }
+    formData.append('product_name', payload.product_name)
+    formData.append('from', payload.from)
+    formData.append('to', payload.to)
+    formData.append('description', payload.description)
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
+            url: `/bid/${id}`,
             method: 'PUT',
-            data: payload
+            data: formData,
+            headers: {
+              access_token: tokenShipper,
+              'content-type': 'multipart/form-data'
+            }
           })
             .then(({ data }) => {
                 console.log(data)
@@ -65,12 +130,22 @@ export const fetchShippersById = (id) => {
   }
 
 export const createPostShipper = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('product_name', payload.product_name)
+    formData.append('from', payload.from)
+    formData.append('to', payload.to)
+    formData.append('description', payload.description)
     return (dispatch) => {
         // console.log(payload)
         axios({
-            url: '/shipper',
+            url: '/bid',
             method: 'POST',
-            data: payload
+            data: formData,
+            headers: {
+              access_token: tokenShipper,
+              'content-type': 'multipart/form-data'
+            }
           })
             .then(({ data }) => {
                 console.log(data)
@@ -85,8 +160,11 @@ export const createPostShipper = (payload) => {
 export const postShipperRemove = (id) => {
     return (dispatch) => {
         axios({
-            url: `/shipper/${id}`,
-            method: 'DELETE'
+            url: `/bid/${id}`,
+            method: 'DELETE',
+            headers: {
+              access_token: tokenShipper
+            }
           })
             .then(({ data }) => {
                 console.log(data)
@@ -141,6 +219,10 @@ function reducer (state = initialState, action) {
             return { ...state, dataShipper: action.payload}
         case 'SET_SHIPPER':
             return { ...state, shipper: action.payload}
+        case 'SET_TRANSPORTER':
+            return { ...state, transporter: action.payload}
+        case 'SET_POST':
+            return { ...state, post: action.payload}
         case 'SET_SHOW':
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':

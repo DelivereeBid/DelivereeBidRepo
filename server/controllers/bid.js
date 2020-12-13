@@ -1,4 +1,4 @@
-const {Bid, Shipper} = require('../models')
+const {Bid, Shipper, Post} = require('../models')
 
 class BidController {
     static findAll(req, res, next){
@@ -7,10 +7,13 @@ class BidController {
                 exclude: ["createdAt", "updatedAt"]
             },
             include: {
-                model: Shipper,
+                model: Post,
                 attributes: {
                     exclude: ["password", "createdAt", "updatedAt", "wallet"]
                 }
+            },
+            where: {
+                ShipperId: req.loggedIn.id
             }
         }).then(bid => {
             res.status(200).json(bid)
@@ -18,15 +21,19 @@ class BidController {
     }
     static getById(req, res, next){
         const {id} = req.params
-        Bid.findByPk(id, {
+        Bid.findAll({
             attributes: {
                 exclude: ["createdAt", "updatedAt"]
             },
             include: {
-                model: Shipper,
+                model: Post,
                 attributes: {
                     exclude: ["password", "wallet", "createdAt", "updatedAt"]
                 }
+            },
+            where: {
+                ShipperId: req.loggedIn.id,
+                id: id
             }
         }).then(bid => {
             if(!bid) throw {msg: "Bid not found", code: 404}

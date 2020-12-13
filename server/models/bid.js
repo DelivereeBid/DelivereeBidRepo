@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Bid.belongsTo(models.Shipper)
+      Bid.hasMany(models.Post)
     }
   };
   Bid.init({
@@ -22,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {args: true, msg: "Product picture is required"},
         notNull: {args: true, msg: "Product picture is required"}
-      }
+      },
+      allowNull: false
     },
     product_name: {
       allowNull: false,
@@ -30,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {args: true, msg: "Product name is required"},
         notNull: {args: true, msg: "Product name is required"}
-      }
+      },
+      allowNull: false
     },
     description: DataTypes.STRING,
     from: {
@@ -39,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {args: true, msg: "From is required"},
         notNull: {args: true, msg: "From is required"}
-      }
+      },
+      allowNull: false
     },
     to: {
       allowNull: false,
@@ -47,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {args: true, msg: "To destination is required"},
         notNull: {args: true, msg: "To destination is required"}
-      }
+      },
+      allowNull: false
     },
   }, {
     sequelize,

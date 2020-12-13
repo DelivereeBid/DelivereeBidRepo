@@ -151,13 +151,61 @@ _Response (500 - internal server error)_
 ]
 ```
 
-## Service
+### PUT /transporter/:id
 
-> Service that provide by transporter
+> Register transporter account
 
-### POST /service/
+_Request Params_
 
-> Create server only by transporter account
+```
+id
+```
+
+_Request Headers_
+
+```
+access_token: <string>
+```
+
+_Request Body_
+
+```
+{
+    "username": <string>,
+    "wallet": <int>
+}
+```
+
+_Response (200 - OK)_
+
+```
+{
+    msg: "Success update profile"
+}
+```
+
+_Response (403 - Forbidden)_
+
+```
+[
+    "Not authorized"
+]
+```
+_Response (500 - internal server error)_
+
+```
+[
+    "Internal server error"
+]
+```
+
+## Post
+
+> Post that created when transporter submit price of bid that offer by shipper
+
+### POST /post/
+
+> Create post only by transporter account
 
 _Request Params_
 
@@ -175,12 +223,8 @@ _Request Body_
 
 ```
 {
-    "service_name": <string>,
-    "service_picture": <string>,
-    "vehicle": <string>,
-    "price": <int>,
-    "tracking_log": <string>,
-    "status": <string>
+    "BidId": <int>,
+    "price": <int>
 }
 ```
 
@@ -189,15 +233,13 @@ _Response (200 - OK)_
 ```
 {
     "id": <int>,
-    "service_name": <string>,
-    "service_picture": <string>,
-    "vehicle": <string>,
+    "TransporterId": <int> from req.loggedIn auth,
+    "BidId": <int>,
     "price": <int>,
-    "tracking_log": <string>,
-    "status": <string>,
-    "TransporterId": <int>
-    "updatedAt": "2020-12-11T04:25:29.710Z",
-    "createdAt": "2020-12-11T04:25:29.710Z"
+    "status": "Pending" <defaultValue>,
+    "tracking_log": "Pending" <defaultValue>,
+    "updatedAt": "2020-12-12T14:44:40.383Z",
+    "createdAt": "2020-12-12T14:44:40.383Z"
 }
 ```
 
@@ -205,11 +247,9 @@ _Response (400 - Bad Request)_
 
 ```
 [
-    "Service name is required",
-    "Service picture is required",
-    "Vehicle is required",
+    "BidId is required",
     "Price is required",
-    "Tracking log is required"
+    "Price cannot minus"
 ],
 [
     "Authentication failed"
@@ -224,9 +264,9 @@ _Response (500 - internal server error)_
 ]
 ```
 
-### GET /service/
+### GET /post/
 
-> Get service
+> Get post only match with transporter id
 
 _Request Params_
 
@@ -249,22 +289,25 @@ Not needed
 _Response (200 - OK)_
 
 ```
-{
-    "id": <int>,
-    "service_name": <string>,
-    "service_picture": <string>,
-    "vehicle": <string>,
-    "price": <int>,
-    "tracking_log": <string>,
-    "status": <string>,
-    "TransporterId": <int>,
-    "Transporter": {
+[
+    {
         "id": <int>,
-        "username": <string>,
-        "email": <string>,
-        "profile_picture": <string>
+        "TransporterId": <int>,
+        "BidId": <int>,
+        "price": <int>,
+        "status": "Pending" <defaultValue>,
+        "tracking_log": "Pending" <defaultValue>,
+        "Bid": {
+            "id": 1,
+            "product_picture": "https://www.indosecuritysystem.com/image/blank_image.png",
+            "product_name": "kasur",
+            "description": "hati hati buat bapak",
+            "from": "jakarta",
+            "to": "jogja",
+            "ShipperId": 1
+        }
     }
-}
+]
 ```
 
 _Response (400 - Bad Request)_
@@ -283,9 +326,9 @@ _Response (500 - internal server error)_
 ]
 ```
 
-### GET /service/:id
+### GET /post/:id
 
-> Get service
+> Get post by post id and transporter id match with req.loggedIn.id
 
 _Request Params_
 
@@ -308,24 +351,34 @@ Not needed
 _Response (200 - OK)_
 
 ```
-{
-    "id": <int>,
-    "service_name": <string>,
-    "service_picture": <string>,
-    "vehicle": <string>,
-    "price": <int>,
-    "tracking_log": <string>,
-    "status": <string>,
-    "TransporterId": <int>,
-    "Transporter": {
+[
+    {
         "id": <int>,
-        "username": <string>,
-        "email": <string>,
-        "profile_picture": <string>
+        "TransporterId": <int>,
+        "BidId": <int>,
+        "price": <int>,
+        "status": "Pending" <defaultValue>,
+        "tracking_log": "Pending" <defaultValue>,
+        "Bid": {
+            "id": 1,
+            "product_picture": "https://www.indosecuritysystem.com/image/blank_image.png",
+            "product_name": "kasur",
+            "description": "hati hati buat bapak",
+            "from": "jakarta",
+            "to": "jogja",
+            "ShipperId": 1
+        }
     }
-}
+]
 ```
 
+_Response (404 - Not found)_
+
+```
+[
+    "Post not found"
+]
+```
 _Response (400 - Bad Request)_
 
 ```
@@ -342,9 +395,9 @@ _Response (500 - internal server error)_
 ]
 ```
 
-### PUT /service/:id
+### PUT /post/:id
 
-> Get service
+> Update post for transporter and this allow them to set price
 
 _Request Params_
 
@@ -362,23 +415,16 @@ _Request Body_
 
 ```
 {
-    "service_name": <string>,
-    "service_picture": <string>,
-    "vehicle": <string>,
     "price": <int>,
-    "tracking_log": <string>,
-    "status": <string>
-}
+    "status": <string>,
+    "tracking_log": <string>
 ```
 
 _Response (200 - OK)_
 
 ```
 {
-    "service": [
-        1
-    ],
-    "msg": "Success update service"
+    "msg": "Success update post"
 }
 ```
 
@@ -387,14 +433,24 @@ _Response (400 - Bad Request)_
 ```
 [
     "Authentication failed"
+],
+[
+    "Failed update post"
 ]
 ```
 
+_Response (403 - Forbidden)_
+
+```
+[
+    "Not authorized"
+]
+```
 _Response (404 - Not Found)_
 
 ```
 [
-    "Service not found"
+    "Post not found"
 ]
 ```
 
@@ -406,9 +462,9 @@ _Response (500 - internal server error)_
 ]
 ```
 
-### DELETE /service/:id
+### DELETE /post/:id
 
-> Get service
+> Delete post only by match transporterId and id target from params
 
 _Request Params_
 
@@ -432,7 +488,7 @@ _Response (200 - OK)_
 
 ```
 {
-    "msg": "Success delete service"
+    "msg": "Success delete post"
 }
 ```
 
@@ -441,14 +497,24 @@ _Response (400 - Bad Request)_
 ```
 [
     "Authentication failed"
+],
+[
+    "Failed delete post"
 ]
 ```
 
+_Response (403 - Forbidden)_
+
+```
+[
+    "Not authorized"
+]
+```
 _Response (404 - Not Found)_
 
 ```
 [
-    "Service not found"
+    "Post not found"
 ]
 ```
 
@@ -494,7 +560,8 @@ _Response (200 - OK)_
 {
     "id": <int>,
     "username": <string>,
-    "email": <string>
+    "email": <string>,
+    "file": <file>
 }
 ```
 
@@ -645,7 +712,7 @@ _Request Body_
 ```
 {
     "product_name": <string>,
-    "product_picture": <string>,
+    "file": <file>,
     "description": <string>,
     "from": <string>,
     "to": <string>

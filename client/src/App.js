@@ -12,10 +12,10 @@ function App() {
           <Route path='/shipper'>
             <HomeShipper/>
           </Route>
-          <Route exact path='/shipper/createPost'>
+          {/* <Route exact path='/shipper/createPost'>
             <CreatePostShipper/>
-          </Route>
-          <Route exact path='/shipper/payment'>
+          </Route> */}
+          <Route exact path='/payment/:id'>
             <PaymentMethod/>
           </Route>
           <Route exact path='/transporter'>

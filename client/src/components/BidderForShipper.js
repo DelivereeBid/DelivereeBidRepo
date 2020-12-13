@@ -8,7 +8,7 @@ function BidderForShipper (props) {
     const dispatch = useDispatch()
     const {id} = useParams()
     const shipper = useSelector((state) => state.shipper)
-    // console.log(shipper.Transporters)
+    console.log(shipper.Posts, 'ini bidderforshipper')
 
     useEffect (() => {
         dispatch(fetchShippersById(id))
@@ -17,29 +17,29 @@ function BidderForShipper (props) {
     return (
         <div className='col-9'>
             <h3>Your Bidder</h3>
-            <div style={{height: '400px', overflowY:'scroll'}}>
-                <table className="table">
-                    <thead>
-                        <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Vechile</th>
-                        <th>Bid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {shipper.Transporters !== undefined &&
-                            shipper.Transporters.map(bidder => {
-                                return (
-                                    <TableRowShipper key={bidder.id} bidder={bidder}/>
-                                )
-                            })
-                        }
+                <div style={{height: '400px', overflowY:'scroll'}}>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Vechile</th>
+                            <th>Bid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {shipper.Posts !== undefined &&
+                                shipper.Posts.map(post => {
+                                    return (
+                                        <TableRowShipper key={post.id} bidder={post}/>
+                                    )
+                                })
+                            }
 
-                    </tbody>
-                </table>
-            </div>
-            <button className='btn btn-primary float-right mr-5' style={{width: '150px'}}>Deal</button>
+                        </tbody>
+                    </table>
+                </div>
+                <button className='btn btn-primary float-right mr-5' style={{width: '150px'}}>Deal</button>
         </div>
     )
 
