@@ -1,3 +1,16 @@
 .specification {
     /* border: 1px solid black */
 }
+
+.content {
+    margin: 0 10%;
+}
+
+.banner {
+    background-image: url('https://kargo.tech/wp-content/uploads/2020/03/warehouse-work@2x-1.jpg');
+    background-position-y: 20%;
+}
+
+/* <img src="https://kargo.tech/wp-content/uploads/2020/03/warehouse-work@2x-1.jpg" 
+        style={{height: '100px', width: '100%', objectFit: 'cover'}} alt="">
+        </img> */
