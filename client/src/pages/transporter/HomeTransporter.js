@@ -11,22 +11,27 @@ function HomeTransporter(props) {
   const transporter = useSelector((state) => state.dataTransporter);
   const trucking = useSelector((state) => state.transporter);
   const transporterId = +localStorage.getItem("transporterId");
-
+  console.log(transporter, 'tra');
   useEffect(() => {
     dispatch(fetchTransporter());
     dispatch(fetchTransporterById(transporterId));
   }, [dispatch]);
-
+  
   const changePage = (id) => {
     history.push(`/transporter/${id}`);
   };
-
-  const toControlPage = () => {
+  
+  const toControlPage = (ShipperId) => {
     history.push(
-      `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}`
+      `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
   };
 
+  // const filterBid = transporter.filter((el) => {
+  //   return el.id == 
+  // })
+
+  // console.log(filterBid, 'feltier')
   return (
     <>
     <NavbarTrans/>
@@ -38,6 +43,10 @@ function HomeTransporter(props) {
             <div id="card-size" className="card">
               <div className="card-body mt-2 text-center mx-auto">
                 <h5>{el.product_name}</h5>
+                {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
+                {
+                  console.log(transporter[0].ShipperId, 'awa')
+                }
                 <img
                   className="card-img-top"
                   src={el.product_picture}
@@ -51,7 +60,7 @@ function HomeTransporter(props) {
                 ) ? (
                   el.Posts.some((post) => post.status === "accepted") ? (
                     <button
-                      onClick={() => toControlPage()}
+                      onClick={() => toControlPage(el.ShipperId)}
                       className="btn btn-primary"
                     >
                       Start

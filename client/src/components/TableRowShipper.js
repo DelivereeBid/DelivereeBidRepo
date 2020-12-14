@@ -40,7 +40,7 @@ function TableRowShipper(props) {
       });
     } else if (bidder.status === "accepted") {
       history.push(
-        `/controlPage/shipper_${shipperUser.username}_${shipperUser.id}_${shipperUser.email}`
+        `/controlPage/shipper_${shipperUser.username}_${shipperUser.id}_${shipperUser.email}_${bidder.TransporterId}`
       );
       // history.push('/controlPage')
     }

@@ -252,6 +252,7 @@ export const createPostShipper = (payload) => {
   formData.append("from", payload.from);
   formData.append("to", payload.to);
   formData.append("description", payload.description);
+  console.log(tokenShipper)
   return (dispatch) => {
     // console.log(payload)
     axios({

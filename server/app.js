@@ -44,7 +44,7 @@ io.on("connection", socket => {
     //ALTERNATIVE 2 ==start==
     socket.on('joinRoom', ({ username, room }) => {
         const user = userJoin(socket.id, username, room);
-
+        console.log(user.room, 'rooomz')
         socket.join(user.room);
 
         // Welcome current user
