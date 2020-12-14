@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import { fetchTransporter } from '../../store/index'
 
 
 function HomeTransporter (props) {
+    const history = useHistory()
     const dispatch = useDispatch()
     const transporter = useSelector((state) => state.dataTransporter)
 
@@ -12,6 +14,10 @@ function HomeTransporter (props) {
     useEffect(() => {
         dispatch(fetchTransporter())
     }, [dispatch])
+
+    const changePage = (id) => {
+        history.push(`/transporter/${id}`)
+    }
 
     return (
         <>
@@ -27,7 +33,7 @@ function HomeTransporter (props) {
                         <h5 className=" mt-2">{el.description}</h5>
                         <h5 className=" mt-2">{el.from}</h5>
                         <h5 className=" mt-2">{el.to}</h5> 
-
+                        <button onClick={() => changePage(el.id)} className="btn btn-danger">Bid !</button>
                         </div>
                     </div>
                 </div>  
