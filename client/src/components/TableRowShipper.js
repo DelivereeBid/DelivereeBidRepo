@@ -14,7 +14,7 @@ function TableRowShipper(props) {
     function selectedBid (e, bidder) {
         e.preventDefault()
 
-        if(bidder.status === 'pending') {
+        if(bidder.status === 'Pending') {
             Swal.fire({
                 title: `Deal with ${bidder.name}?`,
                 text: `Bid: Rp ${bidder.price.toLocaleString(['ban', 'id'])} | Vechile: ${bidder.vehicle}`,
