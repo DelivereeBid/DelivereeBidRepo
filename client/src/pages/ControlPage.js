@@ -11,6 +11,7 @@ function ControlPage (props) {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const {id} = useParams()
+    console.log(id, 'id')
     const arrId = id.split('_')
     const role = arrId[0]
     const username = arrId[1]

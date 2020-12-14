@@ -25,14 +25,13 @@ function App() {
           </PrivateRoute>
           <PrivateRoute auth={credentialsHandler()} component={PaymentMethod} exact path='/payment/:id' redirect='/'>
           </PrivateRoute>
-          <PrivateRoute auth="transporter_token" component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
+          <PrivateRoute auth="transporter_token" exact component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
           </PrivateRoute>
           <Route exact path='/'>
             <HomePage/>
           </Route>
-          <Route exact path='/transporter/:id'>
-            <DetailPostShipper/>
-          </Route>
+          <PrivateRoute auth="transporter_token" redirect='/transporter-login' path='/transporter/:id' component={DetailPostShipper}>
+          </PrivateRoute>
           <Route exact path='/transporter/wallet'>
             <Wallet/>
           </Route>
@@ -41,7 +40,7 @@ function App() {
           </Route>
           <PrivateRoute auth={credentialsHandler()} component={ComplaintPage} path="/complaint" exact redirect='/'>
           </PrivateRoute>
-          <PrivateRoute auth={credentialsHandler()} component={ControlPage} path='/controlPage' redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={ControlPage} path='/controlPage/:id' redirect='/'>
           </PrivateRoute>
           <Route exact path='/shipper-login'>
             <LoginShipper/>

@@ -2,16 +2,16 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
 
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzkxNjk2NH0.3iwuFyqv5_x6W-cvFJVGfySUN4EbrIES26SXLhRSKGg"
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
-
+const tokenShipper = localStorage.getItem('shipper_token')
+const tokenTransporter = localStorage.getItem('transporter_token')
 
 const initialState = {
     dataShipper: [],
     show: false,
     showEdit: false,
     shipper: {},
-    access_token: '',
+    transporter_token: '',
+    shipper_token: '',
     post: {},
     transporter: {},
     deal: {},
@@ -248,7 +248,7 @@ export const setLogin = (payload) => {
         })
         .then(({data}) => {
             localStorage.setItem('transporter_token', data.access_token)
-            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+            dispatch({type: 'SET_TRANSPORTER_TOKEN', payload: data.access_token})
         })
         .catch((err) => console.log(err.response, '<<< error dari action'))
     }
@@ -266,7 +266,7 @@ export const setLoginShipper = (payload) => {
         })
         .then(({data}) => {
             localStorage.setItem('shipper_token', data.access_token)
-            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+            dispatch({type: 'SET_SHIPPER_TOKEN', payload: data.access_token})
         })
         .catch((err) => console.log(err.response, '<<< error dari action'))
     }
@@ -406,7 +406,7 @@ function reducer (state = initialState, action) {
             return { ...state, show: action.payload}
         case 'SET_SHOW_EDIT':
             return { ...state, showEdit: action.payload, shipper: {}}
-        case 'SET_TOKEN':
+        case 'SET_TRANSPORTER_TOKEN':
         // console.log(action.payload, '<<< ini dari reducer')
             return {...state, access_token: action.payload}
         default:
