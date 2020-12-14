@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzgyNjM5MH0.bp4fDnrgU3b6COtEUtA6v2NThrQIe_xzVcLhbCfUuLM"
-const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QG1haWwuY28iLCJ1c2VybmFtZSI6InRlc3QiLCJ2ZWhpY2xlIjoiYXZhbnphIiwiaWF0IjoxNjA3ODYwMDgzfQ.lXWCLMjHSRGFS7ntwg3f6uVSNq8p1vI24OZdIzqoOPY'
+
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzg0OTkwMn0.30iqKE7HetBjJWQSDB-78W9SOgn7nPK-VOC0psykC_8"
+const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
+
 
 const initialState = {
     dataShipper: [],
@@ -73,6 +75,23 @@ export const fetchShippersById = (id) => {
                     type: 'SET_POST',
                     payload: data
                 })
+            })
+            .catch(err => {
+                console.log('Error:', err)
+            })
+    }
+  }
+
+  export const patchPostById = (id, payload) => {
+    return (dispatch) => {
+        axios({
+            url: `/post/${id}`,
+            method: 'PATCH',
+            data: payload
+          })
+            .then(({ data }) => {
+                console.log(data, 'ini patch post id')
+
             })
             .catch(err => {
                 console.log('Error:', err)
@@ -218,9 +237,7 @@ export const postShipperRemove = (id) => {
   }
 
 export const setLogin = (payload) => {
-    // console.log('masuk 102')
     return (dispatch) => {
-        // console.log('msuk action')
         axios({
             url: '/transporter/login',
             method: 'POST',
@@ -230,10 +247,10 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            // console.log(data, '<<< ini data dari action')
+            localStorage.setItem('access_token', data.access_token)
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
-        .catch((err) => console.log(err, '<<< error dari action'))
+        .catch((err) => console.log(err.response, '<<< error dari action'))
     }
 }
 
@@ -259,11 +276,17 @@ export const setBid = (payload) => {
 
 
 export const setSignUp = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('username', payload.username)
+    formData.append('email', payload.email)
+    formData.append('password', payload.password)
+    formData.append('vehicle', payload.vehicle)
     return (dispatch) => {
         axios({
             url: '/transporter/register',
             method: 'POST',
-            data: payload
+            data: formData
         })
         .then(({data}) => {
             dispatch({type: 'SET_TOKEN', payload: data.access_token})

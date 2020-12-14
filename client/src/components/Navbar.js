@@ -36,9 +36,6 @@ function Navbar (props) {
               <a className="nav-link" href="#"><Link to='/vechileInformation'></Link>Vechile</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#"><Link to='/controlPage'>Control</Link></a>
-            </li>
-            <li className="nav-item">
               <a className="nav-link" href="#">Inbox</a>
             </li>
           </ul>
