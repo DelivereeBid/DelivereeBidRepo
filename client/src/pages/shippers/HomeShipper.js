@@ -3,14 +3,19 @@ import {Navbar, TableRowShipper, CardPostShipper, CreatePostShipper, EditPostShi
 import {fetchShippers} from '../../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Link } from 'react-router-dom'
+import jwt from 'jsonwebtoken'
 
 
 function HomeShipper (props) {
     const dispatch = useDispatch()
     const shippers = useSelector((state) => state.dataShipper)
-    const show = useSelector((state) => state.show)
+    const shipperToken = localStorage.getItem("shipper_token")
+    let decode = jwt.verify(shipperToken, 'secret')
 
-    console.log(shippers)
+    let idShipperLoggedIn = decode.id
+
+    let filterPostBidFromShipper = shippers.filter(el => el.ShipperId === idShipperLoggedIn)
+
     const handleShow = () => dispatch({
         type: 'SET_SHOW',
         payload: true
@@ -31,7 +36,7 @@ function HomeShipper (props) {
 
                     <div style={{height: '400px', overflowY:'scroll'}}>
                         {
-                            shippers.map(shipper => {
+                            filterPostBidFromShipper.map(shipper => {
                                 return (
                                     <CardPostShipper
                                         key={shipper.id}
