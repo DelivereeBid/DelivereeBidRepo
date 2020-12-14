@@ -12,7 +12,6 @@ import {
   } from 'react-places-autocomplete';
 import './controlPage.css'
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 
 function ControlPage (props) {
     const dispatch = useDispatch()
