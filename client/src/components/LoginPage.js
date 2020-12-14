@@ -10,16 +10,15 @@ function LoginPage (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const access_token = useSelector(state => state.access_token)
   const handleLogin = (e) => {
-    console.log(access_token, 'dklsalkj')
     e.preventDefault()
     const payload = {
       email,password
     }
     dispatch(setLogin(payload))
-    // history.push('/transporter')
+    history.push('/transporter')
   }
+  
 
   const handleRegister = () => {
     history.push('/transporter-register')
