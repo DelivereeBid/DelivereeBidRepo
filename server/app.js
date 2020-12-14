@@ -6,7 +6,12 @@ const router = require('./router')
 const err = require('./middlewares/errHandler')
 const upload = require('./middlewares/upload');
 const http = require("http").createServer(app);
-const io = require('socket.io')(http)
+const io = require('socket.io')(http, {
+    cors: {
+        origin: "http://localhost:3001",
+        methods: ["GET", "POST"]
+    }
+})
 
 app.use(cors())
 app.use(express.urlencoded({extended: true}))

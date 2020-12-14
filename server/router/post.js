@@ -5,6 +5,7 @@ const {authenticationTransporter, authorizationPost} = require('../middlewares/a
 router.get("/", PostController.findAll)
 router.get("/:id", PostController.getPostById)
 router.patch("/:id", PostController.patchPost)
+router.patch("/tracking/:id", PostController.patchTrackingLog)
 router.use(authenticationTransporter)
 router.post("/", PostController.createPost)
 

@@ -2,10 +2,19 @@ import React, { useState, useEffect, useRef } from 'react'
 import {Navbar} from '../components'
 import io from "socket.io-client";
 import { useHistory, useParams } from 'react-router-dom'
-import {transporterById} from '../store/index.js'
+import {transporterById, patchTrackingLogById} from '../store/index.js'
+import PlacesAutocomplete from 'react-places-autocomplete';
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+  } from 'react-places-autocomplete';
 import './controlPage.css'
+import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
 function ControlPage (props) {
+    const dispatch = useDispatch();
     const [yourID, setYourID] = useState();
     const [usernameId, setUsername] = useState();
     const [messages, setMessages] = useState([]);
@@ -17,50 +26,79 @@ function ControlPage (props) {
     const username = arrId[1]
     const userId = arrId[2]
     const email = arrId[3]
+    let [address, setAddress] = useState('')
 
     const socketRef = useRef();
     console.log(message)
+
     useEffect(() => {
         socketRef.current = io.connect('http://localhost:3000');
-
+        
         socketRef.current.emit("your id", id);
-
+        
         socketRef.current.on("your id", id => {
             console.log(id, 'iniId')
-             setYourID(id);
+            setYourID(id);
         })
-
+        
         socketRef.current.emit("your username", username);
         socketRef.current.on("your username", username => {
             console.log(username, 'iniUsername')
             setUsername(username);
         })
-
-
+        
+        
         socketRef.current.on("message", (message) => {
-          console.log("here");
-          receivedMessage(message);
+            console.log("here");
+            receivedMessage(message);
         })
-      }, []);
-
-      function receivedMessage(message) {
+    }, []);
+    
+    function receivedMessage(message) {
         setMessages(oldMsgs => [...oldMsgs, message]);
-      }
-
-      function sendMessage(e) {
+    }
+    
+    function sendMessage(e) {
         e.preventDefault();
         const messageObject = {
-          body: message,
-          id: yourID,
-          username: usernameId
+            body: message,
+            id: yourID,
+            username: usernameId
         };
         setMessage("");
         socketRef.current.emit("send message", messageObject);
-      }
-
-      function handleChange(e) {
+    }
+    
+    function handleChange(e) {
         setMessage(e.target.value);
-      }
+    }
+
+    //G MAPS
+    
+    const [latitude, setLatitude] = useState(-6.2087634)
+    const [longitude, setLongitude] = useState(106.845599)
+
+    const handleSearchChange = address => {
+        setAddress(address)
+    };
+    
+    const handleSelect = address => {
+        setAddress(address)
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(latLng => {
+                console.log('Success', latLng)
+                setLatitude(latLng.lat);
+                setLongitude(latLng.lng);
+            })
+            .catch(error => console.error('Error', error));
+    };
+
+    const handleSubmitLoc = e => {
+        e.preventDefault();
+        const city = address.split(',')
+        dispatch(patchTrackingLogById(userId, {tracking_log: city[0]}))
+    }
 
     return (
         <>
@@ -162,11 +200,58 @@ function ControlPage (props) {
                         </div>
                         {   role === 'transporter' &&
                             <div className="card">
+                                    {
+                                        // let latlon = position.coords.latitude + "," + position.coords.longitude;
+                                        latitude && longitude ?
+                                        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude +','+longitude}
+                                        &zoom=14&size=400x400&sensor=false&markers=color:red%7C${latitude + ',' + longitude}
+                                        &key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw`} alt=''></img> : null
+                                    }
                                 <div className="card-body">
                                     <h4 className="card-title">Update Location</h4>
                                     <form>
-                                        <input type='text' placeholder='Cikarang'/>
-                                        <button type='submit' className='btn btn-primary'>Update</button>
+                                        <div className="row">
+
+                                                <PlacesAutocomplete
+                                                value={address}
+                                                onChange={handleSearchChange}
+                                                onSelect={handleSelect}
+                                                >
+                                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                                    <div>
+                                                        <input
+                                                        {...getInputProps({
+                                                            placeholder: 'Search Places ...',
+                                                            className: 'location-search-input',
+                                                        })}
+                                                        />
+                                                        <div className="autocomplete-dropdown-container">
+                                                        {loading && <div>Loading...</div>}
+                                                        {suggestions.map(suggestion => {
+                                                            const className = suggestion.active
+                                                            ? 'suggestion-item--active'
+                                                            : 'suggestion-item';
+                                                            // inline style for demonstration purpose
+                                                            const style = suggestion.active
+                                                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                            return (
+                                                            <div
+                                                                {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                                })}
+                                                            >
+                                                                <span>{suggestion.description}</span>
+                                                            </div>
+                                                            );
+                                                        })}
+                                                        </div>
+                                                    </div>
+                                                    )}
+                                            </PlacesAutocomplete>
+                                            <Button onClick={handleSubmitLoc} className="px-1 p-0 ml-1" style={{height: '30px'}} variant="primary">Update Location</Button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
