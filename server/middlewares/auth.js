@@ -12,7 +12,6 @@ async function authenticationTransporter(req, res, next){
             })
             if(!transporter) throw {msg: "Authentication failed", code: 401}
             else{
-                console.log(decoded)
                 req.loggedIn = decoded
                 next()
             }
