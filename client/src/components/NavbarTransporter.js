@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { fetchTransporterById } from '../store/index'
 
 const NavbarTrans = (props) => {
-    const id = localStorage.getItem('id')
+    const id = localStorage.getItem('transporterId')
     const history = useHistory()
     const dispatch = useDispatch()
     const profile = useSelector((state) => state.transporter)
