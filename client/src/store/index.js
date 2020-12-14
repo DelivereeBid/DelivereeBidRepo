@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzg0OTkwMn0.30iqKE7HetBjJWQSDB-78W9SOgn7nPK-VOC0psykC_8"
+
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsYWxhQGdtYWlsLmNvbSIsImlhdCI6MTYwNzg3NDkxMH0.HxUdcbI--OPcgbRsUHdE4T1U0b4pQXhnoO3mYgH6-B8"
 const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
+
 
 const initialState = {
     dataShipper: [],
@@ -13,7 +15,8 @@ const initialState = {
     post: {},
     transporter: {},
     deal: {},
-    transporterId: {}
+    transporterId: {},
+    dataTransporter: []
 }
 
 export const fetchShippers = () => {
@@ -245,7 +248,7 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            console.log(data, '<<< ini data dari action')
+            // console.log(data, '<<< ini data dari action')
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
         .catch((err) => console.log(err, '<<< error dari action'))
@@ -269,10 +272,35 @@ export const setSignUp = (payload) => {
     }
 }
 
+export const fetchTransporter = () => {
+    console.log('masuk fetch action')
+    return (dispatch) => {
+        console.log('masuk dalem axios')
+        axios({
+            method: 'GET',
+            url: '/bid',
+            headers: {
+                access_token: tokenTransporter
+            }
+        })
+        .then(res => {
+            dispatch({
+                type: 'SET_DATA_TRANSPORTER',
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+}
+
 function reducer (state = initialState, action) {
     switch (action.type) {
         case 'SET_DATA_SHIPPER':
             return { ...state, dataShipper: action.payload}
+        case 'SET_DATA_TRANSPORTER':
+            return {...state, dataTransporter: action.payload}
         case 'SET_SHIPPER':
             return { ...state, shipper: action.payload}
         case 'SET_TRANSPORTER':
@@ -288,7 +316,7 @@ function reducer (state = initialState, action) {
         case 'SET_SHOW_EDIT':
             return { ...state, showEdit: action.payload, shipper: {}}
         case 'SET_TOKEN':
-        console.log(action.payload, '<<< ini dari reducer')
+        // console.log(action.payload, '<<< ini dari reducer')
             return {...state, access_token: action.payload}
         default:
             return state
