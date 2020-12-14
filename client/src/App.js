@@ -37,7 +37,7 @@ function App() {
           <Route exact path='/complaint'>
             <ComplaintPage/>
           </Route>
-          <Route exact path='/controlPage'>
+          <Route exact path='/controlPage/:id'>
             <ControlPage/>
           </Route>
           <Route exact path='/shipper-login'>
@@ -55,7 +55,7 @@ function App() {
           <Route path='/ratingPage'>
             <RatingPage/>
           </Route>
-          <Route path='/vechileInformation'>
+          <Route path='/vehicleInformation'>
             <VechileInformation/>
           </Route>
         </Switch>

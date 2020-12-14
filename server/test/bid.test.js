@@ -26,10 +26,12 @@ const bid_data2 = {
 let decoded = {};
 
 async function getToken() {
-  let userData = {email: 'anto@23232.com', password: 'alhamdu', username: 'admin'}
+  let userData = {email: 'anto@23232.com', 
+  password: 'alhamdu', username: 'admin'}
   await Shipper.create(userData)
       .then((res) => {
-          return Shipper.findOne({where:{email:userData.email}})
+          return Shipper.findOne({where:
+            {email:userData.email}})
       })
       .then((res) => {
           access_token = generateToken({
@@ -124,6 +126,7 @@ describe ("POST /BID" , () => {
         }
       });
   });
+
   it("400 Failed Post - should return error if From is empty string", (done) => {
     request(app)
       .post("/bid")
@@ -169,6 +172,27 @@ describe ("POST /BID" , () => {
       });
   });
   it("401 Failed Post - should return error if access_token is empty", (done) => {
+    request(app)
+      .post("/bid")
+      .send({
+        "product_name": 'product1',
+        "product_picture": 'product.png',
+        "description": 'product_desc',
+        "from": 'A',
+        "to": ''
+      })
+      .end((err, response) => {
+        if (err) {
+          throw err;
+        } else {
+          const { body, status } = response;
+          expect(status).toBe(401);
+          expect(body).toEqual(["Authentication failed"]);
+          done();
+        }
+      });
+  });
+  it("401 Failed Post - should return error if user is not authorized", (done) => {
     request(app)
       .post("/bid")
       .send({
@@ -247,20 +271,6 @@ describe ("GET /BID" , () => {
         }
       });
   });
-  it("401 Authentication Failed - should return error if access token is empty or invalid", (done) => {
-    request(app)
-      .get("/bid")
-      .end((err, response) => {
-        if (err) {
-          throw err;
-        } else {
-          const { body, status } = response;
-          expect(status).toBe(401);
-          expect(body).toEqual(["Authentication failed"])
-          done();
-        }
-      });
-  });
   it("200 Success GET by Id - should return value if request is valid", (done) => {
     request(app)
       .get(`/bid/${idBid}`)
@@ -279,7 +289,7 @@ describe ("GET /BID" , () => {
   });
   it("404 Error GET by Id - should return error if id is invalid", (done) => {
     request(app)
-      .get(`/bid/9999`)
+      .get(`/bid/5656575`)
       .set('access_token', access_token)
       .end((err, response) => {
         if (err) {
@@ -312,6 +322,7 @@ describe ("PUT /BID" , () => {
         }
       });
   });
+
   it("404 Error PUT - should respond error if id is invalid", (done) => {
     request(app)
       .put(`/bid/999`)
@@ -328,6 +339,30 @@ describe ("PUT /BID" , () => {
         }
       });
   });
+
+  it("400 Error PUT - should respond error if product name is empty", (done) => {
+    request(app)
+      .put(`/bid/${idBid}`)
+      .set('access_token', access_token)
+      .send({
+        "product_name": '',
+        "product_picture": 'product.png',
+        "description": 'product_desc',
+        "from": 'lajeddah',
+        "to": 'BukaPedia'
+      })
+      .end((err, response) => {
+        if (err) {
+          throw err;
+        } else {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toEqual(['Product name is required'])
+          done();
+        }
+      });
+  });
+
   it("401 Error PUT - should respond error if access token is invalid/unauthorized", (done) => {
     request(app)
       .put(`/bid/999`)
