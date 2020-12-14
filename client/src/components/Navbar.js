@@ -1,11 +1,28 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { fetchProfileShipper } from '../../src/store/index'
 
 const role = 'shipper'
 
 function Navbar (props) {
+  const history = useHistory()
+  const id = localStorage.getItem('shipperId')
+  const dispatch = useDispatch()
+  const profile = useSelector((state) => state.profile_shipper)
+
+  useEffect(() => {
+    dispatch(fetchProfileShipper(id))
+  }, [dispatch])
+
+  const signOut = () => {
+    localStorage.clear()
+    history.push('/')
+  }
 
     return (
+      <>
+      {JSON.stringify(profile)}
     <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <a className="navbar-brand" href="#"><Link to={role === 'shipper' ? '/shipper' : '/transporter'}>DeliverieeBid</Link></a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +55,9 @@ function Navbar (props) {
             <li className="nav-item">
               <a className="nav-link" href="#">Inbox</a>
             </li>
+            <li className="nav-item">
+              <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
+            </li>
           </ul>
           <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
@@ -45,6 +65,7 @@ function Navbar (props) {
           </form>
         </div>
       </nav>
+      </>
     )
 }
 
