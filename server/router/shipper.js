@@ -5,6 +5,7 @@ const {authenticationShipper} = require('../middlewares/auth')
 router.post("/register", upload.single('file'), ShipperController.register)
 router.post("/login", ShipperController.login)
 router.get("/", ShipperController.findAll)
+router.get("/:id", ShipperController.getById)
 router.put("/:id", authenticationShipper, ShipperController.updateShipper)
 
 

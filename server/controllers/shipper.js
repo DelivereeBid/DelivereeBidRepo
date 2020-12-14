@@ -1,4 +1,4 @@
-const {Shipper} = require('../models')
+const {Shipper, Bid} = require('../models')
 const {comparePassword} = require('../helper/bcrypt')
 const {generateToken} = require('../helper/jwt')
 
@@ -13,6 +13,20 @@ class ShipperController {
             res.status(200).json(shipper)
         })
         .catch(err => next(err))
+    }
+    static getById(req, res, next){
+        const {id} = req.params
+        Shipper.findByPk(id, {
+            attributes: {
+                exclude: ['password']
+            }
+        })
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            next(err)
+        })
     }
     static register(req, res, next){
         const {username,email,password, file} = req.body
