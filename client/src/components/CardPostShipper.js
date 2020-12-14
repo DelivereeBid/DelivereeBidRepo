@@ -45,16 +45,31 @@ function CardPostShipper(props) {
                        : <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: { shipper.Posts.length}</span>
                     }
 
+                        {shipper.Posts.length === 0
+                            ? (
+                                <div className="btn-group">
+                                    <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span className="sr-only">Toggle Dropdown</span>
+                                    </i>
+                                    <div className="dropdown-menu">
+                                        <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a>
+                                        <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
+                                    </div>
+                                </div>
+                            )
+                            : (
+                                <div className="btn-group"  style={{display: `${filterShipperPost.length !== 0 ? 'none' : ''}`}}>
+                                    <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span className="sr-only">Toggle Dropdown</span>
+                                    </i>
+                                    <div className="dropdown-menu">
+                                        {/* <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a> */}
+                                        <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
+                                    </div>
+                                </div>
+                            )
+                        }
 
-                        <div className="btn-group">
-                            <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span className="sr-only">Toggle Dropdown</span>
-                            </i>
-                            <div className="dropdown-menu">
-                                <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a>
-                                <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
-                            </div>
-                        </div>
                     </span>
                 </h4>
 

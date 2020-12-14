@@ -7,6 +7,13 @@ const err = require('./middlewares/errHandler')
 const upload = require('./middlewares/upload');
 const http = require("http").createServer(app);
 const io = require('socket.io')(http)
+const formatMessage = require('./utils/messages');
+const {
+    userJoin,
+    getCurrentUser,
+    userLeave,
+    getRoomUsers
+  } = require('./utils/users');
 
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
@@ -15,24 +22,52 @@ app.use(express.json())
 app.use(router)
 app.use(err)
 
+let rooms = []
+let isDuplicated = false
+let isSameUser = false
+let indexArr = 0
+let users = []
+
+const botName = 'DeliverieeBid Bot';
+
 io.on("connection", socket => {
     // socket.emit("your id", socket.id);
 
-    socket.on("your id", id => {
-        console.log(id, 'ini id dari server')
-        socket.emit("your id", id);
-    })
-    socket.on("your username", username => {
-        console.log(username, 'ini id dari server')
-        socket.emit("your username", username);
-    })
-    socket.on("send message", body => {
-        console.log(body, 'ini dari server')
-        io.emit("message", body)
-    })
+    //ALTERNATIVE 2 ==start==
+    socket.on('joinRoom', ({ username, room }) => {
+        const user = userJoin(socket.id, username, room);
+
+        socket.join(user.room);
+
+        // Welcome current user
+        socket.emit('message', formatMessage(botName, 'Welcome to DeliverieeBid!'));
+
+        // Broadcast when a user connects
+        socket.broadcast
+          .to(user.room)
+          .emit(
+            'message',
+            formatMessage(botName, `${user.username} has joined the chat`)
+          );
+
+        // Send users and room info
+        io.to(user.room).emit('roomUsers', {
+          room: user.room,
+          users: getRoomUsers(user.room)
+        });
+      });
+
+        // Listen for chatMessage
+        socket.on('chatMessage', msg => {
+            const user = getCurrentUser(socket.id);
+            // messagesAlt2.push(formatMessage(user.username, msg))
+            io.to(user.room).emit('message', formatMessage(user.username, msg));
+            // io.to(user.room).emit('message', messagesAlt2);
+        });
+
+    //ALTERNATIVE 2 ==end==
 })
 
-// app.listen(port, () => console.log(`server running: http://localhost:${port}`))
 
 http.listen(port, () => console.log(`server running: http://localhost:${port}`))
 

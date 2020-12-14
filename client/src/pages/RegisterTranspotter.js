@@ -7,12 +7,13 @@ import { setSignUp } from '../store'
 function RegisterTranspotter (props) {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [fileee, setFileee] = useState('');
   const [user, setUser] = useState ({
     username : '',
     email : '',
     password : '',
-    file : '',
-    vehicle: ''
+    vehicle: '',
+    file: ''
   }) 
 
   const changeInput = (e) => {
@@ -21,7 +22,15 @@ function RegisterTranspotter (props) {
     }
     newInput[e.target.name] = e.target.value
     setUser(newInput)
-    console.log(user, '<<< ini suer')
+  }
+
+  const changeInputFile = (e) => {
+    const newInput = {
+      ...user
+    }
+    setFileee(e.target)
+    newInput.file = e.target.files[0]
+    setUser(newInput)
   }
 
   const handleRegister = () => {
@@ -50,7 +59,7 @@ function RegisterTranspotter (props) {
               </div>
               <div class="form-group">
                 <label for="username">Picture</label>
-                <input onChange={(e) => changeInput(e)} type="file" name="file" class="form-control" />
+                <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
               </div>
               <div class="form-group">
                 <label for="vehicle">Vehicle</label>
