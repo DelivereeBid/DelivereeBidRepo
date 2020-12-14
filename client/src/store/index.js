@@ -51,7 +51,7 @@ export const fetchShippersById = (id) => {
       },
     })
       .then(({ data }) => {
-        // console.log(data, 'ini fetch id')
+        // console.log(data, "ini fetch id");
         dispatch({
           type: "SET_SHIPPER",
           payload: data[0],
@@ -59,6 +59,24 @@ export const fetchShippersById = (id) => {
       })
       .catch((err) => {
         console.log("Error:", err);
+      });
+  };
+};
+
+export const fetchTransporterById = (id) => {
+  return (dispatch) => {
+    axios({
+      url: `/transporter/${id}`,
+      method: "GET",
+    })
+      .then(({ data }) => {
+        dispatch({
+          type: "SET_TRANSPORTER",
+          payload: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -99,20 +117,20 @@ export const patchPostById = (id, payload) => {
 };
 
 export const patchTrackingLogById = (id, payload) => {
-    return (dispatch) => {
-      axios({
-        url: `/post/tracking/${id}`,
-        method: "PATCH",
-        data: payload,
+  return (dispatch) => {
+    axios({
+      url: `/post/tracking/${id}`,
+      method: "PATCH",
+      data: payload,
+    })
+      .then(({ data }) => {
+        console.log(data, "ini patch tracking log id");
       })
-        .then(({ data }) => {
-          console.log(data, "ini patch tracking log id");
-        })
-        .catch((err) => {
-          console.log("Error:", err);
-        });
-    };
+      .catch((err) => {
+        console.log("Error:", err);
+      });
   };
+};
 
 export const updateWalletShipper = (id, payload) => {
   return (dispatch) => {
