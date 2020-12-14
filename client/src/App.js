@@ -30,7 +30,7 @@ function App() {
           <Route exact path='/'>
             <HomePage/>
           </Route>
-          <Route exact path='/transporter/detailPost'>
+          <Route exact path='/transporter/:id'>
             <DetailPostShipper/>
           </Route>
           <Route exact path='/transporter/wallet'>
