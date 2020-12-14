@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import {setLogin} from '../store'
+import {setLogin, setLoginShipper} from '../store'
 
 function LoginShipper (props) {
   const history =useHistory()
@@ -15,7 +15,7 @@ function LoginShipper (props) {
     const payload = {
       email,password
     }
-    dispatch(setLogin(payload))
+    dispatch(setLoginShipper(payload))
     history.push('/shipper')
   }
 

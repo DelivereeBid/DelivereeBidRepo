@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
 
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzg0OTkwMn0.30iqKE7HetBjJWQSDB-78W9SOgn7nPK-VOC0psykC_8"
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzkxNjk2NH0.3iwuFyqv5_x6W-cvFJVGfySUN4EbrIES26SXLhRSKGg"
 const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
 
 
@@ -247,7 +247,25 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('transporter_token', data.access_token)
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+        })
+        .catch((err) => console.log(err.response, '<<< error dari action'))
+    }
+}
+
+export const setLoginShipper = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/shipper/login',
+            method: 'POST',
+            data: {
+                email: payload.email,
+                password: payload.password
+            }
+        })
+        .then(({data}) => {
+            localStorage.setItem('shipper_token', data.access_token)
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
         .catch((err) => console.log(err.response, '<<< error dari action'))
@@ -285,6 +303,28 @@ export const setSignUp = (payload) => {
     return (dispatch) => {
         axios({
             url: '/transporter/register',
+            method: 'POST',
+            data: formData
+        })
+        .then(({data}) => {
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+            console.log(data, 'sukses')
+        })
+        .catch((err) => {
+            console.log(err, '<<error')
+        })
+    }
+}
+
+export const setSignUpShipper = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('username', payload.username)
+    formData.append('email', payload.email)
+    formData.append('password', payload.password)
+    return (dispatch) => {
+        axios({
+            url: '/shipper/register',
             method: 'POST',
             data: formData
         })

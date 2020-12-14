@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import { setSignUp } from '../store'
+import { setSignUp, setSignUpShipper } from '../store'
 
 function RegisterShipper (props) {
   const history = useHistory()
@@ -23,9 +23,18 @@ function RegisterShipper (props) {
     console.log(user, '<<< ini suer')
   }
 
+  const changeInputFile = (e) => {
+    const newInput = {
+      ...user
+    }
+    newInput.file = e.target.files[0]
+    setUser(newInput)
+    console.log(user, '<<< ini suer')
+  }
+
   const handleRegister = (e) => {
     e.preventDefault()
-    dispatch(setSignUp(user))
+    dispatch(setSignUpShipper(user))
     history.push('/shipper-login')
   }
 
@@ -50,7 +59,7 @@ function RegisterShipper (props) {
               </div>
               <div class="form-group">
                 <label for="username">Picture</label>
-                <input onChange={(e) => changeInput(e)} type="file" name="file" class="form-control" />
+                <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
               </div>
               {/* <div className="form-group">
               <label for="text">Role</label>
