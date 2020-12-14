@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from '../axios/axiosInstance'
 
-const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzg0OTkwMn0.30iqKE7HetBjJWQSDB-78W9SOgn7nPK-VOC0psykC_8"
+const tokenShipper = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsImlhdCI6MTYwNzkxNjk2NH0.3iwuFyqv5_x6W-cvFJVGfySUN4EbrIES26SXLhRSKGg"
 const tokenTransporter = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ3YXdhbkBtYWlsLmNvbSIsInVzZXJuYW1lIjoiZGllYiIsInZlaGljbGUiOiJnZXJtbyIsImlhdCI6MTYwNzg0OTgwNn0.bMEURS1OIOftuSuzJycJhVsq0apyqD_prCml96Ga_UI'
 
 
@@ -16,7 +16,8 @@ const initialState = {
     transporter: {},
     deal: {},
     transporterId: {},
-    dataTransporter: []
+    dataTransporter: [],
+    profileTransporter: []
 }
 
 export const fetchShippers = () => {
@@ -236,9 +237,7 @@ export const postShipperRemove = (id) => {
   }
 
 export const setLogin = (payload) => {
-    // console.log('masuk 102')
     return (dispatch) => {
-        // console.log('msuk action')
         axios({
             url: '/transporter/login',
             method: 'POST',
@@ -248,12 +247,51 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            // console.log(data, '<<< ini data dari action')
+            localStorage.setItem('transporter_token', data.access_token)
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
-        .catch((err) => console.log(err, '<<< error dari action'))
+        .catch((err) => console.log(err.response, '<<< error dari action'))
     }
 }
+
+export const setLoginShipper = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/shipper/login',
+            method: 'POST',
+            data: {
+                email: payload.email,
+                password: payload.password
+            }
+        })
+        .then(({data}) => {
+            localStorage.setItem('shipper_token', data.access_token)
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+        })
+        .catch((err) => console.log(err.response, '<<< error dari action'))
+    }
+}
+
+export const setBid = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/post',
+            method: 'POST',
+            headers: {
+                access_token: tokenTransporter
+            },
+            data: {
+                BidId: payload.BidId,
+                price: payload.price
+            }
+        })
+        .then(({data}) => {
+            console.log(data, '<<<< dari setbid action')
+        })
+        .catch((err) => console.log(err, '<<< eror setBid action'))
+    }
+}
+
 
 export const setSignUp = (payload) => {
     const formData = new FormData();
@@ -278,10 +316,32 @@ export const setSignUp = (payload) => {
     }
 }
 
-export const fetchTransporter = () => {
-    console.log('masuk fetch action')
+export const setSignUpShipper = (payload) => {
+    const formData = new FormData();
+    formData.append('file',payload.file)
+    formData.append('username', payload.username)
+    formData.append('email', payload.email)
+    formData.append('password', payload.password)
     return (dispatch) => {
-        console.log('masuk dalem axios')
+        axios({
+            url: '/shipper/register',
+            method: 'POST',
+            data: formData
+        })
+        .then(({data}) => {
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+            console.log(data, 'sukses')
+        })
+        .catch((err) => {
+            console.log(err, '<<error')
+        })
+    }
+}
+
+export const fetchTransporter = () => {
+    // console.log('masuk fetch action')
+    return (dispatch) => {
+        // console.log('masuk dalem axios')
         axios({
             method: 'GET',
             url: '/bid',
@@ -301,10 +361,35 @@ export const fetchTransporter = () => {
     }
 }
 
+export const fetchProfileTransporter = () => {
+    return (dispatch) => {
+        axios({
+            method: 'GET',
+            url: '/transporter',
+            headers: {
+                access_token: tokenTransporter
+            }
+        })
+        .then(res => {
+            dispatch({
+                type: 'SET_PROFILE_TRANSPORTER',
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+}
+
+
+
 function reducer (state = initialState, action) {
     switch (action.type) {
         case 'SET_DATA_SHIPPER':
             return { ...state, dataShipper: action.payload}
+        case 'SET_PROFILE_TRANSPORTER':
+            return {...state, profile_picture: action.payload}
         case 'SET_DATA_TRANSPORTER':
             return {...state, dataTransporter: action.payload}
         case 'SET_SHIPPER':

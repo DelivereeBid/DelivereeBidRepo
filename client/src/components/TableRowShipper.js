@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { Button } from 'react-bootstrap'
 
 function TableRowShipper(props) {
     const {bidder, postId, shipperUser} = props
@@ -50,7 +51,8 @@ function TableRowShipper(props) {
     }
 
     return (
-        <tr onClick={(e) => selectedBid(e, bidder)} style={{cursor:'pointer', display: `${bidder.status === 'rejected' ? 'none' : ''}`}}>
+        <tr style={{cursor:'pointer', display: `${bidder.status === 'rejected' ? 'none' : ''}`}}>
+            <Button onClick={(e) => selectedBid(e, bidder)} variant="warning">Click</Button>
             <th scope="row">{bidder.id}</th>
             <td>{bidder.name}</td>
             <td>{bidder.vehicle}</td>
