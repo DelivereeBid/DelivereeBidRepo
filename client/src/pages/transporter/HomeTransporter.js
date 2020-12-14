@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchTransporter, fetchTransporterById } from "../../store/index";
+import { NavbarTrans} from '../../components'
+
 
 function HomeTransporter(props) {
   const history = useHistory();
@@ -27,6 +29,7 @@ function HomeTransporter(props) {
 
   return (
     <>
+    <NavbarTrans/>
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">

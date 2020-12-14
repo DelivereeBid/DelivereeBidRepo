@@ -18,6 +18,8 @@ const initialState = {
   transporter: {},
   deal: {},
   transporterId: {},
+  shipperId: {},
+  profile_shipper: {},
   dataTransporter: [],
   profileTransporter: [],
 };
@@ -82,6 +84,28 @@ export const fetchTransporterById = (id) => {
       });
   };
 };
+
+export const fetchProfileShipper = (id) => {
+  console.log(id, 'masuk')
+  return (dispatch) => {
+    axios({
+      url: `/shipper/${id}`,
+      method: "GET",
+    })
+      .then(({ data }) => {
+        console.log(data, "<<< ini data ")
+        dispatch({
+          type: "SET_PROFILE_SHIPPER",
+          payload: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+
 
 export const fetchPostById = (id) => {
   return (dispatch) => {
@@ -300,6 +324,7 @@ export const setLoginShipper = (payload) => {
       .then(({ data }) => {
         localStorage.setItem("shipper_token", data.access_token);
         dispatch({ type: "SET_SHIPPER_TOKEN", payload: data.access_token });
+        dispatch({ type: "SET_SHIPPER_ID", payload: data.id });
       })
       .catch((err) => console.log(err.response, "<<< error dari action"));
   };
@@ -418,8 +443,8 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case "SET_DATA_SHIPPER":
       return { ...state, dataShipper: action.payload };
-    case "SET_PROFILE_TRANSPORTER":
-      return { ...state, profile_picture: action.payload };
+    case "SET_PROFILE_SHIPPER":
+      return { ...state, profile_shipper: action.payload };
     case "SET_DATA_TRANSPORTER":
       return { ...state, dataTransporter: action.payload };
     case "SET_SHIPPER":
@@ -429,6 +454,9 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER_ID":
       localStorage.setItem("transporterId", action.payload);
       return { ...state, transporterId: action.payload };
+    case "SET_SHIPPER_ID":
+      localStorage.setItem("shipperId", action.payload);
+      return { ...state, shipperId: action.payload };
     case "SET_POST":
       return { ...state, post: action.payload };
     case "SET_DEAL":
