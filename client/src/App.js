@@ -38,10 +38,14 @@ function App() {
           <Route exact path="/transporter/deliveryStatus">
             <DeliveryStatus />
           </Route>
-          <PrivateRoute auth={credentialsHandler()} component={ComplaintPage} path="/complaint" exact redirect='/'>
-          </PrivateRoute>
-          <PrivateRoute auth={credentialsHandler()} component={ControlPage} path='/controlPage/:id' redirect='/'>
-          </PrivateRoute>
+
+          <Route exact path='/complaint'>
+            <ComplaintPage/>
+          </Route>
+          <Route exact path='/controlPage/:id'>
+            <ControlPage/>
+          </Route>
+
           <Route exact path='/shipper-login'>
             <LoginShipper/>
           </Route>
