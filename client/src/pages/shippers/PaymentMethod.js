@@ -51,7 +51,6 @@ function PaymentMethod (props) {
 
 
         dispatch(patchPostById(+arrId[1], payloadUpdatePost))
-
         history.push(`/controlPage/shipper_${shipper.Shipper.username}_${shipper.Shipper.id}_${shipper.Shipper.email}`)
     }
 
