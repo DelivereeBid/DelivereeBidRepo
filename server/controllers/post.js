@@ -122,16 +122,15 @@ class PostController {
       const filterBid = postList.filter((el) => el.BidId === bidId[0]);
 
       const filterId = filterBid.filter((el) => el.id !== id)
-
-      filterId.forEach((el) => {
-        queryInterface.bulkUpdate("Posts", { status: "rejected" });
-      });
+      const idNonTarget = filterId.map(el => el.BidId)
+      
+      const patchNonTarget = await Post.update({status: 'rejected'}, {where: {BidId: idNonTarget}})
 
       const patchPost = await Post.update(
         { status },
         {
           where: {
-            id: id,
+            id: id, 
           },
         }
       );
