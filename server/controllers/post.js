@@ -146,6 +146,56 @@ class PostController {
     }
   }
 
+  static async patchTrackingLog(req, res, next) {
+    const { id } = req.params;
+    const { tracking_log } = req.body;
+
+    try {
+      const postList = await Post.findAll({
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: Bid,
+            required: true,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        ],
+        where: { id: id },
+      });
+      const bidId = postList.map((el) => el.BidId);
+
+      const filterBid = postList.filter((el) => el.BidId === bidId[0]);
+
+      const filterId = filterBid.filter((el) => el.id !== id);
+      const idNonTarget = filterId.map((el) => el.BidId);
+
+      const patchNonTarget = await Post.update(
+        { tracking_log: "rejected" },
+        { where: { BidId: idNonTarget } }
+      );
+
+      const patchPost = await Post.update(
+        { tracking_log },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      if (patchPost[0] === 0) throw { msg: "Failed update post", code: 400 };
+      else {
+        res.status(200).json({ msg: "Success update post" });
+      }
+    } catch (err) {
+        console.log(err);
+      next(err);
+    }
+  }
+
   static deletePost(req, res, next) {
     const { id } = req.params;
     Post.destroy({

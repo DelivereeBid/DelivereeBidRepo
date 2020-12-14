@@ -98,6 +98,22 @@ export const patchPostById = (id, payload) => {
   };
 };
 
+export const patchTrackingLogById = (id, payload) => {
+    return (dispatch) => {
+      axios({
+        url: `/post/tracking/${id}`,
+        method: "PATCH",
+        data: payload,
+      })
+        .then(({ data }) => {
+          console.log(data, "ini patch tracking log id");
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
+    };
+  };
+
 export const updateWalletShipper = (id, payload) => {
   return (dispatch) => {
     axios({

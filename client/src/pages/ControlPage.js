@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {Navbar} from '../components'
 import io from "socket.io-client";
 import { useHistory, useParams } from 'react-router-dom'
-import {transporterById} from '../store/index.js'
+import {transporterById, patchTrackingLogById} from '../store/index.js'
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
@@ -11,8 +11,10 @@ import {
   } from 'react-places-autocomplete';
 import './controlPage.css'
 import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
 function ControlPage (props) {
+    const dispatch = useDispatch();
     const [yourID, setYourID] = useState();
     const [usernameId, setUsername] = useState();
     const [messages, setMessages] = useState([]);
@@ -91,6 +93,12 @@ function ControlPage (props) {
             })
             .catch(error => console.error('Error', error));
     };
+
+    const handleSubmitLoc = e => {
+        e.preventDefault();
+        const city = address.split(',')
+        dispatch(patchTrackingLogById(userId, {tracking_log: city[0]}))
+    }
 
     return (
         <>
@@ -242,7 +250,7 @@ function ControlPage (props) {
                                                     </div>
                                                     )}
                                             </PlacesAutocomplete>
-                                            <Button className="px-1 p-0 ml-1" style={{height: '30px'}} variant="primary">Update Location</Button>
+                                            <Button onClick={handleSubmitLoc} className="px-1 p-0 ml-1" style={{height: '30px'}} variant="primary">Update Location</Button>
                                         </div>
                                     </form>
                                 </div>
