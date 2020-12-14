@@ -5,7 +5,6 @@ function LoginTransporter (props) {
 
     return (
         <>
-            <h1>ini login</h1>
             <LoginPage/>
         </>
     )

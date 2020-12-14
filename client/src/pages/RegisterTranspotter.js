@@ -22,7 +22,6 @@ function RegisterTranspotter (props) {
     }
     newInput[e.target.name] = e.target.value
     setUser(newInput)
-    console.log(user, '<<< ini suer')
   }
 
   const changeInputFile = (e) => {
@@ -31,7 +30,6 @@ function RegisterTranspotter (props) {
     }
     setFileee(e.target)
     newInput.file = e.target.files[0]
-    console.log(newInput, '<<< file')
     setUser(newInput)
   }
 

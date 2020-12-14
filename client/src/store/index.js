@@ -236,9 +236,7 @@ export const postShipperRemove = (id) => {
   }
 
 export const setLogin = (payload) => {
-    // console.log('masuk 102')
     return (dispatch) => {
-        // console.log('msuk action')
         axios({
             url: '/transporter/login',
             method: 'POST',
@@ -248,10 +246,10 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            // console.log(data, '<<< ini data dari action')
+            localStorage.setItem('access_token', data.access_token)
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
-        .catch((err) => console.log(err, '<<< error dari action'))
+        .catch((err) => console.log(err.response, '<<< error dari action'))
     }
 }
 
