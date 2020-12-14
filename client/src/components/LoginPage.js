@@ -11,14 +11,16 @@ function LoginPage(props) {
   const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const payload = {
-      email,password
-    }
-    dispatch(setLogin(payload))
-    history.push('/transporter')
-  }
-
+      email,
+      password,
+    };
+    dispatch(setLogin(payload));
+    setTimeout(() => {
+      history.push("/transporter");
+    }, 1000);
+  };
 
   const handleRegister = () => {
     history.push("/transporter-register");
