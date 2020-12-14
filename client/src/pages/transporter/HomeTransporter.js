@@ -1,20 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchTransporter } from "../../store/index";
+import { fetchTransporter, fetchTransporterById } from "../../store/index";
 
 function HomeTransporter(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const transporter = useSelector((state) => state.dataTransporter);
+  const trucking = useSelector((state) => state.transporter);
   const transporterId = +localStorage.getItem("transporterId");
 
   useEffect(() => {
     dispatch(fetchTransporter());
+    dispatch(fetchTransporterById(transporterId));
   }, [dispatch]);
 
   const changePage = (id) => {
     history.push(`/transporter/${id}`);
+  };
+
+  const toControlPage = () => {
+    history.push(
+      `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}`
+    );
   };
 
   return (
@@ -38,7 +46,16 @@ function HomeTransporter(props) {
                 {el.Posts.some(
                   (post) => post.TransporterId === transporterId
                 ) ? (
-                  ""
+                  el.Posts.some((post) => post.status === "accepted") ? (
+                    <button
+                      onClick={() => toControlPage()}
+                      className="btn btn-primary"
+                    >
+                      Start
+                    </button>
+                  ) : (
+                    ""
+                  )
                 ) : (
                   <button
                     onClick={() => changePage(el.id)}
