@@ -16,7 +16,8 @@ const initialState = {
     transporter: {},
     deal: {},
     transporterId: {},
-    dataTransporter: []
+    dataTransporter: [],
+    profileTransporter: []
 }
 
 export const fetchShippers = () => {
@@ -271,6 +272,27 @@ export const setLoginShipper = (payload) => {
     }
 }
 
+export const setBid = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/post',
+            method: 'POST',
+            headers: {
+                access_token: tokenTransporter
+            },
+            data: {
+                BidId: payload.BidId,
+                price: payload.price
+            }
+        })
+        .then(({data}) => {
+            console.log(data, '<<<< dari setbid action')
+        })
+        .catch((err) => console.log(err, '<<< eror setBid action'))
+    }
+}
+
+
 export const setSignUp = (payload) => {
     const formData = new FormData();
     formData.append('file',payload.file)
@@ -317,9 +339,9 @@ export const setSignUpShipper = (payload) => {
 }
 
 export const fetchTransporter = () => {
-    console.log('masuk fetch action')
+    // console.log('masuk fetch action')
     return (dispatch) => {
-        console.log('masuk dalem axios')
+        // console.log('masuk dalem axios')
         axios({
             method: 'GET',
             url: '/bid',
@@ -339,10 +361,35 @@ export const fetchTransporter = () => {
     }
 }
 
+export const fetchProfileTransporter = () => {
+    return (dispatch) => {
+        axios({
+            method: 'GET',
+            url: '/transporter',
+            headers: {
+                access_token: tokenTransporter
+            }
+        })
+        .then(res => {
+            dispatch({
+                type: 'SET_PROFILE_TRANSPORTER',
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+}
+
+
+
 function reducer (state = initialState, action) {
     switch (action.type) {
         case 'SET_DATA_SHIPPER':
             return { ...state, dataShipper: action.payload}
+        case 'SET_PROFILE_TRANSPORTER':
+            return {...state, profile_picture: action.payload}
         case 'SET_DATA_TRANSPORTER':
             return {...state, dataTransporter: action.payload}
         case 'SET_SHIPPER':
