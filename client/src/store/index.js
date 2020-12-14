@@ -5,7 +5,6 @@ import axios from '../axios/axiosInstance'
 const tokenShipper = localStorage.getItem('shipper_token')
 const tokenTransporter = localStorage.getItem('transporter_token')
 
-
 const initialState = {
     dataShipper: [],
     show: false,
