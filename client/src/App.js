@@ -1,23 +1,21 @@
 import React from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Switch, Route, Link  } from 'react-router-dom'
 import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
 import './App.css'
+import PrivateRoute from './routers/PrivateRoute'
 
 function App() {
   return (
     <Provider store={store}>
       <Switch>
-          <Route path='/shipper'>
-            <HomeShipper/>
-          </Route>
-          <Route exact path='/payment/:id'>
-            <PaymentMethod/>
-          </Route>
-          <Route exact path='/transporter'>
-            <HomeTransporter/>
-          </Route>
+          <PrivateRoute component={HomeShipper} path='/shipper' redirect='/shipper-login'>
+          </PrivateRoute>
+          <PrivateRoute component={PaymentMethod} exact path='/payment/:id' redirect='/'>
+          </PrivateRoute>
+          <PrivateRoute component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
+          </PrivateRoute>
           <Route exact path='/'>
             <HomePage/>
           </Route>
@@ -30,12 +28,10 @@ function App() {
           <Route exact path="/transporter/deliveryStatus">
             <DeliveryStatus />
           </Route>
-          <Route exact path='/complaint'>
-            <ComplaintPage/>
-          </Route>
-          <Route exact path='/controlPage'>
-            <ControlPage/>
-          </Route>
+          <PrivateRoute component={ComplaintPage} path="/complaint" exact redirect='/'>
+          </PrivateRoute>
+          <PrivateRoute component={ControlPage} path='/controlPage' redirect='/'>
+          </PrivateRoute>
           <Route exact path='/shipper-login'>
             <LoginShipper/>
           </Route>
@@ -48,12 +44,10 @@ function App() {
           <Route path='/transporter-register'>
             <RegisterTranspotter/>
           </Route>
-          <Route path='/ratingPage'>
-            <RatingPage/>
-          </Route>
-          <Route path='/vechileInformation'>
-            <VechileInformation/>
-          </Route>
+          <PrivateRoute component={RatingPage} path='/ratingPage' redirect='/'>
+          </PrivateRoute>
+          <PrivateRoute component={VechileInformation} path='/vechileInformation' redirect='/'>
+          </PrivateRoute>
         </Switch>
     </Provider>
   );
