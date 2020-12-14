@@ -45,6 +45,7 @@ class PostController {
       },
     })
       .then((post) => {
+        console.log(post, "poszi");
         if (post.length === 0) {
           throw { msg: "Post not found", code: 404 };
         } else {
@@ -99,7 +100,6 @@ class PostController {
   static async patchPost(req, res, next) {
     const { id } = req.params;
     const { status } = req.body;
-    console.log(status, "<<<<<<<<<<<<<<<<<<<<<<<<<");
 
     try {
       const postList = await Post.findAll({
@@ -115,13 +115,19 @@ class PostController {
             },
           },
         ],
+        where: { id: id },
       });
+      const bidId = postList.map((el) => el.BidId);
 
-      const filterPost = postList.filter((el) => el.id !== id);
+      const filterBid = postList.filter((el) => el.BidId === bidId[0]);
 
-      filterPost.forEach((el) => {
-        queryInterface.bulkUpdate("Posts", { status: "rejected" });
-      });
+      const filterId = filterBid.filter((el) => el.id !== id);
+      const idNonTarget = filterId.map((el) => el.BidId);
+
+      const patchNonTarget = await Post.update(
+        { status: "rejected" },
+        { where: { BidId: idNonTarget } }
+      );
 
       const patchPost = await Post.update(
         { status },
