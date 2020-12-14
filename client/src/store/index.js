@@ -409,7 +409,9 @@ function reducer (state = initialState, action) {
             return { ...state, showEdit: action.payload, shipper: {}}
         case 'SET_TRANSPORTER_TOKEN':
         // console.log(action.payload, '<<< ini dari reducer')
-            return {...state, access_token: action.payload}
+            return {...state, transporter_token: action.payload}
+        case 'SET_SHIPPER_TOKEN':
+            return {...state, shipper_token: action.payload}
         default:
             return state
     }

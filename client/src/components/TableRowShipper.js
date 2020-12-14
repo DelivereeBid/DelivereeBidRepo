@@ -51,8 +51,7 @@ function TableRowShipper(props) {
     }
 
     return (
-        <tr style={{cursor:'pointer', display: `${bidder.status === 'rejected' ? 'none' : ''}`}}>
-            <Button onClick={(e) => selectedBid(e, bidder)} variant="warning">Click</Button>
+        <tr onClick={(e) => selectedBid(e, bidder)} style={{cursor:'pointer', display: `${bidder.status === 'rejected' ? 'none' : ''}`}}>
             <th scope="row">{bidder.id}</th>
             <td>{bidder.name}</td>
             <td>{bidder.vehicle}</td>
