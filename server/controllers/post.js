@@ -1,6 +1,4 @@
 const { Bid, Post, Transporter } = require("../models");
-const { sequelize } = require("../models/index");
-const { queryInterface } = sequelize;
 
 class PostController {
   static findAll(req, res, next) {

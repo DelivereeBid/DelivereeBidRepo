@@ -8,9 +8,10 @@ function CardPostShipper(props) {
     const {shipper} = props
     const showEdit = useSelector((state) => state.showEdit)
     const history = useHistory()
+    
+
 
     const filterShipperPost = shipper.Posts.filter(el => el.status === 'accepted')
-    console.log(filterShipperPost, 'filter')
 
     const handleShow = (e, id) => {
         e.preventDefault()
