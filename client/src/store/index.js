@@ -246,7 +246,25 @@ export const setLogin = (payload) => {
             }
         })
         .then(({data}) => {
-            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('transporter_token', data.access_token)
+            dispatch({type: 'SET_TOKEN', payload: data.access_token})
+        })
+        .catch((err) => console.log(err.response, '<<< error dari action'))
+    }
+}
+
+export const setLoginShipper = (payload) => {
+    return (dispatch) => {
+        axios({
+            url: '/shipper/login',
+            method: 'POST',
+            data: {
+                email: payload.email,
+                password: payload.password
+            }
+        })
+        .then(({data}) => {
+            localStorage.setItem('shipper_token', data.access_token)
             dispatch({type: 'SET_TOKEN', payload: data.access_token})
         })
         .catch((err) => console.log(err.response, '<<< error dari action'))

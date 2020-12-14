@@ -7,14 +7,25 @@ import './App.css'
 import PrivateRoute from './routers/PrivateRoute'
 
 function App() {
+  let shipper_token = localStorage.getItem('shipper_token');
+  let transporter_token = localStorage.getItem('transporter_token');
+
+  function credentialsHandler () {
+    if(shipper_token) {
+      return 'shipper_token'
+    } else {
+      return 'transporter_token'
+    }
+  }
+
   return (
     <Provider store={store}>
       <Switch>
-          <PrivateRoute component={HomeShipper} path='/shipper' redirect='/shipper-login'>
+          <PrivateRoute auth="shipper_token" component={HomeShipper} path='/shipper' redirect='/shipper-login'>
           </PrivateRoute>
-          <PrivateRoute component={PaymentMethod} exact path='/payment/:id' redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={PaymentMethod} exact path='/payment/:id' redirect='/'>
           </PrivateRoute>
-          <PrivateRoute component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
+          <PrivateRoute auth="transporter_token" component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
           </PrivateRoute>
           <Route exact path='/'>
             <HomePage/>
@@ -28,9 +39,9 @@ function App() {
           <Route exact path="/transporter/deliveryStatus">
             <DeliveryStatus />
           </Route>
-          <PrivateRoute component={ComplaintPage} path="/complaint" exact redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={ComplaintPage} path="/complaint" exact redirect='/'>
           </PrivateRoute>
-          <PrivateRoute component={ControlPage} path='/controlPage' redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={ControlPage} path='/controlPage' redirect='/'>
           </PrivateRoute>
           <Route exact path='/shipper-login'>
             <LoginShipper/>
@@ -44,9 +55,9 @@ function App() {
           <Route path='/transporter-register'>
             <RegisterTranspotter/>
           </Route>
-          <PrivateRoute component={RatingPage} path='/ratingPage' redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={RatingPage} path='/ratingPage' redirect='/'>
           </PrivateRoute>
-          <PrivateRoute component={VechileInformation} path='/vechileInformation' redirect='/'>
+          <PrivateRoute auth={credentialsHandler()} component={VechileInformation} path='/vechileInformation' redirect='/'>
           </PrivateRoute>
         </Switch>
     </Provider>

@@ -5,12 +5,13 @@ const  PrivateRoute = ({
         component,
         path,
         exact,
-        redirect
+        redirect,
+        auth
 }) => {
 
     function credentialsValidation () {
         let result = false;
-        const access_token = localStorage.getItem('access_token');
+        const access_token = localStorage.getItem(auth);
         access_token ? result = true : result = false;
         return result;
     }
