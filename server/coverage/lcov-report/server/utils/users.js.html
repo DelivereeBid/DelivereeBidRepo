@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for server/middlewares/errHandler.js</title>
+    <title>Code coverage report for server/utils/users.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/middlewares</a> errHandler.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/utils</a> users.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/25</span>
+                <span class='fraction'>2/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.64% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/11</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/25</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,79 +93,79 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">function errHandler(err, req, res, next){
-    let code = err.code || 500
-    let msg = err.msg || 'Internal server error'
-    let errors = []
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const users = [];
 &nbsp;
-    switch(err.name){
-        case 'SequelizeValidationError':
-            err.errors.forEach(el =&gt; {
-                <span class="missing-if-branch" title="else path not taken" >E</span>if(el.message) {
-                    errors.push(el.message)
-                }
-            })
-            code = 400
-            msg = errors.join(', ')
-            break;
-<span class="branch-1 cbranch-no" title="branch not covered" >        case 'SequelizeUniqueConstraintError':</span>
-<span class="cstat-no" title="statement not covered" >            code = 400</span>
-<span class="cstat-no" title="statement not covered" >            errors.push("Email must be unique")</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-<span class="branch-2 cbranch-no" title="branch not covered" >        case 'SequelizeDatabaseError':</span>
-<span class="cstat-no" title="statement not covered" >            code = 400;</span>
-<span class="cstat-no" title="statement not covered" >            errors.push("Internal server error")</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-<span class="branch-3 cbranch-no" title="branch not covered" >        case 'SequelizeConnectionError':</span>
-<span class="cstat-no" title="statement not covered" >            code = 400;</span>
-<span class="cstat-no" title="statement not covered" >            errors.push("Connection failed")</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-        default:
-            errors.push(err.msg)
-            code = err.code
-            break;
-    }
-    console.log(errors)
-    res.status(code).json(errors)
+// Join user to chat
+function <span class="fstat-no" title="function not covered" >userJoin(</span>id, username, room) {
+  const user = <span class="cstat-no" title="statement not covered" >{ id, username, room };</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  users.push(user);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return user;</span>
 }
 &nbsp;
-module.exports = errHandler;</pre></td></tr></table></pre>
+// Get current user
+function <span class="fstat-no" title="function not covered" >getCurrentUser(</span>id) {
+<span class="cstat-no" title="statement not covered" >  return users.find(<span class="fstat-no" title="function not covered" >us</span>er =&gt; <span class="cstat-no" title="statement not covered" >user.id === id)</span>;</span>
+}
+&nbsp;
+// User leaves chat
+function <span class="fstat-no" title="function not covered" >userLeave(</span>id) {
+  const index = <span class="cstat-no" title="statement not covered" >users.findIndex(<span class="fstat-no" title="function not covered" >us</span>er =&gt; <span class="cstat-no" title="statement not covered" >user.id === id)</span>;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (index !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >    return users.splice(index, 1)[0];</span>
+  }
+}
+&nbsp;
+// Get room users
+function <span class="fstat-no" title="function not covered" >getRoomUsers(</span>room) {
+<span class="cstat-no" title="statement not covered" >  return users.filter(<span class="fstat-no" title="function not covered" >us</span>er =&gt; <span class="cstat-no" title="statement not covered" >user.room === room)</span>;</span>
+}
+&nbsp;
+module.exports = {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
