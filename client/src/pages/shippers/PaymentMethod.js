@@ -48,9 +48,14 @@ function PaymentMethod (props) {
         const payloadUpdatePost = {
             status: 'accepted'
         }
+        dispatch({
+            type: "SET_BID_ID_POST_ID",
+            payload: post[0],
+        })
 
 
         dispatch(patchPostById(+arrId[1], payloadUpdatePost))
+
 
         history.push(`/controlPage/shipper_${shipper.Shipper.username}_${shipper.Shipper.id}_${shipper.Shipper.email}_${+arrId[2]}`)
     }

@@ -23,9 +23,18 @@ function HomeTransporter(props) {
     history.push(`/transporter/${id}`);
   };
 
-  const toControlPage = (ShipperId) => {
+  const toControlPage = (ShipperId, postId, bidId) => {
+    // const payload = {
+    //   BidId: bidId,
+    //   id: postId
+    // }
+
+    // dispatch({
+    //   type: "SET_BID_ID_POST_ID",
+    //   payload: payload,
+    // })
     history.push(
-      `/controlPage/transporter_${trucking.username}_${ShipperId}_${trucking.email}_${trucking.id}`
+      `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
   };
 
