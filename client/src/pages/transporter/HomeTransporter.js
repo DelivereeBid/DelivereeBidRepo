@@ -12,29 +12,40 @@ function HomeTransporter(props) {
   const trucking = useSelector((state) => state.transporter);
   const transporterId = +localStorage.getItem("transporterId");
   console.log(transporter, 'tra');
+  console.log(transporter, 'transporter', trucking, 'trucking', transporterId, 'transporterId')
+
   useEffect(() => {
     dispatch(fetchTransporter());
     dispatch(fetchTransporterById(transporterId));
   }, [dispatch]);
-  
+
   const changePage = (id) => {
     history.push(`/transporter/${id}`);
   };
-  
-  const toControlPage = (ShipperId) => {
+
+  const toControlPage = (ShipperId, postId, bidId) => {
+    // const payload = {
+    //   BidId: bidId,
+    //   id: postId
+    // }
+
+    // dispatch({
+    //   type: "SET_BID_ID_POST_ID",
+    //   payload: payload,
+    // })
     history.push(
       `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
   };
 
-  // const filterBid = transporter.filter((el) => {
-  //   return el.id == 
+    // const filterBid = transporter.filter((el) => {
+  //   return el.id ==
   // })
 
   // console.log(filterBid, 'feltier')
   return (
     <>
-    <NavbarTrans/>
+      <NavbarTrans/>
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">

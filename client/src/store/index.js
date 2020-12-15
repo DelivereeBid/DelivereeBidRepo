@@ -20,6 +20,8 @@ const initialState = {
   profile_shipper: {},
   dataTransporter: [],
   profileTransporter: [],
+  postId: 0,
+  bidId: 0
 };
 
 export const fetchShippers = () => {
@@ -185,7 +187,7 @@ export const transporterById = (id) => {
         console.log(data, "dataById");
         dispatch({
           type: "SET_TRANSPORTER_ID",
-          payload: data.id,
+          payload: data,
         });
       })
       .catch((err) => {
@@ -450,11 +452,16 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER":
       return { ...state, transporter: action.payload };
     case "SET_TRANSPORTER_ID":
-      localStorage.setItem("transporterId", action.payload);
+      localStorage.setItem("transporterId", action.payload.id);
       return { ...state, transporterId: action.payload };
     case "SET_SHIPPER_ID":
       localStorage.setItem("shipperId", action.payload);
       return { ...state, shipperId: action.payload };
+    case "SET_BID_ID_POST_ID":
+      console.log(action.payload, 'ini di payload reducer')
+      localStorage.setItem("bidId", action.payload.BidId);
+      localStorage.setItem("postId", action.payload.id);
+      return { ...state, bidId: action.payload.BidId, postId: action.payload.id };
     case "SET_POST":
       return { ...state, post: action.payload };
     case "SET_DEAL":
