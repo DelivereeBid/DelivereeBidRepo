@@ -115,6 +115,7 @@ class PostController {
         ],
         where: { id: id },
       });
+      if(postList.length === 0) throw {msg: "Post not found", code:404}
       const bidId = postList.map((el) => el.BidId);
 
       const filterBid = postList.filter((el) => el.BidId === bidId[0]);
@@ -164,6 +165,8 @@ class PostController {
         ],
         where: { id: id },
       });
+
+      if(postList.length === 0) throw {msg: "Post not found", code: 404}
       const bidId = postList.map((el) => el.BidId);
 
       const filterBid = postList.filter((el) => el.BidId === bidId[0]);
