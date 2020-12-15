@@ -30,6 +30,7 @@ function errHandler(err, req, res, next){
             code = err.code
             break;
     }
+    console.log(errors)
     res.status(code).json(errors)
 }
 

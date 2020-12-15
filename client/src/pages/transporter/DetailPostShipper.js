@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { fetchShippersById, setBid } from "../../store/index";
+import { fetchShippersById, setBid, fetchTransporterById } from "../../store/index";
 
 function DetailPostShipper(props) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const detail = useSelector((state) => state.shipper);
+  const bid = useSelector((state) => state.transporter)
   const [price, setPrice] = useState(0);
-
   useEffect(() => {
     dispatch(fetchShippersById(id));
+    dispatch(fetchTransporterById(id));
+    console.log(bid);
   }, [dispatch]);
 
   const handleBid = (e) => {
@@ -21,6 +23,7 @@ function DetailPostShipper(props) {
       BidId: id,
       price,
     };
+    console.log(price, id)
     dispatch(setBid(payload));
     history.push("/transporter");
   };
@@ -46,7 +49,9 @@ function DetailPostShipper(props) {
               <div class="input-group ">
                 <div class="input-group-text">Bid :</div>
                 <input
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) => {
+                    console.log(bid)
+                    setPrice(+e.target.value)}}
                   type="number"
                   class="form-control col-sm-5"
                   placeholder="000000"

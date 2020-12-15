@@ -23,7 +23,7 @@ function HomePage (props) {
                 <div className="card" style={{width: 250}}>
                     <div className="card-body text-center">
                     
-                        <h5>Login as a Transporter</h5>
+                        <h5>Sign in as a Transporter</h5>
                         <button onClick={() => handleLoginAsTransporter()} className="btn btn-danger">Click Here!</button>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ function HomePage (props) {
             <div className="col-4-lg text-center"style={{marginTop: 150, marginLeft:800}}>
                 <div className="card shadow" style={{width: 250}}>
                     <div className="card-body">
-                        <h5>Login as a Shipper</h5>
+                        <h5>Sign in as a Shipper</h5>
                         <button onClick={() => handleLoginAsShipper()} className="btn btn-success">Click Here!</button>
                     </div>
                 </div>

@@ -1,9 +1,23 @@
+
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "../axios/axiosInstance";
+import Swal from 'sweetalert2'
 
 const tokenShipper = localStorage.getItem("shipper_token");
 const tokenTransporter = localStorage.getItem("transporter_token");
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 const initialState = {
   dataShipper: [],
@@ -16,6 +30,8 @@ const initialState = {
   transporter: {},
   deal: {},
   transporterId: {},
+  shipperId: {},
+  profile_shipper: {},
   dataTransporter: [],
   profileTransporter: [],
 };
@@ -80,6 +96,27 @@ export const fetchTransporterById = (id) => {
       });
   };
 };
+
+export const fetchProfileShipper = (id) => {
+  console.log(id, 'masuk')
+  return (dispatch) => {
+    axios({
+      url: `/shipper/${id}`,
+      method: "GET",
+    })
+      .then(({ data }) => {
+        dispatch({
+          type: "SET_PROFILE_SHIPPER",
+          payload: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+
 
 export const fetchPostById = (id) => {
   return (dispatch) => {
@@ -153,15 +190,17 @@ export const updateWalletShipper = (id, payload) => {
 };
 
 export const transporterById = (id) => {
+  console.log(id)
   return (dispatch) => {
     axios({
       url: `/transporter/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
+        console.log(data, 'dataById')
         dispatch({
           type: "SET_TRANSPORTER_ID",
-          payload: data,
+          payload: data.id,
         });
       })
       .catch((err) => {
@@ -226,6 +265,7 @@ export const createPostShipper = (payload) => {
   formData.append("from", payload.from);
   formData.append("to", payload.to);
   formData.append("description", payload.description);
+  console.log(tokenShipper)
   return (dispatch) => {
     // console.log(payload)
     axios({
@@ -277,11 +317,24 @@ export const setLogin = (payload) => {
       },
     })
       .then(({ data }) => {
-        localStorage.setItem("transporter_token", data.access_token);
-        dispatch({ type: "SET_TRANSPORTER_TOKEN", payload: data.access_token });
-        dispatch({ type: "SET_TRANSPORTER_ID", payload: data.id });
+        if(data.access_token){
+          localStorage.setItem("transporter_token", data.access_token);
+          dispatch({ type: "SET_TRANSPORTER_TOKEN", payload: data.access_token });
+          dispatch({ type: "SET_TRANSPORTER_ID", payload: data.id });
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+          })
+        }
       })
-      .catch((err) => console.log(err.response, "<<< error dari action"));
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.response.data[0],
+          timer: 3000,
+          showConfirmButton: false,
+        })
+      });
   };
 };
 
@@ -296,10 +349,24 @@ export const setLoginShipper = (payload) => {
       },
     })
       .then(({ data }) => {
-        localStorage.setItem("shipper_token", data.access_token);
-        dispatch({ type: "SET_SHIPPER_TOKEN", payload: data.access_token });
+        if(data.access_token){
+          localStorage.setItem("shipper_token", data.access_token);
+          dispatch({ type: "SET_SHIPPER_TOKEN", payload: data.access_token });
+          dispatch({ type: "SET_SHIPPER_ID", payload: data.id });
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+          })
+        }
       })
-      .catch((err) => console.log(err.response, "<<< error dari action"));
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.response.data[0],
+          timer: 3000,
+          showConfirmButton: false,
+        })
+      });
   };
 };
 
@@ -338,10 +405,18 @@ export const setSignUp = (payload) => {
     })
       .then(({ data }) => {
         dispatch({ type: "SET_TOKEN", payload: data.access_token });
-        console.log(data, "sukses");
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed up successfully'
+        })
       })
       .catch((err) => {
-        console.log(err, "<<error");
+        Swal.fire({
+          icon: 'error',
+          title: err.response.data.join(", "),
+          timer: 3000,
+          showConfirmButton: false
+        })
       });
   };
 };
@@ -359,11 +434,19 @@ export const setSignUpShipper = (payload) => {
       data: formData,
     })
       .then(({ data }) => {
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed up successfully'
+        })
         dispatch({ type: "SET_TOKEN", payload: data.access_token });
-        console.log(data, "sukses");
       })
       .catch((err) => {
-        console.log(err, "<<error");
+        Swal.fire({
+          icon: 'error',
+          title: err.response.data.join(", "),
+          timer: 3000,
+          showConfirmButton: false
+        })
       });
   };
 };
@@ -416,8 +499,8 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case "SET_DATA_SHIPPER":
       return { ...state, dataShipper: action.payload };
-    case "SET_PROFILE_TRANSPORTER":
-      return { ...state, profile_picture: action.payload };
+    case "SET_PROFILE_SHIPPER":
+      return { ...state, profile_shipper: action.payload };
     case "SET_DATA_TRANSPORTER":
       return { ...state, dataTransporter: action.payload };
     case "SET_SHIPPER":
@@ -427,6 +510,9 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER_ID":
       localStorage.setItem("transporterId", action.payload);
       return { ...state, transporterId: action.payload };
+    case "SET_SHIPPER_ID":
+      localStorage.setItem("shipperId", action.payload);
+      return { ...state, shipperId: action.payload };
     case "SET_POST":
       return { ...state, post: action.payload };
     case "SET_DEAL":

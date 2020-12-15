@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import {Navbar} from '../components'
 import io from "socket.io-client";
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import {transporterById, patchTrackingLogById} from '../store/index.js'
 import PlacesAutocomplete from 'react-places-autocomplete';
@@ -11,10 +12,13 @@ import {
   } from 'react-places-autocomplete';
 import './controlPage.css'
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 
 function ControlPage (props) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
+    const [rooms, setRooms] = useState([]);
+    const [isMyRoom, setIsMyRoom] = useState(false)
+    const [roomName, setRoomName] = useState('')
+
     const [yourID, setYourID] = useState();
     const [usernameId, setUsername] = useState();
     const [messages, setMessages] = useState([]);
@@ -26,50 +30,125 @@ function ControlPage (props) {
     const username = arrId[1]
     const userId = arrId[2]
     const email = arrId[3]
+
+    const transporterId = arrId[4]
+    //ALTERNATIVE 2 ==START==
+    const [outputMessage, setOutputMessage] = useState('')
+    const [outputRoomName, setOutputRoomName] = useState('')
+    const [outputUsers, setOutputUsers] = useState('')
+    const [arrOutputMessages, setArrMessages] = useState([])
+    //ALTERNATIVE 2 ==END==
+
+    console.log(rooms, 'ini rooms')
+
+    const transporter = useSelector((state) => state.transporterId)
+    console.log(transporter, 'ini di control')
+
     let [address, setAddress] = useState('')
+
 
     const socketRef = useRef();
     console.log(message)
 
     useEffect(() => {
+        if(transporterId) {
+            dispatch(transporterById(userId))
+        }
+
         socketRef.current = io.connect('http://localhost:3000');
-        
-        socketRef.current.emit("your id", id);
-        
-        socketRef.current.on("your id", id => {
-            console.log(id, 'iniId')
-            setYourID(id);
+
+
+
+
+
+        //ALTERNATIVE 2 ==START=========
+
+        // Join chatroom
+        if(role === 'transporter'){
+            socketRef.current.emit('joinRoom', { username, room: `shipper_${transporterId}&transporter_${userId}` });
+        } else {
+            socketRef.current.emit('joinRoom', { username, room: `shipper_${userId}&transporter_${transporterId}` });
+        }
+
+        // Get room and users
+        socketRef.current.on('roomUsers', ({ room, users }) => {
+            setOutputRoomName(room);
+            setOutputUsers(users);
+        });
+
+        // Message from server
+        socketRef.current.on('message', message => {
+            console.log(message);
+            setOutputMessage(message);
+            appendMessage(message)
         })
-        
-        socketRef.current.emit("your username", username);
-        socketRef.current.on("your username", username => {
-            console.log(username, 'iniUsername')
-            setUsername(username);
-        })
-        
-        
-        socketRef.current.on("message", (message) => {
-            console.log("here");
-            receivedMessage(message);
-        })
-    }, []);
-    
-    function receivedMessage(message) {
-        setMessages(oldMsgs => [...oldMsgs, message]);
-    }
-    
-    function sendMessage(e) {
-        e.preventDefault();
-        const messageObject = {
-            body: message,
-            id: yourID,
-            username: usernameId
-        };
-        setMessage("");
-        socketRef.current.emit("send message", messageObject);
-    }
-    
-    function handleChange(e) {
+
+
+
+
+        //ALTERNATIVE 2 ==END==========
+
+      }, []);
+
+
+      //ALTERNATIVE 2 ==START=======
+        // Message submit
+        function sendMessageAlt (e) {
+            e.preventDefault();
+
+            // Get message text
+            let msg = message;
+
+            msg = msg.trim();
+
+            if (!msg){
+                return false;
+            }
+
+            // Emit message to server
+            socketRef.current.emit('chatMessage', msg);
+            setMessage('')
+        }
+
+        console.log(outputMessage)
+
+        function appendMessage(message) {
+            let div;
+            if(username === message.username) {
+                 div = document.createElement('div');
+                div.classList.add('d-flex');
+                div.classList.add('justify-content-start');
+                div.classList.add('mb-4');
+
+                const divChild = document.createElement('div');
+                divChild.classList.add('msg_cotainer');
+                divChild.innerText = `${message.username}: ${message.text}`
+                div.appendChild(divChild);
+            } else {
+                div = document.createElement('div');
+                div.classList.add('d-flex');
+                div.classList.add('justify-content-end');
+                div.classList.add('mb-4');
+
+                const divChildSend = document.createElement('div');
+                divChildSend.classList.add('msg_cotainer_send');
+                divChildSend.innerText = `${message.username}: ${message.text}`
+                div.appendChild(divChildSend);
+            }
+
+
+
+            document.querySelector('.msg_card_body').appendChild(div);
+
+
+
+
+          }
+      //ALTERNATIVE 2 ==END=======
+
+
+
+      function handleChange(e) {
         setMessage(e.target.value);
     }
 
@@ -102,7 +181,7 @@ function ControlPage (props) {
 
     return (
         <>
-            <Navbar/>
+            {/* <Navbar/> */}
             <h3>Control Page</h3>
             <div className="container-fluid h-100">
                 <div className="stepwizard">
@@ -132,18 +211,29 @@ function ControlPage (props) {
 
                 </div>
                 <div className="row justify-content-center h-100">
+
                     <div className="col-md-8 col-xl-8 chat">
-                        <div className="card card-chat">
+                        {/* {   isMyRoom && */}
+                            <div className="card card-chat">
                             <div className="card-header-chat msg_head">
                                 <div className="d-flex bd-highlight">
                                     <div className="user_info">
-                                        <span>Chat with {usernameId}</span>
+                                        <span>Chat with {username}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="card-body msg_card_body">
-                                {messages.map((message, index) => {
-                                    if(message.id === yourID) {
+
+
+                                {/* <div className="d-flex justify-content-start mb-4">
+                                    <div className="msg_cotainer">
+                                    {outputMessage.username}: {outputMessage.text}
+                                    </div>
+                                </div> */}
+
+
+                                 {/* {messages.map((message, index) => {
+                                    if(message.id === yourID ) {
                                         return (
                                             <div className="d-flex justify-content-start mb-4" key={index}>
                                                 <div className="msg_cotainer">
@@ -154,20 +244,20 @@ function ControlPage (props) {
                                     }
                                     return (
                                         <div className="d-flex justify-content-end mb-4" key={index}>
-                                    <div className="msg_cotainer_send">
-                                        {message.body}
-                                    </div>
-                                </div>
-                                    )
-                                })
+                                            <div className="msg_cotainer_send">
+                                                {message.body}
+                                            </div>
+                                        </div>
+                                        )
+                                    })
 
-                                }
+                                } */}
 
 
 
                             </div>
                             <div className="card-footer-chat">
-                            <form onSubmit={sendMessage}>
+                                <form onSubmit={(e) => sendMessageAlt(e)}>
                                     <div className="input-group">
 
                                         <textarea name="" className="form-control type_msg" value={message} onChange={handleChange} placeholder="Say something..."></textarea>
@@ -180,6 +270,8 @@ function ControlPage (props) {
                                 </form>
                             </div>
                         </div>
+
+
                     </div>
                     <div className="col-md-4 col-xl-4">
                         <div className="card">
