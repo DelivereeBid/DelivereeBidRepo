@@ -10,13 +10,16 @@ function HomeTransporter(props) {
   const transporter = useSelector((state) => state.dataTransporter);
   const trucking = useSelector((state) => state.transporter);
   const transporterId = +localStorage.getItem("transporterId");
-<<<<<<< HEAD
   console.log(transporter, "tra");
-=======
-  console.log(transporter, 'tra');
-  console.log(transporter, 'transporter', trucking, 'trucking', transporterId, 'transporterId')
+  console.log(
+    transporter,
+    "transporter",
+    trucking,
+    "trucking",
+    transporterId,
+    "transporterId"
+  );
 
->>>>>>> b8c8629cdcb4a873d1985460a1455db0bbd93ce3
   useEffect(() => {
     dispatch(fetchTransporter());
     dispatch(fetchTransporterById(transporterId));
@@ -26,9 +29,6 @@ function HomeTransporter(props) {
     history.push(`/transporter/${id}`);
   };
 
-<<<<<<< HEAD
-  const toControlPage = (ShipperId) => {
-=======
   const toControlPage = (ShipperId, postId, bidId) => {
     // const payload = {
     //   BidId: bidId,
@@ -39,28 +39,19 @@ function HomeTransporter(props) {
     //   type: "SET_BID_ID_POST_ID",
     //   payload: payload,
     // })
->>>>>>> b8c8629cdcb4a873d1985460a1455db0bbd93ce3
     history.push(
       `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
   };
 
-<<<<<<< HEAD
   // const filterBid = transporter.filter((el) => {
-=======
-    // const filterBid = transporter.filter((el) => {
->>>>>>> b8c8629cdcb4a873d1985460a1455db0bbd93ce3
   //   return el.id ==
   // })
 
   // console.log(filterBid, 'feltier')
   return (
     <>
-<<<<<<< HEAD
       <NavbarTrans />
-=======
-      <NavbarTrans/>
->>>>>>> b8c8629cdcb4a873d1985460a1455db0bbd93ce3
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">
