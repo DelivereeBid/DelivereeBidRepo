@@ -100,6 +100,7 @@ function ControlPage (props) {
             setOutputMessage(message);
             appendMessage(message)
 
+            
               // Scroll down
             const chatMessages = document.querySelector('.msg_card_body');
             chatMessages.scrollTop = chatMessages.scrollHeight;
