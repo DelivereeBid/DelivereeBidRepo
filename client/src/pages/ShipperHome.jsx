@@ -50,7 +50,7 @@ export default function ShipperHome () {
           <div className="col-9">
             <div className="card px-4 py-2 mb-4">
               <span className="row">
-              <h3 className="">Sort results by</h3>
+              <h3 className="">Your Shipment <i class="fas fa-plus float-right" type='button' onClick={handleShow}></i></h3>
               <Button className="ml-3" variant="light" >Price</Button>
               <Button className="ml-1" variant="light" >Distance</Button>
               </span>
@@ -74,6 +74,8 @@ export default function ShipperHome () {
                   <EditPostShipper/>
               </Route>
           </Switch>
+          <CreatePostShipper/>
+
           </div>
         </div>
       </div>
