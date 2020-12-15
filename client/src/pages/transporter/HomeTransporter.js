@@ -23,16 +23,17 @@ function HomeTransporter(props) {
     history.push(`/transporter/${id}`);
   };
 
-  const toControlPage = (ShipperId, postId, bidId) => {
-    // const payload = {
-    //   BidId: bidId,
-    //   id: postId
-    // }
+  const toControlPage = (ShipperId, post) => {
+    const payload = {
+      BidId: post[0].BidId,
+      id: post[0].id
+    }
 
-    // dispatch({
-    //   type: "SET_BID_ID_POST_ID",
-    //   payload: payload,
-    // })
+    dispatch({
+      type: "SET_BID_ID_POST_ID",
+      payload: payload,
+    })
+    console.log(post, 'ini di 36 HomeTransporter')
     history.push(
       `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
@@ -70,12 +71,16 @@ function HomeTransporter(props) {
                   (post) => post.TransporterId === transporterId
                 ) ? (
                   el.Posts.some((post) => post.status === "accepted") ? (
+
                     <button
-                      onClick={() => toControlPage(el.ShipperId)}
+                      onClick={() => toControlPage(el.ShipperId, el.Posts)}
                       className="btn btn-primary"
                     >
                       Start
                     </button>
+
+
+
                   ) : (
                     ""
                   )
