@@ -26,7 +26,7 @@ function errHandler(err, req, res, next){
             errors.push("Connection failed")
             break;
         default:
-            errors.push(err.msg)
+            errors.push(err.msg || err.message)
             code = err.code
             break;
     }
