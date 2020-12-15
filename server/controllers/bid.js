@@ -46,7 +46,6 @@ class BidController {
         }
       })
       .catch((err) => {
-        console.log(err);
         next(err);
       });
   }
@@ -64,7 +63,6 @@ class BidController {
         res.status(201).json(bid);
       })
       .catch((err) => {
-        console.log(err);
         next(err);
       });
   }
@@ -81,6 +79,28 @@ class BidController {
     )
       .then((bid) => {
         res.status(200).json({ msg: "Success update bid" });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
+  static patchBid(req, res, next) {
+    const { id } = req.params;
+    const { status, TransporterId } = req.body;
+    Bid.update(
+      { status, TransporterId },
+      {
+        where: {
+          id: id,
+        },
+      }
+    )
+      .then((bid) => {
+        if(bid[0] === 0) throw {msg: "Bid not found", code:404}
+        else {
+          res.status(200).json({ msg: "Success patch bid" });
+        }
       })
       .catch((err) => {
         next(err);

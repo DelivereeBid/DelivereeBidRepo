@@ -246,6 +246,17 @@ describe("Shipper Router Test", () => {
   });
 
   describe("GET/shipper - shipper find all process", () => {
+    beforeAll(async (done) => {
+      await getToken();
+      done();     
+    })
+    
+    afterAll(async (done) => {
+      queryInterface.bulkDelete("Shippers")
+      .then(() => {
+        done();
+      });
+    })
     it("200 Success GET shipper - should return list of shippers", (done) => {
       request(app)
         .get("/shipper")
@@ -255,13 +266,25 @@ describe("Shipper Router Test", () => {
           done();
         });
     });
+    it("404 Failed GET shipper by id - should return shipper", (done) => {
+      request(app)
+        .get("/shipper/1")
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(404);
+          expect(body).toEqual(["Shipper not found"])
+          done();
+        });
+    });
     it("200 Success GET shipper by id - should return shipper", (done) => {
       request(app)
-        .get("/shipper/" + 1)
+        .get(`/shipper/${shipperId}`)
         .then((response) => {
-          console.log(response)
           const { body, status } = response;
           expect(status).toBe(200);
+          expect(body).toHaveProperty("email", "yanto@mail.com")
+          expect(body).toHaveProperty("username", "admin")
+          expect(body).not.toBeNull()
           done();
         });
     });

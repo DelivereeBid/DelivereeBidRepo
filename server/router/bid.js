@@ -8,6 +8,7 @@ router.get("/:id", BidController.getById)
 router.use(authenticationShipper)
 router.post("/", upload.single('file'), BidController.createBid)
 router.put("/:id", authorizationBid, upload.single('file'), BidController.updateBid)
+router.patch("/:id", authorizationBid, BidController.patchBid)
 router.delete("/:id", authorizationBid, BidController.deleteBid)
 
 

@@ -299,9 +299,20 @@ describe("Transporter Router Test", () => {
   })
   
   describe("GET/transporter/:id - transporter findBy id process", () => {
+    beforeAll(async (done) => {
+      await getToken();
+      done();     
+    })
+    
+    afterAll(async (done) => {
+      queryInterface.bulkDelete("Transporters")
+      .then(() => {
+        done();
+      });
+    })
     it("200 Success GET transporter - should return list of transporters", (done) => {
       request(app)
-        .get("/transporter/1")
+        .get("/transporter/" + transporterId)
         .then((response) => {
           const { body, status } = response;
           expect(status).toBe(200);
@@ -418,17 +429,27 @@ describe("Transporter Router Test", () => {
         });
     });
   })
-  // describe("PATCH /transporter/:id - update wallet only", () => {
-  //   it("200 success update wallet", (done) => {
-  //     request(app)
-  //     .patch(`transporter/${transporterId}`)
-  //     .send({wallet: 500000})
-  //     .then((response) => {
-  //       const {body, status} = response
-  //       expect(status).toBe(200)
-  //       expect(body).toEqual(["Success update wallet"])
-  //       done()
-  //     })
-  //   })
-  // })
+  describe("PATCH /transporter/:id - update wallet only", () => {
+    it("200 success update wallet", (done) => {
+      request(app)
+      .patch(`/transporter/${transporterId}`)
+      .send({wallet: 500000})
+      .then((response) => {
+        const {body, status} = response
+        expect(status).toBe(200)
+        expect(body).toEqual({"msg": "Success update wallet"})
+        done()
+      })
+    })
+    it("404 failed update wallet", (done) => {
+      request(app)
+      .patch(`/transporter/`)
+      .send({wallet: -1})
+      .then((response) => {
+        const {body, status} = response
+        expect(status).toBe(404)
+        done()
+      })
+    })
+  })
 });
