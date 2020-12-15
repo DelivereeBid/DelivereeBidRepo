@@ -214,15 +214,15 @@ function ControlPage (props) {
                     {   role === 'shipper' &&
                         <div className="stepwizard-row setup-panel">
                             <div className="stepwizard-step">
-                                <a href="" type="button" className="btn btn-secondary btn-circle" disabled="disabled">
+                                <div  className="btn btn-secondary btn-circle" disabled="disabled">
                                     <span className="glyphicon glyphicon-envelope"></span>
-                                </a>
+                                </div>
                                 <p>{shipper.from}</p>
                             </div>
                             <div className="stepwizard-step">
-                                <a href="" type="button" className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
+                                <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
                                     <span className="glyphicon glyphicon-user"></span>
-                                </a>
+                                </div>
                                 <p>
                                     { post &&
                                         post.tracking_log
@@ -230,9 +230,9 @@ function ControlPage (props) {
                                 </p>
                             </div>
                             <div className="stepwizard-step">
-                                <a href="" type="button"  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
+                                <div  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
                                     <span className="glyphicon glyphicon-ok"></span>
-                                </a>
+                                </div>
                                 <p>{shipper.to}</p>
                             </div>
                         </div>
