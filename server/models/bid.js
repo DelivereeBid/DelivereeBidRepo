@@ -54,6 +54,25 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      defaultValue: 'available',
+      validate: {
+        notEmpty: {args: true, msg: "status is required"},
+        notNull: {args: true, msg: "status is required"}
+      }
+    },
+    TransporterId: {
+      allowNull: true,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Transporter',
+        key: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    }
   }, {
     sequelize,
     modelName: 'Bid',

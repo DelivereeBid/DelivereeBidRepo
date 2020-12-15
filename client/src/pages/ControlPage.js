@@ -3,7 +3,7 @@ import {Navbar} from '../components'
 import io from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import {transporterById, patchTrackingLogById, fetchProfileShipper, fetchPostById, fetchShippersById} from '../store/index.js'
+import {transporterById, patchTrackingLogById, fetchProfileShipper, fetchPostById, fetchShippersById, postShipperRemove} from '../store/index.js'
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
@@ -32,6 +32,7 @@ function ControlPage (props) {
     const transporterId = arrId[4]
     const bidID = localStorage.getItem("bidId")
     const postID = localStorage.getItem("postId")
+    const history = useHistory()
     //ALTERNATIVE 2 ==START==
     const [outputMessage, setOutputMessage] = useState('')
     const [outputRoomName, setOutputRoomName] = useState('')
@@ -100,6 +101,7 @@ function ControlPage (props) {
             setOutputMessage(message);
             appendMessage(message)
 
+
               // Scroll down
             const chatMessages = document.querySelector('.msg_card_body');
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -160,7 +162,9 @@ function ControlPage (props) {
 
 
 
-            document.querySelector('.msg_card_body').appendChild(div);
+                document.querySelector('.msg_card_body').appendChild(div);
+
+
 
 
 
@@ -198,11 +202,19 @@ function ControlPage (props) {
     const handleSubmitLoc = e => {
         e.preventDefault();
         const city = address.split(',')
-        dispatch(patchTrackingLogById(userId, {tracking_log: city[0]}))
+        dispatch(patchTrackingLogById(postID, {tracking_log: city[0]}))
+        setAddress('')
     }
 
+    function removeBid (e, bidId) {
+        e.preventDefault()
+        dispatch(postShipperRemove(bidId))
+        history.push('/shipper')
+    }
+
+
     return (
-        <>
+        <div >
             {/* <Navbar/> */}
             <h3>Control Page</h3>
             <div className="container-fluid h-100">
@@ -210,26 +222,36 @@ function ControlPage (props) {
                     {   role === 'shipper' &&
                         <div className="stepwizard-row setup-panel">
                             <div className="stepwizard-step">
-                                <a href="" type="button" className="btn btn-secondary btn-circle" disabled="disabled">
+                                <div  className="btn btn-secondary btn-circle" disabled="disabled">
                                     <span className="glyphicon glyphicon-envelope"></span>
-                                </a>
+                                </div>
                                 <p>{shipper.from}</p>
                             </div>
                             <div className="stepwizard-step">
-                                <a href="" type="button" className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
+                                <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
                                     <span className="glyphicon glyphicon-user"></span>
-                                </a>
+                                </div>
                                 <p>
                                     { post &&
                                         post.tracking_log
                                     }
+
                                 </p>
                             </div>
                             <div className="stepwizard-step">
-                                <a href="" type="button"  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
+                                <div  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
                                     <span className="glyphicon glyphicon-ok"></span>
-                                </a>
-                                <p>{shipper.to}</p>
+                                </div>
+                                <p>
+                                    {
+                                        post && shipper &&
+
+                                            post.tracking_log === shipper.to
+                                            ? 'Delivered'
+                                            : shipper.to
+                                    }
+
+                                </p>
                             </div>
                         </div>
                     }
@@ -386,14 +408,18 @@ function ControlPage (props) {
                                 </div>
                             </div>
                         }
-                        {/* <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-danger">Complaint</button>
-                            <button type="button" class="btn btn-success">Send Money</button>
-                        </div> */}
+
+                        { post && shipper && post.tracking_log === shipper.to && role === 'shipper' &&
+                            <div class="btn-group btn-block" role="group" aria-label="Basic example">
+                                {/* <button type="button" class="btn btn-danger">Complaint</button> */}
+                                <button onClick={(e) => removeBid(e, bidID)} type="button" class="btn btn-success">Yeayy, your order has been deliverd!</button>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

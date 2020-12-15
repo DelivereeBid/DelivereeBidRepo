@@ -87,6 +87,27 @@ class BidController {
       });
   }
 
+  static patchBid(req, res, next) {
+    const { id } = req.params;
+    const { status, TransporterId } = req.body;
+    console.log(id, status, 'AWIWJDWSTAUTS')
+    Bid.update(
+      { status, TransporterId },
+      {
+        where: {
+          id: id,
+        },
+      }
+    )
+      .then((bid) => {
+        res.status(200).json({ msg: "Success patch bid" });
+      })
+      .catch((err) => {
+        console.log(err, 'patch error')
+        next(err);
+      });
+  }
+
   static deleteBid(req, res, next) {
     const { id } = req.params;
     Bid.destroy({

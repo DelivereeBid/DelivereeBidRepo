@@ -49,10 +49,15 @@ function EditPostShipper (props) {
 
     function submitPost (e) {
         e.preventDefault()
+        const arrFrom = [ ...from]
+        arrFrom[0] = arrFrom[0].toUpperCase()
+
+        const arrTo = [ ...to]
+        arrTo[0] = arrTo[0].toUpperCase()
         const payload = {
             product_name,
-            from,
-            to,
+            from: arrFrom.join(''),
+            to: arrTo.join(''),
             description,
             product_picture: file ? file : product_picture,
             file

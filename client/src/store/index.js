@@ -228,6 +228,25 @@ export const patchWalletTransporter = (id, payload) => {
   };
 };
 
+export const patchShipperPost = (id, payload) => {
+  return (dispatch) => {
+    console.log(id, "ini id", payload, "ini payload bid");
+    axios({
+      url: `/bid/${id}`,
+      headers: {access_token: tokenShipper},
+      method: "PATCH",
+      data: payload,
+    })
+      .then(({ data }) => {
+        console.log(data, "ini patchBid");
+        //fetch ulang transporter disini
+      })
+      .catch((err) => {
+        console.log("Error:", err.response);
+      });
+  };
+};
+
 export const updateShipperPost = (id, payload) => {
   const formData = new FormData();
   if (payload.file) {
@@ -317,6 +336,7 @@ export const setLogin = (payload) => {
       },
     })
       .then(({ data }) => {
+
         if(data.access_token){
           localStorage.setItem("transporter_token", data.access_token);
           dispatch({ type: "SET_TRANSPORTER_TOKEN", payload: data.access_token });
@@ -326,6 +346,7 @@ export const setLogin = (payload) => {
             title: 'Signed in successfully'
           })
         }
+
       })
       .catch((err) => {
         Swal.fire({
@@ -371,6 +392,7 @@ export const setLoginShipper = (payload) => {
 };
 
 export const setBid = (payload) => {
+  console.log(payload, 'payload setBid 376')
   return (dispatch) => {
     axios({
       url: "/post",
@@ -384,7 +406,7 @@ export const setBid = (payload) => {
       },
     })
       .then(({ data }) => {
-        console.log(data, "<<<< dari setbid action");
+        console.log(data, "data hasil axios setBid 348 index");
       })
       .catch((err) => console.log(err, "<<< eror setBid action"));
   };
@@ -508,7 +530,7 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER":
       return { ...state, transporter: action.payload };
     case "SET_TRANSPORTER_ID":
-      localStorage.setItem("transporterId", action.payload.id);
+      localStorage.setItem("transporterId", action.payload);
       return { ...state, transporterId: action.payload };
     case "SET_SHIPPER_ID":
       localStorage.setItem("shipperId", action.payload);

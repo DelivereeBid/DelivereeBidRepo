@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+
+
 #homepage {
   background-image: url(../src/assets/vechile/landing1.jpg);
   background-size: cover;
@@ -12,6 +16,7 @@
   color: white;
   background-color: transparent;
 }
+
 
 #btn-landing:hover {
   transition: all 0.3s ease-out;
@@ -147,3 +152,4 @@ label {
 .loginbttm {
   padding: 0px;
 }
+

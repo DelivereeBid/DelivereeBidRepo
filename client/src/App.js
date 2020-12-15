@@ -1,10 +1,13 @@
 import React from 'react'
 import { Switch, Route, Link, useHistory  } from 'react-router-dom'
-import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
+import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, 
+  DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, 
+  RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
 import './App.css'
 import PrivateRoute from './routers/PrivateRoute'
+import ShipperHome from './pages/ShipperHome'
 
 function App() {
   const history = useHistory();
@@ -40,17 +43,17 @@ function App() {
   return (
     <Provider store={store}>
       <Switch>
-          <PrivateRoute auth="shipper_token" component={HomeShipper} path='/shipper' redirect='/shipper-login'>
+        <Route exact path="/shipperTes">
+          <ShipperHome />
+        </Route>
+          <PrivateRoute auth="shipper_token" component={ShipperHome} path='/shipper' redirect='/shipper-login'>
           </PrivateRoute>
           <PrivateRoute auth={credentialsHandler()} component={PaymentMethod} exact path='/payment/:id' redirect='/'>
           </PrivateRoute>
           <PrivateRoute auth="transporter_token" exact component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
           </PrivateRoute>
           <Route exact path='/'>
-            {
-              homePageRedirectHandler()
-            }
-            <HomePage/>
+            <HomePage />
           </Route>
           <PrivateRoute auth="transporter_token" redirect='/transporter-login' path='/transporter/:id' component={DetailPostShipper}>
           </PrivateRoute>
