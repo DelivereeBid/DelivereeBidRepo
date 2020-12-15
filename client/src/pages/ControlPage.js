@@ -41,7 +41,9 @@ function ControlPage (props) {
 
     const transporter = useSelector((state) => state.transporterId)
     console.log(transporter, 'ini di control')
+
     let [address, setAddress] = useState('')
+
 
     const socketRef = useRef();
     console.log(message)
@@ -283,13 +285,13 @@ function ControlPage (props) {
                         </div>
                         {   role === 'transporter' &&
                             <div className="card">
-                                    {
+                                    {/* {
                                         // let latlon = position.coords.latitude + "," + position.coords.longitude;
                                         latitude && longitude ?
                                         <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude +','+longitude}
                                         &zoom=14&size=400x400&sensor=false&markers=color:red%7C${latitude + ',' + longitude}
                                         &key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw`} alt=''></img> : null
-                                    }
+                                    } */}
                                 <div className="card-body">
                                     <h4 className="card-title">Update Location</h4>
                                     <form>
