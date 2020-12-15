@@ -1,95 +1,107 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-import {useDispatch} from 'react-redux'
-import {useHistory} from 'react-router-dom'
-import { setSignUp, setSignUpShipper } from '../store'
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { setSignUpShipper } from "../store";
+import { Container, Form, Button } from "react-bootstrap";
 
-function RegisterShipper (props) {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const [user, setUser] = useState ({
-    username : '',
-    email : '',
-    password : '',
-    file : ''
-  }) 
+function RegisterShipper(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    file: "",
+  });
 
   const changeInput = (e) => {
     const newInput = {
-      ...user
-    }
-    newInput[e.target.name] = e.target.value
-    setUser(newInput)
-    console.log(user, '<<< ini suer')
-  }
+      ...user,
+    };
+    newInput[e.target.name] = e.target.value;
+    setUser(newInput);
+  };
 
   const changeInputFile = (e) => {
     const newInput = {
-      ...user
-    }
-    newInput.file = e.target.files[0]
-    setUser(newInput)
-    console.log(user, '<<< ini suer')
-  }
+      ...user,
+    };
+    newInput.file = e.target.files[0];
+    setUser(newInput);
+  };
 
+  console.log(user.file, 'line tiga tiga')
   const handleRegister = (e) => {
-    e.preventDefault()
-    dispatch(setSignUpShipper(user))
-    history.push('/shipper-login')
+    e.preventDefault();
+    if(user.username !== "" && user.email !== "" && user.password !== "" && user.file !== ""){
+      history.push("/shipper-login")
+    }
+    dispatch(setSignUpShipper(user));
+  };
+
+  const toLoginShipper = () => {
+    history.push("/shipper-login")
   }
 
-    return (
-        <>
-        <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 mb-3">
-            <h3 class="signin-text mb-3">Register</h3>
-            <form onSubmit={(e) => handleRegister(e)}>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input onChange={(e) => changeInput(e)} type="email" name="email" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input onChange={(e) => changeInput(e)} type="password" name="password" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input onChange={(e) => changeInput(e)} type="text" name="username" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="username">Picture</label>
-                <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
-              </div>
-              {/* <div className="form-group">
-              <label for="text">Role</label>
-              <select class="form-control" aria-label="Default select example">
-                <option selected disabled>Choose your role</option>
-                <option value="Transpotter">Transpotter</option>
-                <option value="Shipper">Shipper</option>
-              </select>
-              </div> */}
-              {/* <div className="form-group">
-                <input class="form-check-input-control" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."></input>
-                <label for="text">Vehicle 1</label>
-                <br></br>
-                <input class="form-check-input-control" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."></input>
-                <label for="text">Vehicle 2</label>
-                <br></br>
-                <input class="form-check-input-control" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."></input>
-                <label for="text">Vehicle 3</label>
-                <br></br>
-                <input class="form-check-input-control" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."></input>
-                <label for="text">Vehicle 4</label>
-              </div> */}
-              <button type="submit" class="btn btn-primary">Register</button>
-              <p className="mt-3" role="button" onClick={() => handleRegister()}>Have an account ?</p>
-            </form>
-          </div>
-        </div>
-      </div>
-        </>
-    )
+  return (
+    <>
+      <Container>
+        <Form onSubmit={(e) => handleRegister(e)}>
+          <Form.Group>
+            <h2 className="mb-3 mt-5">Sign Up as Shipper</h2>
+
+            <Form.Group controlId="form.username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                onChange={(e) => changeInput(e)}
+                type="username"
+                placeholder="Enter username"
+                name="username"
+              />
+              <Form.Text as="div" className="text text-danger"></Form.Text>
+            </Form.Group>
+            <Form.Group controlId="form.email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                onChange={(e) => changeInput(e)}
+                type="email"
+                placeholder="Enter email"
+                name="email"
+              />
+              <Form.Text as="div" className="text text-danger"></Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="form.password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                onChange={(e) => changeInput(e)}
+              />
+              <Form.Text as="div" className="text text-danger"></Form.Text>
+            </Form.Group>
+            <Form.Group controlId="form.picture">
+              <Form.Label>Profile Picture</Form.Label>
+              <Form.File.Input onChange={(e) => changeInputFile(e)}></Form.File.Input>
+            </Form.Group>
+
+            <Form.Group>
+              <Button variant="outline-primary" type="submit">
+                Sign Up
+              </Button>
+              <Button
+                variant="outline-success"
+                onClick={() => toLoginShipper()}
+              >
+                Already have an account?
+              </Button>
+            </Form.Group>
+          </Form.Group>
+        </Form>
+      </Container>
+    </>
+  );
 }
 
-export default RegisterShipper
+export default RegisterShipper;

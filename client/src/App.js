@@ -66,14 +66,12 @@ function App() {
           <Route exact path="/transporter/deliveryStatus">
             <DeliveryStatus />
           </Route>
-
           <Route exact path='/complaint'>
             <ComplaintPage/>
           </Route>
           <Route exact path='/controlPage/:id'>
             <ControlPage/>
           </Route>
-
           <Route exact path='/shipper-login'>
             <LoginShipper/>
           </Route>

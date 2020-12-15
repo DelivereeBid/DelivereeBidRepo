@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setLogin, setLoginShipper } from "../store";
+import { setLoginShipper } from "../store";
+import { Container, Form, Button } from "react-bootstrap";
 
 function LoginShipper(props) {
   const history = useHistory();
@@ -26,41 +26,49 @@ function LoginShipper(props) {
   const handleRegister = () => {
     history.push("/shipper-register");
   };
+
+  const toHome = () => {
+    history.push("/")
+  }
   return (
     <>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 mb-3">
-            <h3 class="signin-text mb-3">Login</h3>
-            <form onSubmit={(e) => handleLogin(e)}>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  name="email"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  name="password"
-                  class="form-control"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Sign In
-              </button>
-              <p role="button" onClick={() => handleRegister()}>
-                Don't have any account yet?
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
+      <Container>
+        <Form onSubmit={(e) => handleLogin(e)}>
+          <Form.Group>
+            <h2 className="mb-3 mt-5">Sign In as Shipper</h2>
+
+            <Form.Group controlId="form.email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="Enter email"
+                name="email"
+              />
+              <Form.Text as="div" className="text text-danger"></Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="form.password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Form.Text as="div" className="text text-danger"></Form.Text>
+            </Form.Group>
+
+            <Form.Group>
+            <Button variant="outline-primary" type="submit">
+              Sign In
+            </Button>
+            <Button variant="outline-success" onClick={() => handleRegister()}>Create Shipper account?</Button>
+            <Button variant="outline-danger" onClick={() => toHome()}>Cancel</Button>
+            </Form.Group>
+          </Form.Group>
+        </Form>
+        </Container>
     </>
   );
 }

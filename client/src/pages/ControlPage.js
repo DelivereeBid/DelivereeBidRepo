@@ -3,7 +3,7 @@ import {Navbar} from '../components'
 import io from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import {transporterById, patchTrackingLogById} from '../store/index.js'
+import {transporterById, patchTrackingLogById, fetchProfileShipper, fetchPostById, fetchShippersById} from '../store/index.js'
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
@@ -18,7 +18,6 @@ function ControlPage (props) {
     const [rooms, setRooms] = useState([]);
     const [isMyRoom, setIsMyRoom] = useState(false)
     const [roomName, setRoomName] = useState('')
-
     const [yourID, setYourID] = useState();
     const [usernameId, setUsername] = useState();
     const [messages, setMessages] = useState([]);
@@ -30,8 +29,9 @@ function ControlPage (props) {
     const username = arrId[1]
     const userId = arrId[2]
     const email = arrId[3]
-
     const transporterId = arrId[4]
+    const bidID = localStorage.getItem("bidId")
+    const postID = localStorage.getItem("postId")
     //ALTERNATIVE 2 ==START==
     const [outputMessage, setOutputMessage] = useState('')
     const [outputRoomName, setOutputRoomName] = useState('')
@@ -39,10 +39,15 @@ function ControlPage (props) {
     const [arrOutputMessages, setArrMessages] = useState([])
     //ALTERNATIVE 2 ==END==
 
-    console.log(rooms, 'ini rooms')
+
+    const shipper = useSelector((state) => state.shipper)
+    const post = useSelector((state) => state.post[0])
+
 
     const transporter = useSelector((state) => state.transporterId)
-    console.log(transporter, 'ini di control')
+    console.log(transporter, 'ini transporter control')
+    const profile_shipper = useSelector((state) => state.profile_shipper)
+    console.log(profile_shipper, 'ini shipper di control')
 
     let [address, setAddress] = useState('')
 
@@ -51,12 +56,25 @@ function ControlPage (props) {
     console.log(message)
 
     useEffect(() => {
-        if(transporterId) {
-            dispatch(transporterById(userId))
+        if(role === 'transporter' && transporterId) {
+            dispatch(fetchProfileShipper(transporterId))
+        } else if(role === 'shipper' && transporterId) {
+            dispatch(transporterById(transporterId))
         }
 
-        socketRef.current = io.connect('http://localhost:3000');
+        if(postID) {
+            dispatch(fetchPostById(postID))
+        }
 
+        if(bidID) {
+            dispatch(fetchShippersById(bidID))
+        }
+
+
+
+
+
+        socketRef.current = io.connect('http://localhost:3000');
 
 
 
@@ -81,6 +99,10 @@ function ControlPage (props) {
             console.log(message);
             setOutputMessage(message);
             appendMessage(message)
+
+              // Scroll down
+            const chatMessages = document.querySelector('.msg_card_body');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         })
 
 
@@ -153,14 +175,14 @@ function ControlPage (props) {
     }
 
     //G MAPS
-    
+
     const [latitude, setLatitude] = useState(-6.2087634)
     const [longitude, setLongitude] = useState(106.845599)
 
     const handleSearchChange = address => {
         setAddress(address)
     };
-    
+
     const handleSelect = address => {
         setAddress(address)
         geocodeByAddress(address)
@@ -191,19 +213,23 @@ function ControlPage (props) {
                                 <a href="" type="button" className="btn btn-secondary btn-circle" disabled="disabled">
                                     <span className="glyphicon glyphicon-envelope"></span>
                                 </a>
-                                <p>Bandung</p>
+                                <p>{shipper.from}</p>
                             </div>
                             <div className="stepwizard-step">
                                 <a href="" type="button" className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
                                     <span className="glyphicon glyphicon-user"></span>
                                 </a>
-                                <p>Cikarang</p>
+                                <p>
+                                    { post &&
+                                        post.tracking_log
+                                    }
+                                </p>
                             </div>
                             <div className="stepwizard-step">
                                 <a href="" type="button"  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
                                     <span className="glyphicon glyphicon-ok"></span>
                                 </a>
-                                <p>Jakarta</p>
+                                <p>{shipper.to}</p>
                             </div>
                         </div>
                     }
@@ -260,7 +286,7 @@ function ControlPage (props) {
                                 <form onSubmit={(e) => sendMessageAlt(e)}>
                                     <div className="input-group">
 
-                                        <textarea name="" className="form-control type_msg" value={message} onChange={handleChange} placeholder="Say something..."></textarea>
+                                        <textarea name="" className="form-control type_msg" value={message} onChange={handleChange} placeholder="Say something..." ></textarea>
                                         <button type='submit' className="btn">
                                             <span className="input-group-text send_btn"><i className="fas fa-location-arrow"></i></span>
                                         </button>
@@ -277,13 +303,25 @@ function ControlPage (props) {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title">Contact</h4>
-                                <h6 className="card-subtitle mb-2 text-muted">{usernameId}</h6>
+                                <h6 className="card-subtitle mb-2 text-muted">
+                                    {
+                                        role === 'transporter'
+                                        ? profile_shipper.username
+                                        : transporter.username
+                                    }
+                                </h6>
                                 <div className="card-text">
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td><i class="fas fa-clock mr-2 text-center"></i></td>
-                                                <td>{email}</td>
+                                                <td>
+                                                    {
+                                                        role === 'transporter'
+                                                        ? profile_shipper.email
+                                                        : transporter.email
+                                                    }
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

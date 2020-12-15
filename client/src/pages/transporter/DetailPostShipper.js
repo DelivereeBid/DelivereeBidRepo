@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { fetchShippersById, setBid, fetchTransporterById } from "../../store/index";
+import { NavbarTrans } from '../../components/index'
 
 function DetailPostShipper(props) {
   const { id } = useParams();
@@ -30,6 +31,7 @@ function DetailPostShipper(props) {
 
   return (
     <>
+    <NavbarTrans/>
       {/* {JSON.stringify(detail)} */}
       <h1 className="text-center">Detail Post Shipper</h1>
       <div class="row row-cols-1 row-cols-md-2 g-4">
