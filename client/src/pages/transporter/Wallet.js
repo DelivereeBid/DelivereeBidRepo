@@ -1,9 +1,11 @@
 import React from "react";
 import { Container, Card, Button, Col, Row, Image } from "react-bootstrap";
+import { NavbarTrans } from '../../components'
 
 function Wallet(props) {
   return (
     <>
+    <NavbarTrans/>
       <Container style={{ marginTop: 100 }}>
         <Row>
           <Col xs={6} md={6}>

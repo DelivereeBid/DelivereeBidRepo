@@ -22,7 +22,7 @@ function Navbar (props) {
 
     return (
       <>
-      {JSON.stringify(profile)}
+      {/* {JSON.stringify(profile)} */}
     <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <a className="navbar-brand" href="#"><Link to={role === 'shipper' ? '/shipper' : '/transporter'}>DeliverieeBid</Link></a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@ function Navbar (props) {
               </li>
             } */}
 
-            { role === 'transporter' &&
+            {/* { role === 'transporter' &&
               <li className="nav-item">
                 <a className="nav-link" href="#"><Link to='/transporter/wallet'>Wallet</Link></a>
               </li>
@@ -47,22 +47,23 @@ function Navbar (props) {
               <li className="nav-item">
                 <a className="nav-link" href="#">Delivery Status</a>
               </li>
-            }
+            } */}
 
             <li className="nav-item">
               <a className="nav-link" href="#"><Link to='/vechileInformation'></Link>Vechile</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Inbox</a>
-            </li>
-            <li className="nav-item">
-              <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
-            </li>
           </ul>
-          <form className="form-inline my-2 my-lg-0">
+          <ul className="navbar-nav mr-2">
+              <li className="nav-item">
+              <a className="nav-item">Welcome, {profile.username}</a>
+              </li>
+          </ul>
+          
+          <button className="nav-item" onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
+          {/* <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
             <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+          </form> */}
         </div>
       </nav>
       </>
