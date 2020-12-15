@@ -62,7 +62,13 @@ function RegisterTranspotter (props) {
                 <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
               </div>
               <div class="form-group">
-                <label for="vehicle">Vehicle</label>
+                <label className="mb-3" for="vehicle">Vehicle</label> <br></br>
+                {/* <select name="vehicle" id="cars">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select> */}
                 <input onChange={(e) => changeInput(e)} type="text" name="vehicle" class="form-control" />
               </div>
               {/* <div className="form-group">
