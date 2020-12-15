@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchTransporter, fetchTransporterById } from "../../store/index";
-import { NavbarTrans} from '../../components'
-
+import { NavbarTrans } from "../../components";
 
 function HomeTransporter(props) {
   const history = useHistory();
@@ -11,16 +10,16 @@ function HomeTransporter(props) {
   const transporter = useSelector((state) => state.dataTransporter);
   const trucking = useSelector((state) => state.transporter);
   const transporterId = +localStorage.getItem("transporterId");
-  console.log(transporter, 'tra');
+  console.log(transporter, "tra");
   useEffect(() => {
     dispatch(fetchTransporter());
     dispatch(fetchTransporterById(transporterId));
   }, [dispatch]);
-  
+
   const changePage = (id) => {
     history.push(`/transporter/${id}`);
   };
-  
+
   const toControlPage = (ShipperId) => {
     history.push(
       `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
@@ -28,13 +27,13 @@ function HomeTransporter(props) {
   };
 
   // const filterBid = transporter.filter((el) => {
-  //   return el.id == 
+  //   return el.id ==
   // })
 
   // console.log(filterBid, 'feltier')
   return (
     <>
-    <NavbarTrans/>
+      <NavbarTrans />
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">
@@ -44,9 +43,7 @@ function HomeTransporter(props) {
               <div className="card-body mt-2 text-center mx-auto">
                 <h5>{el.product_name}</h5>
                 {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
-                {
-                  console.log(transporter[0].ShipperId, 'awa')
-                }
+                {console.log(transporter[0].ShipperId, "awa")}
                 <img
                   className="card-img-top"
                   src={el.product_picture}
@@ -55,6 +52,9 @@ function HomeTransporter(props) {
                 <h5 className=" mt-2">{el.description}</h5>
                 <h5 className=" mt-2">{el.from}</h5>
                 <h5 className=" mt-2">{el.to}</h5>
+                {el.Posts.map((post) => (
+                  <p>{post.status}</p>
+                ))}
                 {el.Posts.some(
                   (post) => post.TransporterId === transporterId
                 ) ? (
@@ -68,6 +68,8 @@ function HomeTransporter(props) {
                   ) : (
                     ""
                   )
+                ) : el.Posts.some((post) => (post.status = "accepted")) ? (
+                  ""
                 ) : (
                   <button
                     onClick={() => changePage(el.id)}
