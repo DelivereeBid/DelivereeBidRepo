@@ -53,10 +53,7 @@ function App() {
           <PrivateRoute auth="transporter_token" exact component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
           </PrivateRoute>
           <Route exact path='/'>
-            {
-              homePageRedirectHandler()
-            }
-            <HomePage/>
+            <HomePage />
           </Route>
           <PrivateRoute auth="transporter_token" redirect='/transporter-login' path='/transporter/:id' component={DetailPostShipper}>
           </PrivateRoute>
