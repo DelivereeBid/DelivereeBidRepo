@@ -11,6 +11,15 @@ function TableRowShipper(props) {
 
   console.log(bidder, "ini bidder dari table row shipper");
 
+  useEffect(() => {
+    if(bidder.status === 'accepted') {
+        dispatch({
+          type: "SET_BID_ID_POST_ID",
+          payload: bidder,
+        })
+    }
+  },[])
+
   function selectedBid(e, bidder) {
     console.log(bidder);
     e.preventDefault();

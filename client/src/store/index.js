@@ -1,8 +1,6 @@
-
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "../axios/axiosInstance";
-
 
 const tokenShipper = localStorage.getItem("shipper_token");
 const tokenTransporter = localStorage.getItem("transporter_token");
@@ -22,6 +20,8 @@ const initialState = {
   profile_shipper: {},
   dataTransporter: [],
   profileTransporter: [],
+  postId: 0,
+  bidId: 0
 };
 
 export const fetchShippers = () => {
@@ -86,14 +86,14 @@ export const fetchTransporterById = (id) => {
 };
 
 export const fetchProfileShipper = (id) => {
-  console.log(id, 'masuk')
+  console.log(id, "masuk");
   return (dispatch) => {
     axios({
       url: `/shipper/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
-        console.log(data, "<<< ini data ")
+        console.log(data, "<<< ini data ");
         dispatch({
           type: "SET_PROFILE_SHIPPER",
           payload: data,
@@ -104,8 +104,6 @@ export const fetchProfileShipper = (id) => {
       });
   };
 };
-
-
 
 export const fetchPostById = (id) => {
   return (dispatch) => {
@@ -179,12 +177,14 @@ export const updateWalletShipper = (id, payload) => {
 };
 
 export const transporterById = (id) => {
+  console.log(id);
   return (dispatch) => {
     axios({
       url: `/transporter/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
+        console.log(data, "dataById");
         dispatch({
           type: "SET_TRANSPORTER_ID",
           payload: data,
@@ -252,7 +252,6 @@ export const createPostShipper = (payload) => {
   formData.append("from", payload.from);
   formData.append("to", payload.to);
   formData.append("description", payload.description);
-  console.log(tokenShipper)
   return (dispatch) => {
     // console.log(payload)
     axios({
@@ -260,7 +259,7 @@ export const createPostShipper = (payload) => {
       method: "POST",
       data: formData,
       headers: {
-        access_token: tokenShipper,
+        access_token: localStorage.getItem("shipper_token"),
         "content-type": "multipart/form-data",
       },
     })
@@ -453,11 +452,16 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER":
       return { ...state, transporter: action.payload };
     case "SET_TRANSPORTER_ID":
-      localStorage.setItem("transporterId", action.payload);
+      localStorage.setItem("transporterId", action.payload.id);
       return { ...state, transporterId: action.payload };
     case "SET_SHIPPER_ID":
       localStorage.setItem("shipperId", action.payload);
       return { ...state, shipperId: action.payload };
+    case "SET_BID_ID_POST_ID":
+      console.log(action.payload, 'ini di payload reducer')
+      localStorage.setItem("bidId", action.payload.BidId);
+      localStorage.setItem("postId", action.payload.id);
+      return { ...state, bidId: action.payload.BidId, postId: action.payload.id };
     case "SET_POST":
       return { ...state, post: action.payload };
     case "SET_DEAL":
