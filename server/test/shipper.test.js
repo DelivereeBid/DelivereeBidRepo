@@ -255,6 +255,16 @@ describe("Shipper Router Test", () => {
           done();
         });
     });
+    it("200 Success GET shipper by id - should return shipper", (done) => {
+      request(app)
+        .get("/shipper/" + 1)
+        .then((response) => {
+          console.log(response)
+          const { body, status } = response;
+          expect(status).toBe(200);
+          done();
+        });
+    });
   })
 
   describe("PUT/shipper - update shipper data", () => {

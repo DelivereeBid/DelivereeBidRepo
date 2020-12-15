@@ -373,6 +373,7 @@ export const setLoginShipper = (payload) => {
 };
 
 export const setBid = (payload) => {
+  console.log(payload, 'payload setBid 376')
   return (dispatch) => {
     axios({
       url: "/post",

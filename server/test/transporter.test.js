@@ -297,7 +297,30 @@ describe("Transporter Router Test", () => {
         });
     });
   })
-
+  
+  describe("GET/transporter/:id - transporter findBy id process", () => {
+    it("200 Success GET transporter - should return list of transporters", (done) => {
+      request(app)
+        .get("/transporter/1")
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(200);
+          expect(body).not.toBeNull()
+          done();
+        });
+    });
+    it("404 Failed GET transporter - should return not fund", (done) => {
+      request(app)
+        .get("/transporter/0")
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(404);
+          expect(body).toEqual(["Transporter not found"])
+          done();
+        });
+    });
+  })
+  
   describe("PUT/transporter - update transporter data", () => {
     
     beforeAll(async (done) => {
@@ -395,4 +418,17 @@ describe("Transporter Router Test", () => {
         });
     });
   })
+  // describe("PATCH /transporter/:id - update wallet only", () => {
+  //   it("200 success update wallet", (done) => {
+  //     request(app)
+  //     .patch(`transporter/${transporterId}`)
+  //     .send({wallet: 500000})
+  //     .then((response) => {
+  //       const {body, status} = response
+  //       expect(status).toBe(200)
+  //       expect(body).toEqual(["Success update wallet"])
+  //       done()
+  //     })
+  //   })
+  // })
 });

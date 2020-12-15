@@ -1,7 +1,6 @@
 const {Transporter} = require('../models')
 const {comparePassword} = require('../helper/bcrypt')
 const {generateToken} = require('../helper/jwt')
-const transporter = require('../models/transporter')
 
 class TransporterController {
     static findAll(req, res, next){
@@ -20,7 +19,12 @@ class TransporterController {
         const {id} = req.params
         Transporter.findByPk(id)
         .then(transporter => {
-            res.status(200).json(transporter)
+            if(transporter){
+                res.status(200).json(transporter)
+            }
+            else {
+                throw {msg: "Transporter not found", code: 404}    
+            }
         })
         .catch(err => next(err))
     }
@@ -66,9 +70,10 @@ class TransporterController {
         const {wallet} = req.body
         Transporter.update({wallet}, { where: {id: id}})
         .then(transporter => {
-            res.status(200).json({transporter, msg: "Success update profile"})
+            res.status(200).json({msg: "Success update wallet"})
         })
         .catch(err => {
+            console.log(err, 'err anna')
             next(err)
         })
     }
