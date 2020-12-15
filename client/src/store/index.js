@@ -303,6 +303,7 @@ export const setLogin = (payload) => {
       },
     })
       .then(({ data }) => {
+        console.log(data, 'ini setLogin index 306')
         localStorage.setItem("transporter_token", data.access_token);
         dispatch({ type: "SET_TRANSPORTER_TOKEN", payload: data.access_token });
         dispatch({ type: "SET_TRANSPORTER_ID", payload: data.id });
@@ -344,7 +345,7 @@ export const setBid = (payload) => {
       },
     })
       .then(({ data }) => {
-        console.log(data, "<<<< dari setbid action");
+        console.log(data, "data hasil axios setBid 348 index");
       })
       .catch((err) => console.log(err, "<<< eror setBid action"));
   };
@@ -452,7 +453,7 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER":
       return { ...state, transporter: action.payload };
     case "SET_TRANSPORTER_ID":
-      localStorage.setItem("transporterId", action.payload.id);
+      localStorage.setItem("transporterId", action.payload);
       return { ...state, transporterId: action.payload };
     case "SET_SHIPPER_ID":
       localStorage.setItem("shipperId", action.payload);

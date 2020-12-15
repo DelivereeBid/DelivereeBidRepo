@@ -160,7 +160,9 @@ function ControlPage (props) {
 
 
 
-            document.querySelector('.msg_card_body').appendChild(div);
+                document.querySelector('.msg_card_body').appendChild(div);
+
+
 
 
 
@@ -198,11 +200,13 @@ function ControlPage (props) {
     const handleSubmitLoc = e => {
         e.preventDefault();
         const city = address.split(',')
-        dispatch(patchTrackingLogById(userId, {tracking_log: city[0]}))
+        dispatch(patchTrackingLogById(postID, {tracking_log: city[0]}))
+        setAddress('')
     }
 
+
     return (
-        <>
+        <div >
             {/* <Navbar/> */}
             <h3>Control Page</h3>
             <div className="container-fluid h-100">
@@ -393,7 +397,7 @@ function ControlPage (props) {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

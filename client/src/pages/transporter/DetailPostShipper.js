@@ -25,6 +25,7 @@ function DetailPostShipper(props) {
       price,
     };
     console.log(price, id)
+    console.log(payload , 'ini DetailPostShipper di 28')
     dispatch(setBid(payload));
     history.push("/transporter");
   };

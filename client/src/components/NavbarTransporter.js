@@ -19,6 +19,10 @@ const NavbarTrans = (props) => {
         history.push('/')
       }
 
+    if (!profile) {
+      return <h1>loading</h1>
+    }
+
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
@@ -32,7 +36,10 @@ const NavbarTrans = (props) => {
                 <a className="nav-link" href="#"><Link to='/transporter/wallet'>Wallet</Link></a>
               </li>
             <li className="nav-item">
+
                 <a className="nav-link" >Your Balance : {profile.wallet}</a>
+
+
             </li>
           </ul>
           <ul className="navbar-nav mr-2">
@@ -40,7 +47,7 @@ const NavbarTrans = (props) => {
               <a className="nav-item">Welcome, {profile.username}</a>
               </li>
           </ul>
-          
+
           <button className="nav-item" onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
         </div>
       </nav>
