@@ -67,7 +67,6 @@ async function createInitialPost() {
     price, status: 'Pending', tracking_log: 'Pending', name: decoded.username, vehicle: decoded.vehicle})
     .then(res => {
         postId = res.id
-        console.log(res, 'race')
     })
     .catch(err => {
         throw err;
@@ -136,7 +135,7 @@ afterAll(async (done) => {
     await queryInterface.bulkDelete("Shippers")
     done();
   })
-
+  
 describe("POST /post", () => {
     it("201 Success POST /post - should create new post", (done) => {
         request(app)
@@ -294,7 +293,96 @@ describe("GET /post", () => {
       })
   })
 })
-
+describe("PATCH /post", () => {
+  it("400 msg failed update post status null", (done) => {
+    request(app)
+    .patch(`/post/${postId}`)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(400)
+        expect(body).toEqual(["Failed update post"])
+        done()
+      }
+    })
+  })
+  it("404 post not found", (done) => {
+    request(app)
+    .patch(`/post/1000`)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(404)
+        expect(body).toEqual(["Post not found"])
+        done()
+      }
+    })
+  })
+  it("200 msg success update post", (done) => {
+    request(app)
+    .patch(`/post/${postId}`)
+    .send({
+      status: 'accepted'
+    })
+    .set('access_token', access_token)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(200)
+        expect(body).toEqual({"msg": "Success update post"})
+        done()
+      }
+    })
+  })
+})
+describe("PATCH /post/tracking/:id", () => {
+  it("400 msg failed update post status null", (done) => {
+    request(app)
+    .patch(`/post//tracking/${postId}`)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(400)
+        expect(body).toEqual(["Failed update post"])
+        done()
+      }
+    })
+  })
+  it("404 post not found", (done) => {
+    request(app)
+    .patch(`/post//tracking/1000`)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(404)
+        expect(body).toEqual(["Post not found"])
+        done()
+      }
+    })
+  })
+  it("200 msg success update post", (done) => {
+    request(app)
+    .patch(`/post/tracking/${postId}`)
+    .send({
+      tracking_log: 'bandung'
+    })
+    .set('access_token', access_token)
+    .end((err, response) => {
+      if(err) throw err;
+      else {
+        const { body, status } = response
+        expect(status).toBe(200)
+        expect(body).toEqual({"msg": "Success update post"})
+        done()
+      }
+    })
+  })
+})
 describe("PUT /post", () => {
   it("200 Success UPDATE - should update post values", (done) => {
     request(app)
@@ -464,3 +552,4 @@ describe("DELETE /post", () => {
       })
   })
 })
+
