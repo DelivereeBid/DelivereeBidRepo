@@ -33,6 +33,7 @@ function CreatePostShippers (props) {
 
     function onFrom (e) {
         e.preventDefault()
+
         setFrom(e.target.value)
     }
 
@@ -49,13 +50,20 @@ function CreatePostShippers (props) {
 
     function submitPost (e) {
         e.preventDefault()
+        const arrFrom = [ ...from]
+        arrFrom[0] = arrFrom[0].toUpperCase()
+
+        const arrTo = [ ...to]
+        arrTo[0] = arrTo[0].toUpperCase()
+
         const payload = {
             product_name,
-            from,
-            to,
+            from : arrFrom.join(''),
+            to: arrTo.join(''),
             file,
             description
         }
+        // console.log(arrFrom.join(''))
         console.log(file)
         dispatch(createPostShipper(payload))
         history.push('/shipper')
