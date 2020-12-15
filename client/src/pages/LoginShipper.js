@@ -12,6 +12,7 @@ function LoginShipper(props) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    localStorage.clear();
     const payload = {
       email,
       password,
