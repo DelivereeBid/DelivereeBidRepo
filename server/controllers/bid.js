@@ -52,7 +52,6 @@ class BidController {
   }
   static createBid(req, res, next) {
     const { product_name, file, description, from, to } = req.body;
-    console.log(file, "ngga");
     Bid.create({
       product_name,
       product_picture: file,

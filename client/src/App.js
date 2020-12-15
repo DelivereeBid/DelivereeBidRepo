@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link  } from 'react-router-dom'
+import { Switch, Route, Link, useHistory  } from 'react-router-dom'
 import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
 import { Provider} from 'react-redux'
 import store from './store'
@@ -7,6 +7,7 @@ import './App.css'
 import PrivateRoute from './routers/PrivateRoute'
 
 function App() {
+  const history = useHistory();
   let shipper_token = localStorage.getItem('shipper_token');
   let transporter_token = localStorage.getItem('transporter_token');
 
@@ -15,6 +16,24 @@ function App() {
       return 'shipper_token'
     } else {
       return 'transporter_token'
+    }
+  }
+
+  function homePageHandler () {
+    let redirect = false;
+    if(shipper_token || transporter_token) {
+      redirect = true;
+    }
+    return redirect;
+  }
+
+  function homePageRedirectHandler () {
+    if(shipper_token) {
+      history.push('/shipper')
+    } else if (transporter_token) {
+      history.push('/transporter')
+    } else {
+      return ''
     }
   }
 
@@ -28,6 +47,9 @@ function App() {
           <PrivateRoute auth="transporter_token" exact component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
           </PrivateRoute>
           <Route exact path='/'>
+            {
+              homePageRedirectHandler()
+            }
             <HomePage/>
           </Route>
           <PrivateRoute auth="transporter_token" redirect='/transporter-login' path='/transporter/:id' component={DetailPostShipper}>

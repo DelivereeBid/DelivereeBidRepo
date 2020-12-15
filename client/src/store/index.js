@@ -1,8 +1,6 @@
-
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "../axios/axiosInstance";
-
 
 const tokenShipper = localStorage.getItem("shipper_token");
 const tokenTransporter = localStorage.getItem("transporter_token");
@@ -88,14 +86,14 @@ export const fetchTransporterById = (id) => {
 };
 
 export const fetchProfileShipper = (id) => {
-  console.log(id, 'masuk')
+  console.log(id, "masuk");
   return (dispatch) => {
     axios({
       url: `/shipper/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
-        console.log(data, "<<< ini data ")
+        console.log(data, "<<< ini data ");
         dispatch({
           type: "SET_PROFILE_SHIPPER",
           payload: data,
@@ -106,8 +104,6 @@ export const fetchProfileShipper = (id) => {
       });
   };
 };
-
-
 
 export const fetchPostById = (id) => {
   return (dispatch) => {
@@ -181,14 +177,14 @@ export const updateWalletShipper = (id, payload) => {
 };
 
 export const transporterById = (id) => {
-  console.log(id)
+  console.log(id);
   return (dispatch) => {
     axios({
       url: `/transporter/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
-        console.log(data, 'dataById')
+        console.log(data, "dataById");
         dispatch({
           type: "SET_TRANSPORTER_ID",
           payload: data,
@@ -256,7 +252,6 @@ export const createPostShipper = (payload) => {
   formData.append("from", payload.from);
   formData.append("to", payload.to);
   formData.append("description", payload.description);
-  console.log(tokenShipper)
   return (dispatch) => {
     // console.log(payload)
     axios({
@@ -264,7 +259,7 @@ export const createPostShipper = (payload) => {
       method: "POST",
       data: formData,
       headers: {
-        access_token: tokenShipper,
+        access_token: localStorage.getItem("shipper_token"),
         "content-type": "multipart/form-data",
       },
     })
