@@ -13,6 +13,13 @@ import Pickup from '../assets/vechile/7.png'
 import Van from '../assets/vechile/8.png'
 import Ekonomi from '../assets/vechile/9.png'
 
+import PlacesAutocomplete from 'react-places-autocomplete';
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+  } from 'react-places-autocomplete';
+
 function CreatePostShippers (props) {
     const [product_name, setName] = useState('')
     const [from, setFrom] = useState('')
@@ -23,6 +30,7 @@ function CreatePostShippers (props) {
     const [file, setFile] = useState('')
     const dispatch = useDispatch()
     const history = useHistory()
+    let [address, setAddress] = useState('')
 
     const show = useSelector((state) => state.show)
 
@@ -32,9 +40,8 @@ function CreatePostShippers (props) {
     }
 
     function onFrom (e) {
-        e.preventDefault()
-
-        setFrom(e.target.value)
+        const city = e.target.value.split(',')
+        setFrom(city[0])
     }
 
     function onTo (e) {
@@ -50,10 +57,14 @@ function CreatePostShippers (props) {
 
     function submitPost (e) {
         e.preventDefault()
-        const arrFrom = [ ...from]
+        const formSplit = from.split(',');
+        const city = formSplit[0];
+        const arrFrom = [ ...city]
         arrFrom[0] = arrFrom[0].toUpperCase()
 
-        const arrTo = [ ...to]
+        const toSplit = to.split(',');
+        const toCity = toSplit[0];
+        const arrTo = [ ...toCity]
         arrTo[0] = arrTo[0].toUpperCase()
 
         const payload = {
@@ -81,6 +92,39 @@ function CreatePostShippers (props) {
       };
 
 
+    //Google Places API
+
+    const handleFromChange = address => {
+        setFrom(address)
+    };
+
+    const handleToChange = address => {
+        setTo(address)
+    };
+
+    const handleSelectFrom = address => {
+        setAddress(address)
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(latLng => {
+                setFrom(address)
+                console.log('Success', latLng)
+            })
+            .catch(error => console.error('Error', error));
+    };
+
+    const handleSelectTo = address => {
+        setAddress(address)
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(latLng => {
+                setTo(address)
+                console.log('Success', latLng)
+            })
+            .catch(error => console.error('Error', error));
+    };
+
+
     return (
 
         <>
@@ -100,15 +144,95 @@ function CreatePostShippers (props) {
                         </div>
                         <div class="form-group row">
                             <label for="inputFrom" class="col-sm-2 col-form-label">From</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onFrom(e)} type="text" class="form-control" id="inputFrom" placeholder="Jl. Pangeran Antasari no.2A"/>
+                            <div className="col-sm-10">
+                                <PlacesAutocomplete
+                                    value={from}
+                                    onChange={handleFromChange}
+                                    onSelect={handleSelectFrom}
+                                    >
+                                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <input
+                                            {...getInputProps({
+                                                placeholder: 'Search Places ...',
+                                                className: 'location-search-input form-control'
+                                            })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions.map(suggestion => {
+                                                const className = suggestion.active
+                                                ? 'suggestion-item--active'
+                                                : 'suggestion-item';
+                                                // inline style for demonstration purpose
+                                                const style = suggestion.active
+                                                ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                return (
+                                                <div
+                                                    {...getSuggestionItemProps(suggestion, {
+                                                    className,
+                                                    style,
+                                                    })}
+                                                >
+                                                    <span>{suggestion.description}</span>
+                                                </div>
+                                                );
+                                            })}
+                                            </div>
+                                        </div>
+                                        )}
+                                </PlacesAutocomplete>
                             </div>
+                            {/* <div class="col-sm-10">
+                                <input onChange={(e) => onFrom(e)} type="text" class="form-control" id="inputFrom" placeholder="Jl. Pangeran Antasari no.2A"/>
+                            </div> */}
                         </div>
                         <div class="form-group row">
                             <label for="inputTo" class="col-sm-2 col-form-label">To</label>
-                            <div class="col-sm-10">
-                                <input onChange={(e) => onTo(e)}  type="text" class="form-control" id="inputTo" placeholder="Jl. Sangkuriang no.31"/>
+                            <div className="col-sm-10">
+                                <PlacesAutocomplete
+                                    value={to}
+                                    onChange={handleToChange}
+                                    onSelect={handleSelectTo}
+                                    >
+                                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <input
+                                            {...getInputProps({
+                                                placeholder: 'Search Destination ...',
+                                                className: 'location-search-input form-control'
+                                            })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions.map(suggestion => {
+                                                const className = suggestion.active
+                                                ? 'suggestion-item--active'
+                                                : 'suggestion-item';
+                                                // inline style for demonstration purpose
+                                                const style = suggestion.active
+                                                ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                return (
+                                                <div
+                                                    {...getSuggestionItemProps(suggestion, {
+                                                    className,
+                                                    style,
+                                                    })}
+                                                >
+                                                    <span>{suggestion.description}</span>
+                                                </div>
+                                                );
+                                            })}
+                                            </div>
+                                        </div>
+                                        )}
+                                </PlacesAutocomplete>
                             </div>
+                            {/* <div class="col-sm-10">
+                                <input onChange={(e) => onTo(e)}  type="text" class="form-control" id="inputTo" placeholder="Jl. Sangkuriang no.31"/>
+                            </div> */}
                         </div>
                         <div class="form-group row">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>

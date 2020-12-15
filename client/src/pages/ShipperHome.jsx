@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import ShipperCardPost from '../components/ShipperCardPost';
+import './ShipperHome.css'
 
 
 export default function ShipperHome () {
@@ -35,38 +36,68 @@ export default function ShipperHome () {
       <div className="content" stye={{margin: '0 1%'}}>
         <div className="row">
           <div className="col-3">
-            <div className="card px-4 py-2 mb-4">
-                <h3 className="">Filter Result</h3>
-                <Button className="text-left" variant="light" >BIZ</Button>
-                <Button className="text-left" variant="light" >Distance</Button>
-                <Button className="text-left" variant="light" >Price</Button>
-                <Button className="text-left" variant="light" >Distance</Button>
-                <Button className="text-left" variant="light" >Price</Button>
-                <Button className="text-left" variant="light" >Distance</Button>
-                <Button className="text-left" variant="light" >Price</Button>
-                <Button className="text-left" variant="light" >Distance</Button>
+            <div class="profile-sidebar">
+              <div class="profile-userpic">
+                <img 
+                src="https://st2.depositphotos.com/4216129/12320/v/950/depositphotos_123208602-stock-illustration-long-distance-truck-driver-portrait.jpg" 
+                class="img-responsive" alt="" />
+              </div>
+              <div class="profile-usertitle">
+                <div class="profile-usertitle-name">
+                  Aloysius Nanang
+                </div>
+                <div class="profile-usertitle-job">
+                  Vendor
+                </div>
+              </div>
+              <div class="profile-userbuttons">
+                <button type="button" class="btn btn-success btn-sm">Profile</button>
+                <button type="button" class="btn btn-danger btn-sm">Message</button>
+              </div>
+              <div class="profile-usermenu">
+                <ul className='nav'>
+                  <li class="active col-12 mb-2">
+                    <a href="#">
+                    <i class="glyphicon glyphicon-home"></i>
+                    Overview </a>
+                  </li>
+                  <li className="col-12 mb-2">
+                    <a href="#">
+                    Account Settings </a>
+                  </li>
+                  <li className="col-12 mb-2">
+                    <a href="#" target="_blank">
+                  Tasks </a>
+                  </li>
+                  <li className="col-12 mb-2">
+                    <a href="#">
+                  Help </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div className="col-9">
             <div className="card px-4 py-2 mb-4">
               <span className="row">
-              <h3 className="">Your Shipment <i class="fas fa-plus float-right" type='button' onClick={handleShow}></i></h3>
-              <Button className="ml-3" variant="light" >Price</Button>
-              <Button className="ml-1" variant="light" >Distance</Button>
+              <h3 className="mt-1 ml-1">Your Shipment </h3>
+              <i class="fas fa-plus ml-auto fa-2x mt-1 mr-1" type='button' onClick={handleShow}></i>
               </span>
             </div>
-            {
-              filterPostBidFromShipper.map(shipper => {
-                return (
-                  <ShipperCardPost
-                    key={shipper.id}
-                    shipper={shipper}
-                  />
-                  
-                )
-              })
-            }
             <Switch>
+              <Route exact path='/shipper'>
+                {
+                  filterPostBidFromShipper.map(shipper => {
+                    return (
+                      <ShipperCardPost
+                        key={shipper.id}
+                        shipper={shipper}
+                      />
+                      
+                    )
+                  })
+                }
+              </Route>
               <Route path='/shipper/bidder/:id'>
                 <BidderForShipper />
               </Route>
