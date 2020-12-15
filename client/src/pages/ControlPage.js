@@ -52,7 +52,7 @@ function ControlPage (props) {
 
     useEffect(() => {
         if(transporterId) {
-            dispatch(transporterById(transporterId))
+            dispatch(transporterById(userId))
         }
 
         socketRef.current = io.connect('http://localhost:3000');
@@ -64,7 +64,11 @@ function ControlPage (props) {
         //ALTERNATIVE 2 ==START=========
 
         // Join chatroom
-        socketRef.current.emit('joinRoom', { username, room: `shipper_${userId}&transporter_${transporterId}` });
+        if(role === 'transporter'){
+            socketRef.current.emit('joinRoom', { username, room: `shipper_${transporterId}&transporter_${userId}` });
+        } else {
+            socketRef.current.emit('joinRoom', { username, room: `shipper_${userId}&transporter_${transporterId}` });
+        }
 
         // Get room and users
         socketRef.current.on('roomUsers', ({ room, users }) => {
@@ -177,7 +181,7 @@ function ControlPage (props) {
 
     return (
         <>
-            <Navbar/>
+            {/* <Navbar/> */}
             <h3>Control Page</h3>
             <div className="container-fluid h-100">
                 <div className="stepwizard">
@@ -288,13 +292,13 @@ function ControlPage (props) {
                         </div>
                         {   role === 'transporter' &&
                             <div className="card">
-                                    {/* {
+                                    {
                                         // let latlon = position.coords.latitude + "," + position.coords.longitude;
                                         latitude && longitude ?
                                         <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude +','+longitude}
                                         &zoom=14&size=400x400&sensor=false&markers=color:red%7C${latitude + ',' + longitude}
                                         &key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw`} alt=''></img> : null
-                                    } */}
+                                    }
                                 <div className="card-body">
                                     <h4 className="card-title">Update Location</h4>
                                     <form>
