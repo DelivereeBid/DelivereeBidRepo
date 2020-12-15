@@ -179,15 +179,17 @@ export const updateWalletShipper = (id, payload) => {
 };
 
 export const transporterById = (id) => {
+  console.log(id)
   return (dispatch) => {
     axios({
       url: `/transporter/${id}`,
       method: "GET",
     })
       .then(({ data }) => {
+        console.log(data, 'dataById')
         dispatch({
           type: "SET_TRANSPORTER_ID",
-          payload: data,
+          payload: data.id,
         });
       })
       .catch((err) => {
