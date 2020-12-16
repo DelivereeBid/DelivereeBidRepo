@@ -62,8 +62,25 @@ function LoginPage(props) {
                   </div>
 
                   <div class="col-lg-12 loginbttm">
-                    <div class="col-lg-6 login-btm login-text">
-                      <p role="button" onClick={() => handleRegister()}>
+                    <div class="col-lg-6 login-btn login-text">
+                      <button
+                        type="submit"
+                        class="mr-2 btn btn-outline-primary"
+                      >
+                        Sign In
+                      </button>
+                      <button
+                        onClick={() => toHome()}
+                        type="submit"
+                        class="btn btn-outline-primary"
+                      >
+                        Back
+                      </button>
+                      <p
+                        className="mt-3"
+                        role="button"
+                        onClick={() => handleRegister()}
+                      >
                         Don't have an account?
                       </p>
                     </div>
@@ -71,22 +88,23 @@ function LoginPage(props) {
                 </form>
               </div>
             </div>
-            <div class="col-lg-3 col-md-2">
-              <button
-                onClick={(e) => handleLogin(e)}
-                type="submit"
-                class="btn btn-outline-primary"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => toHome()}
-                type="submit"
-                class="btn btn-outline-primary mb-5"
-              >
-                Back
-              </button>
-            </div>
+            <div class="col-lg-3 col-md-2"></div>
+          </div>
+          <div class="col-lg-3 col-md-2">
+            <button
+              onClick={(e) => handleLogin(e)}
+              type="submit"
+              class="btn btn-outline-primary"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => toHome()}
+              type="submit"
+              class="btn btn-outline-primary mb-5"
+            >
+              Back
+            </button>
           </div>
         </div>
       </div>
