@@ -16,7 +16,10 @@ class BidController {
       .then((bid) => {
         res.status(200).json(bid);
       })
-      .catch((err) => next(err));
+      .catch((err) => {
+        /* istanbul ignore next */
+        next(err)
+      });
   }
   static getById(req, res, next) {
     const { id } = req.params;
@@ -97,12 +100,14 @@ class BidController {
       }
     )
       .then((bid) => {
+        /* istanbul ignore next */
         if(bid[0] === 0) throw {msg: "Bid not found", code:404}
         else {
           res.status(200).json({ msg: "Success patch bid" });
         }
       })
       .catch((err) => {
+        /* istanbul ignore next */
         next(err);
       });
   }
@@ -115,9 +120,12 @@ class BidController {
       },
     })
       .then((bid) => {
-        res.status(200).json({ msg: "Success delete bid" });
+        res.status(200).json({ msg: "Success delete bid" })
       })
-      .catch((err) => next(err));
+      .catch((err) => {
+        /* istanbul ignore next */
+        next(err)
+      });
   }
 }
 

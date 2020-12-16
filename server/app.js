@@ -36,6 +36,7 @@ let users = [];
 
 const botName = "DeliverieeBid Bot";
 
+/* istanbul ignore next */
 io.on("connection", (socket) => {
   // socket.emit("your id", socket.id);
 
