@@ -101,7 +101,7 @@ export const fetchTransporterById = (id) => {
 };
 
 export const fetchProfileShipper = (id) => {
-  console.log(id, "masuk");
+  console.log(id, "masuk dispatch profile sihpepr");
   return (dispatch) => {
     axios({
       url: `/shipper/${id}`,

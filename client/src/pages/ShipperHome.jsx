@@ -35,13 +35,16 @@ export default function ShipperHome () {
       dispatch(fetchProfileShipper(shipperId))
   },[dispatch])
 
+  document.body.style = 'background: #f6f6f6;';
+
+
   return (
     <>
       <Navbar />
       <img style={{top: '10px', zIndex: '-1', position: 'fixed'}} width= '100%' src={wave}/>
       <div className="content" stye={{margin: '0 1%'}}>
-        <div className="row">
-          <div className="col-3">
+        <div className="row d-flex justify-content-between">
+          <div className="col-md-3 col-12">
             <div class="card shadow-sm profile-sidebar " style={{borderRadius: '15px'}}>
 
               <div class="profile-userpic">
@@ -66,7 +69,7 @@ export default function ShipperHome () {
               </div>
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-md-9 col-12">
             <div className="card px-4 py-2 mb-4 text-white" style={{border: '0px', backgroundColor: 'transparent'}}>
               <span className="row">
                 <h3 className="mt-1 ml-1">Your Shipment </h3>
