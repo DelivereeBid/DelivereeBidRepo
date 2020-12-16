@@ -105,10 +105,10 @@ function App() {
           <LoginShipper />
         </Route>
         <Route exact path="/transporter-login">
-          <LoginTransporter />
+          <LoginShipper />
         </Route>
         <Route exact path="/shipper-register">
-          <RegisterShipper />
+          <RegisterTranspotter />
         </Route>
         <Route path="/transporter-register">
           <RegisterTranspotter />
