@@ -49,6 +49,7 @@ function ControlPage (props) {
 
     const shipper = useSelector((state) => state.shipper)
     const post = useSelector((state) => state.post[0])
+    console.log(shipper, post , 'ini shipper dan posttttttttttttttttttttttttttt')
 
 
     const transporter = useSelector((state) => state.transporterId)
@@ -95,11 +96,14 @@ function ControlPage (props) {
             socketRef.current.emit('joinRoom', { username, room: `shipper_${userId}&transporter_${transporterId}` });
         }
 
+
         // Get room and users
         socketRef.current.on('roomUsers', ({ room, users }) => {
             setOutputRoomName(room);
             setOutputUsers(users);
         });
+
+
 
         // Message from server
         socketRef.current.on('message', message => {
@@ -108,13 +112,13 @@ function ControlPage (props) {
             appendMessage(message)
 
 
+
+
               // Scroll down
+
             const chatMessages = document.querySelector('.msg_card_body');
             chatMessages.scrollTop = chatMessages.scrollHeight;
         })
-
-
-
 
         //ALTERNATIVE 2 ==END==========
 
@@ -142,10 +146,13 @@ function ControlPage (props) {
 
         console.log(outputMessage)
 
+
+
         function appendMessage(message) {
             let div;
+
             if(username === message.username) {
-                 div = document.createElement('div');
+                div = document.createElement('div');
                 div.classList.add('d-flex');
                 div.classList.add('justify-content-start');
                 div.classList.add('mb-4');
@@ -167,13 +174,9 @@ function ControlPage (props) {
             }
 
 
-
                 document.querySelector('.msg_card_body').appendChild(div);
 
-
-
-
-
+            // document.querySelector('.msg_card_body').appendChild(div);
 
           }
       //ALTERNATIVE 2 ==END=======
@@ -216,6 +219,19 @@ function ControlPage (props) {
         e.preventDefault()
         dispatch(postShipperRemove(bidId))
         history.push('/shipper')
+    }
+
+
+
+
+    if((!shipper || !post ) && role === 'transporter') {
+        return(
+            <div>
+                <h3>Control Page</h3>
+                <h1>You have delivered the items</h1>
+            </div>
+
+        )
     }
 
 
