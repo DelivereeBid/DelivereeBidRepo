@@ -60,7 +60,6 @@ function RegisterTranspotter(props) {
 
   return (
     <>
-
       <div class="container register">
                 <div class="row">
                     <div class="col-md-3 register-left">
@@ -121,7 +120,7 @@ function RegisterTranspotter(props) {
                                         <div class="form-group">
                                           <input type="file" name="profile_picture" onChange={(e) => changeInputFile(e)}></input>
                                         </div>
-                                    
+        
                                         <input type="submit" class="btnRegister" value="Register"></input>
                                     </div>
                                     </form>

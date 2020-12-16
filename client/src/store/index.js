@@ -382,6 +382,7 @@ export const setLoginShipper = (payload) => {
         }
       })
       .catch((err) => {
+        console.log(err, '<<< ini error action')
         Swal.fire({
           icon: "error",
           title: err.response.data[0],

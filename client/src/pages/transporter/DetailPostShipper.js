@@ -34,23 +34,47 @@ function DetailPostShipper(props) {
     <>
     <NavbarTrans/>
       {/* {JSON.stringify(detail)} */}
-      <h1 className="text-center">Detail Post Shipper</h1>
       <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col mt-5">
+        <div className="container mb-5" style={{backgroundColor: "blue"}}>
+          <div className="row">
+        <div className="col mx-auto d-flex justify-content-center align-items-center">
+          <img src={detail.product_picture}></img>
+        </div>
+        <div class="col mt-5 mb-5">
           <div class="card">
-            <h3 className="text-center">Detail</h3>
+            <h3 className="text-center">Shipping's Detail</h3>
             <div class="card-body">
-              <h5 class="card-title">Shipper's Information</h5>
-              {/* <p class="card-text">Name           : {detail.Shipper.username}</p> */}
-              {/* <img className="card-img-top" src={detail.Shipper.profile_picture}></img> */}
-              <p class="card-text">From : {detail.from}</p>
-              <p class="card-text">To : {detail.to}</p>
-              <br></br>
-              <p class="card-text">Product name : {detail.product_name} </p>
-              <img src={detail.product_picture}></img>
-              <p className="card-text">Description : {detail.description}</p>
-              <div class="input-group ">
-                <div class="input-group-text">Bid :</div>
+            <table class="table">
+                <tbody>
+                  <tr>
+                   
+                    <th>From</th>
+                    <td>{detail.from}</td>
+                    
+                    
+                  </tr>
+                  <tr>
+                    <th>To</th>
+                    <td>{detail.to}</td>
+                  </tr>
+                  <tr>
+                  <th>Product's Name</th>
+                  <td>{detail.product_name}</td>
+
+                  </tr>
+
+                  <tr>
+                    
+                  <th>Product's Description</th>
+                    
+                    <td>{detail.description}</td>
+                  </tr>
+                  
+                  
+                </tbody>
+              </table>
+              <div class="input-group">
+                <div class="input-group-text mb-3 mr-1">Bid :</div>
                 <input
                   onChange={(e) => {
                     console.log(bid)
@@ -66,8 +90,10 @@ function DetailPostShipper(props) {
             </div>
           </div>
         </div>
+        </div>
       </div>
-      <button className="col-sm-1 btn btn-danger">Back</button>
+      </div>
+     
     </>
   );
 }
