@@ -220,132 +220,74 @@ function ControlPage (props) {
         history.push('/shipper')
     }
 
+  document.body.style = 'background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);';
 
 
 
-    if((!shipper || !post ) && role === 'transporter') {
-        return(
-            <div>
-                <h3>Control Page</h3>
-                <h1>You have delivered the items</h1>
-            </div>
+    // if((!shipper || !post ) && role === 'transporter') {
+    //     return(
+    //         <div>
+    //             <h3>Control Page</h3>
+    //             <h1>You have delivered the items</h1>
+    //         </div>
 
-        )
-    }
+    //     )
+    // }
 
 
     return (
-        <div >
-            {/* <Navbar/> */}
-            <div className="container-fluid h-100 mt-3">
-                <div className="stepwizard">
-                    {   role === 'shipper' &&
-                        <div className="stepwizard-row setup-panel">
-                            <div className="stepwizard-step">
-                                <div  className="btn btn-secondary btn-circle" disabled="disabled">
-                                    <span className="glyphicon glyphicon-envelope"></span>
-                                </div>
-                                <p>{shipper.from}</p>
-                            </div>
-                            <div className="stepwizard-step">
-                                <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
-                                    <span className="glyphicon glyphicon-user"></span>
-                                </div>
-                                <p>
-                                    { post &&
-                                        post.tracking_log
-                                    }
+        <div>
+          {/* <Navbar/> */}
+          <div className="bg-info p-1">
 
-                                </p>
-                            </div>
-                            <div className="stepwizard-step">
-                                <div  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
-                                    <span className="glyphicon glyphicon-ok"></span>
-                                </div>
-                                <p>
-                                    {
-                                        post && shipper &&
-
-                                            post.tracking_log === shipper.to
-                                            ? 'Delivered'
-                                            : shipper.to
-                                    }
-
-                                </p>
-                            </div>
-                        </div>
-                    }
-
-
-                </div>
-                <div className="row justify-content-center h-100 contact-in mt-5 mb-5">
-                    <div className="col-md-4 col-12 col-xl-8 chat">
-                        {/* {   isMyRoom && */}
-                        <div className="card card-chat">
-                            <div className="card-header-chat msg_head">
-                                <div className="d-flex bd-highlight">
-                                    <div className="user_info">
-                                        <span className='text-primary'>To: {username}</span>
+          <div className="stepwizard col-12 mt-5">
+                        {   role === 'shipper' &&
+                            <div className="stepwizard-row setup-panel">
+                                <div className="stepwizard-step">
+                                    <div  className="btn btn-secondary btn-circle" disabled="disabled">
+                                        <span className="glyphicon glyphicon-envelope"></span>
                                     </div>
+                                    <p className='text-danger' style={{fontWeight: 'bold'}}>{shipper.from}</p>
+                                </div>
+                                <div className="stepwizard-step">
+                                    <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
+                                        <span className="glyphicon glyphicon-user"></span>
+                                    </div>
+                                    <p className='text-light' style={{fontWeight: 'bold'}}>
+                                        { post &&
+                                            post.tracking_log
+                                        }
+
+                                    </p>
+                                </div>
+                                <div className="stepwizard-step">
+                                    <div  className="btn btn-secondary btn-circle"  
+                                    disabled="disabled" id="Security-Setup-step-3">
+                                        <span className="glyphicon glyphicon-ok"></span>
+                                    </div>
+                                    <p className='text-warning' style={{fontWeight: 'bold'}}>
+                                        {
+                                            post && shipper &&
+
+                                                post.tracking_log === shipper.to
+                                                ? 'Delivered'
+                                                : shipper.to
+                                        }
+
+                                    </p>
                                 </div>
                             </div>
-                            <div className="card-body msg_card_body">
-
-
-                                {/* <div className="d-flex justify-content-start mb-4">
-                                    <div className="msg_cotainer">
-                                    {outputMessage.username}: {outputMessage.text}
-                                    </div>
-                                </div> */}
-
-
-                                 {/* {messages.map((message, index) => {
-                                    if(message.id === yourID ) {
-                                        return (
-                                            <div className="d-flex justify-content-start mb-4" key={index}>
-                                                <div className="msg_cotainer">
-                                                    {message.body}
-                                                </div>
-                                            </div>
-                                        )
-                                    }
-                                    return (
-                                        <div className="d-flex justify-content-end mb-4" key={index}>
-                                            <div className="msg_cotainer_send">
-                                                {message.body}
-                                            </div>
-                                        </div>
-                                        )
-                                    })
-
-                                } */}
-
-
-
-                            </div>
-                            <div className="card-footer-chat">
-                                <form onSubmit={(e) => sendMessageAlt(e)}>
-                                    <div className="input-group">
-
-                                        <textarea name="" className="form-control type_msg" value={message} onChange={handleChange} placeholder="Say something..." ></textarea>
-                                        <button type='submit' className="btn">
-                                            <span className="input-group-text send_btn"><i className="fas fa-location-arrow"></i></span>
-                                        </button>
-
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        }
 
 
                     </div>
-                    <div className="col-md-6 col-xl-4 map col-12">
-                        {   role === 'transporter' &&
-                            <div className="card map-div">
+          </div>
+          
+          {   role === 'transporter' &&
+                            <div className="card map-container mt-5">
                                 <iframe
                                 width="100%"
-                                height="400"
+                                height="500"
                                 frameborder="0"
                                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw&center=${latitude}
                                 ,${longitude}&maptype=satellite&q=a`}
@@ -361,8 +303,7 @@ function ControlPage (props) {
                                 <div className="card-body">
                                     <h4 className="card-title mx-0 text-left">Update Location</h4>
                                     <form>
-                                        <div className="ml-1 row d-flex justify-content-between">
-
+                                        <div className="ml-1 row d-flex justify-content-between w-100">
                                             <PlacesAutocomplete
                                                 value={address}
                                                 onChange={handleSearchChange}
@@ -373,7 +314,7 @@ function ControlPage (props) {
                                                         <input
                                                         {...getInputProps({
                                                             placeholder: 'Search Places ...',
-                                                            className: 'location-search-input',
+                                                            className: 'location-search-input form-control',
                                                         })}
                                                         />
                                                         <div className="autocomplete-dropdown-container">
@@ -407,51 +348,78 @@ function ControlPage (props) {
                                 </div>
                             </div>
                         }
-                        
-                        {
-                            role === 'shipper' &&
-                            <div className="card mb-3">
-                                    <div className="card-body">
-                                        <h4 className="card-title">Contact</h4>
-                                        <h6 className="card-subtitle mb-2 text-muted">
-                                            {
-                                                role === 'transporter'
-                                                ? profile_shipper.username
-                                                : transporter.username
-                                            }
-                                        </h6>
-                                        <div className="card-text">
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><i class="fas fa-clock mr-2 text-center"></i></td>
-                                                        <td>
-                                                            {
-                                                                role === 'transporter'
-                                                                ? profile_shipper.email
-                                                                : transporter.email
-                                                            }
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                        }
-
-                        { post && shipper && post.tracking_log === shipper.to && role === 'shipper' &&
-                            <div>
-                                <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                                    {/* <button type="button" class="btn btn-danger">Complaint</button> */}
-                                    <button onClick={(e) => removeBid(e, bidID)} type="button" class="btn btn-success">Yeayy, your order has been deliverd!</button>
-                                </div>
-                            </div>
-                        }
-
-                    </div>
-                </div>
+          <div className="chat-container">
+            <div className="search-container">
+                <input type="text" placeholder='Search...' />
             </div>
+            <div className="conversation-list">
+              <div className="card text-light" style={{backgroundColor: '#03257A'}}>
+                <div className="card-body">
+                  <h4 className="card-subtitle mb-2 text-light">
+                      {
+                          role === 'transporter'
+                          ? profile_shipper.username
+                          : transporter.username
+                      }
+                  </h4>
+                  <div className="card-text">
+                      <table>
+                          <tbody>
+                              <tr>
+                                  <td><i class="fas fa-clock mr-2 text-center"></i></td>
+                                  <td>
+                                      {
+                                          role === 'transporter'
+                                          ? profile_shipper.email
+                                          : transporter.email
+                                      }
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div className="new-message-container">
+
+            </div>
+            <div className="chat-title">
+                <span>To: {username}</span>
+            </div>
+            <div className="chat-message-list chat">
+              {/* {   isMyRoom && */}
+                <div className="card-body msg_card_body card-chat">
+                </div>
+                { post && shipper && post.tracking_log === shipper.to && role === 'shipper' &&
+              <div>
+                  <div class="btn-group btn-block" role="group" aria-label="Basic example">
+                      {/* <button type="button" class="btn btn-danger">Complaint</button> */}
+                      <button onClick={(e) => removeBid(e, bidID)} type="button" class="btn bnt-lg btn-success text-light" style={{fontWeight: 'bold'}}>Yeayy, your order has been delivered! Click Here to Confirm...</button>
+                  </div>
+              </div>
+              }
+            </div>
+            <div className="chat-form">
+              <form onSubmit={(e) => sendMessageAlt(e)}>
+                  <div className="input-group">
+                      <input name="" className="form-control type_msg" value={message} onChange={handleChange} placeholder="Say something..." ></input>
+                      <button type='submit' className="btn">
+                          <span className="input-group-text send_btn"><i className="fas fa-location-arrow"></i></span>
+                      </button>
+                </div>
+              </form>
+                {/* <input type='text' placeholder='Send Message...' /> */}
+            </div>
+          </div>
+          <div style={{top: '300px'}}>A</div>
+          {/* <svg className='mt-5' style={{top: '300px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path fill="#0099ff" fill-opacity="1" 
+                  d="M0,64L80,58.7C160,53,320,43,480,80C640,117,800,203,960,202.7C1120,203,1280,117,1360,74.7L1440,
+                  32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z">
+              </path>
+          </svg> */}
         </div>
     )
 }

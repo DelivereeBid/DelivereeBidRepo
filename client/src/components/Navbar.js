@@ -12,14 +12,22 @@ function Navbar (props) {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile_shipper)
 
+  function jalan () {
+    console.log('jalan kaga ya')
+  }
+
   useEffect(() => {
     dispatch(fetchProfileShipper(id))
-  }, [dispatch])
+  }, [])
+
+
 
   const signOut = () => {
     localStorage.clear()
     history.push('/')
   }
+  console.log(id, 'idd')
+  console.log(profile, 'profilz')
 
     return (
       <>
@@ -57,7 +65,8 @@ function Navbar (props) {
           </ul>
           <ul className="navbar-nav mr-4">
             <li className="nav-item">
-                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i> Rp {profile.wallet.toLocaleString(["ban", "id"])}</div>
+                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i> 
+                {profile.wallet?.toLocaleString('id', { style: 'currency', currency: 'IDR' })}</div>
               </li>
               <li className="nav-item">
               <div className="nav-item text-decoration-none text-white" style={{textTransform: 'capitalize'}}><i class="fas fa-user-circle"></i> {profile.username}</div>

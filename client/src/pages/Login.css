@@ -12,6 +12,10 @@
     color: #ECF0F5;
   }
   
+.shadow-content {
+  box-shadow: 0px 10px 20px 0px #666;
+}
+
 .inputLogin input[type=password] {
     background-color: #1A2226;
     border: none;

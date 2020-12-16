@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     wallet: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      defaultValue: 0,
+      defaultValue: 1000000,
       validate: {
         minus(value){
           if(value < 0){
