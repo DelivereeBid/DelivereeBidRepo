@@ -11,7 +11,7 @@ export default function VehicleCDD () {
       history.push('/shipper')
     }
     return (
-      <div className="tronton-content border px-5 py-4">
+      <div className="tronton-content border px-5 py-4" style={{backgroundColor: '#ffffff'}}>
       <p className="text-right"><Button onClick={handleBackButton} className="mt-2 mb-4" variant="primary">Back to Post</Button></p>
       <div className="row d-flex justify-content-between">
         <div className="col-md-3">
