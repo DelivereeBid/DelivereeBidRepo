@@ -129,22 +129,22 @@ function CreatePostShippers (props) {
 
         <>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal dialogClassName="modal-100w" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Request Deliveriee</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
-                <form onSubmit={(e) => submitPost(e)} method="post" encType="multipart/form-data">
-                        <div class="form-group row">
-                            <label for="inputTitle" class="col-sm-2 col-form-label">Product Name</label>
-                            <div class="col-sm-10">
+                <form onSubmit={(e) => submitPost(e)} method="post" encType="multipart/form-data" >
+                        <div class="form-group row" >
+                            <label for="inputTitle" class="col-sm-3 text-right col-form-label">Product Name</label>
+                            <div class="col-sm-9">
                                 <input onChange={(e) => onName(e)} type="text" class="form-control" id="inputTitle" placeholder="Laptop"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputFrom" class="col-sm-2 col-form-label">From</label>
-                            <div className="col-sm-10">
+                            <label for="inputFrom" class="col-sm-3 text-right col-form-label">From</label>
+                            <div className="col-sm-9">
                                 <PlacesAutocomplete
                                     value={from}
                                     onChange={handleFromChange}
@@ -184,13 +184,13 @@ function CreatePostShippers (props) {
                                         )}
                                 </PlacesAutocomplete>
                             </div>
-                            {/* <div class="col-sm-10">
+                            {/* <div class="col-sm-9">
                                 <input onChange={(e) => onFrom(e)} type="text" class="form-control" id="inputFrom" placeholder="Jl. Pangeran Antasari no.2A"/>
                             </div> */}
                         </div>
                         <div class="form-group row">
-                            <label for="inputTo" class="col-sm-2 col-form-label">To</label>
-                            <div className="col-sm-10">
+                            <label for="inputTo" class="col-sm-3 text-right col-form-label">To</label>
+                            <div className="col-sm-9">
                                 <PlacesAutocomplete
                                     value={to}
                                     onChange={handleToChange}
@@ -230,26 +230,26 @@ function CreatePostShippers (props) {
                                         )}
                                 </PlacesAutocomplete>
                             </div>
-                            {/* <div class="col-sm-10">
+                            {/* <div class="col-sm-9">
                                 <input onChange={(e) => onTo(e)}  type="text" class="form-control" id="inputTo" placeholder="Jl. Sangkuriang no.31"/>
                             </div> */}
                         </div>
                         <div class="form-group row">
-                            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
+                            <label for="inputDescription" class="col-sm-3 text-right col-form-label">Description</label>
+                            <div class="col-sm-9">
                                 <input onChange={(e) => onDescription(e)}  type="text" class="form-control" id="inputDescription" placeholder="Ada 5 laptop, tolong hati-hati"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="customFile" class="col-sm-2 col-form-label">Product Picture</label>
-                            <div className='custom-file col-sm-10'>
+                            <label for="customFile" class="col-sm-3 text-right col-form-label">Product Picture</label>
+                            <div className='custom-file col-sm-9'>
                                 <input
                                     type='file'
                                     className='custom-file-input'
                                     id='customFile'
                                     onChange={onChange}
                                 />
-                                <label className='custom-file-label' htmlFor='customFile'>
+                                <label className='custom-file-label' htmlFor='customFile' style={{right: '15px', left: '15px'}}>
                                     {filename}
                                 </label>
                             </div>
@@ -257,8 +257,7 @@ function CreatePostShippers (props) {
                             {/* <Progress percentage={uploadPercentage} /> */}
 
                         </div>
-                        <Button  type="submit"  onClick={handleClose}>Request</Button>
-                        <Button variant='secondary' onClick={handleClose}>Close</Button>
+                        <Button className='btn-block'  type="submit"  onClick={handleClose}>Request</Button>
                     </form>
 
                 </Modal.Body>

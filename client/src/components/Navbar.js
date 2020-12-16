@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { fetchProfileShipper } from '../../src/store/index'
+import wave from '../assets/wave.svg'
 
 const role = 'shipper'
 
@@ -23,8 +24,9 @@ function Navbar (props) {
     return (
       <>
       {/* {JSON.stringify(profile)} */}
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a className="navbar-brand" href="#"><Link to={role === 'shipper' ? '/shipper' : '/transporter'}>DeliverieeBid</Link></a>
+    <nav className="navbar navbar-expand-lg navbar-light  mb-4 sticky-top nav-back-color px-4" >
+
+        <div className="navbar-brand text-decoration-none font-weight-bolder" ><Link className='text-decoration-none text-white' to={role === 'shipper' ? '/shipper' : '/transporter'}>Delivery Jobbers</Link></div>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -50,16 +52,19 @@ function Navbar (props) {
             } */}
 
             <li className="nav-item">
-              <a className="nav-link" href="#"><Link to='/vechileInformation'></Link>Vechile</a>
+              <a className="nav-link text-white" href="#"><Link to='/vechileInformation'></Link>Vehicle</a>
             </li>
           </ul>
-          <ul className="navbar-nav mr-2">
+          <ul className="navbar-nav mr-4">
+            <li className="nav-item">
+                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i> Rp {profile.wallet.toLocaleString(["ban", "id"])}</div>
+              </li>
               <li className="nav-item">
-              <a className="nav-item">Welcome, {profile.username}</a>
+              <div className="nav-item text-decoration-none text-white" style={{textTransform: 'capitalize'}}><i class="fas fa-user-circle"></i> {profile.username}</div>
               </li>
           </ul>
-          
-          <button className="nav-item" onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
+
+          <div type='button' className="nav-item" onClick={() => signOut()} className="font-weight-bold text-white">Sign Out</div>
           {/* <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
             <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

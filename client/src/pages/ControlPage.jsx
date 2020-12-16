@@ -173,10 +173,9 @@ function ControlPage (props) {
                 div.appendChild(divChildSend);
             }
 
-
+                console.log(document.querySelector('.msg_card_body'), 'query selector 170')
                 document.querySelector('.msg_card_body').appendChild(div);
 
-            // document.querySelector('.msg_card_body').appendChild(div);
 
           }
       //ALTERNATIVE 2 ==END=======

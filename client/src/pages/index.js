@@ -7,7 +7,7 @@ export { default as DeliveryStatus } from './transporter/DeliveryStatus'
 export { default as Wallet } from './transporter/Wallet'
 
 export { default as ComplaintPage } from './ComplaintPage'
-export { default as ControlPage } from './ControlPage'
+export { default as ControlPage } from './ControlPage.jsx'
 export { default as HomePage } from './HomePage'
 export { default as LoginTransporter } from './LoginTransporter'
 export { default as LoginShipper } from './LoginShipper'
