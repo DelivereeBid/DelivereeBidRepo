@@ -47,7 +47,6 @@ const NavbarTrans = (props) => {
                 profile &&
                 <a className="nav-link">Your Balance : {profile.wallet}</a>
               }
-
             </li>
           </ul>
           <ul className="navbar-nav mr-2">
@@ -56,7 +55,6 @@ const NavbarTrans = (props) => {
                 profile &&
                 <a className="nav-item">Welcome, {profile.username}</a>
               }
-
             </li>
           </ul>
 
