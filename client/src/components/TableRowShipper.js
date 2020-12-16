@@ -57,11 +57,16 @@ function TableRowShipper(props) {
 
   if (bidder.status === "accepted") {
     return (
-      <tr onClick={(e) => selectedBid(e, bidder)} style={{ cursor: "pointer" }}>
+      <tr className='text-center'>
         <th scope="row">{bidder.id}</th>
         <td>{bidder.name}</td>
         <td>{bidder.vehicle}</td>
         <td>Rp {bidder.price.toLocaleString(["ban", "id"])}</td>
+
+        <Button className='btn-block' onClick={(e) => selectedBid(e, bidder)} variant="success">
+          Chat
+        </Button>
+
       </tr>
     );
   }
@@ -69,8 +74,8 @@ function TableRowShipper(props) {
   return (
     <>
       <tr
+        className='text-center'
         style={{
-          cursor: "pointer",
           display: `${bidder.status === "rejected" ? "none" : ""}`,
         }}
       >
@@ -78,9 +83,11 @@ function TableRowShipper(props) {
         <td>{bidder.name}</td>
         <td>{bidder.vehicle}</td>
         <td>Rp {bidder.price.toLocaleString(["ban", "id"])}</td>
-        <Button onClick={(e) => selectedBid(e, bidder)} variant="warning">
-          Click
+
+        <Button className='btn-block' onClick={(e) => selectedBid(e, bidder)} variant="primary" sty>
+          Choose
         </Button>
+
       </tr>
     </>
   );

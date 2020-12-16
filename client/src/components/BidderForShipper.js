@@ -20,18 +20,23 @@ function BidderForShipper (props) {
 
     return (
         <div className='col-12'>
-            <h3>Your Bidder</h3>
-                <div style={{height: '400px', overflowY:'scroll'}}>
-                <Button onClick={() => {
-                    history.push('/shipper')
-                }} className="float-right" variant="warning">Back</Button>
-                    <table className="table">
+            <div className='row justify-content-between px-3 mb-2'>
+                <h4 className='text-white'>Your Bidder</h4>
+                <Button  onClick={() => {
+                history.push('/shipper')
+                }} className="float-right text-white" variant="light" style={{backgroundColor: 'transparent', border: 0}}><i class="fas fa-arrow-left" ></i> Back</Button>
+            </div>
+
+                <div id='style-3' style={{height: '400px', overflowY:'scroll'}}>
+
+                    <table className="table bg-white shadow" >
                         <thead>
-                            <tr>
+                            <tr className='text-center'>
                             <th>Number</th>
                             <th>Name</th>
                             <th>Vechile</th>
                             <th>Bid</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
