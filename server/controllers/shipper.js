@@ -22,7 +22,10 @@ class ShipperController {
             }
         })
         .then(result => {
-            res.status(200).json(result)
+            if(!result) throw {msg: "Shipper not found", code: 404}
+            else {
+                res.status(200).json(result)
+            }
         })
         .catch(err => {
             next(err)
@@ -37,7 +40,6 @@ class ShipperController {
             res.status(201).json(res.status(201).json({id: shipper.id, username: shipper.username, email: shipper.email}))
         })
         .catch(err => {
-            console.log(err.name, 'LEE')
             next(err)
         })
     }
