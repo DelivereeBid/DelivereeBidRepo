@@ -45,6 +45,14 @@ function HomeTransporter(props) {
     );
   };
 
+  function filteredPosts (el, id) {
+    const result = el.Posts.filter(el => {
+      return el.TransporterId == id
+    })
+    console.log(result.length > 0, 'resz')
+    return result;
+  }
+
   // const filterBid = transporter.filter((el) => {
   //   return el.id ==
   // })
