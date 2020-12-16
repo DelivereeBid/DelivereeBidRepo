@@ -2,11 +2,14 @@ import React, {useEffect} from 'react'
 import {TableRowShipper} from './index.js'
 import {fetchShippersById} from '../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+
 
 function BidderForShipper (props) {
     const dispatch = useDispatch()
     const {id} = useParams()
+    const history = useHistory();
 
     const shipper = useSelector((state) => state.shipper)
     console.log(shipper, 'ini bidderforshipper')
@@ -16,9 +19,12 @@ function BidderForShipper (props) {
     }, [id])
 
     return (
-        <div className='col-9'>
+        <div className='col-12'>
             <h3>Your Bidder</h3>
                 <div style={{height: '400px', overflowY:'scroll'}}>
+                <Button onClick={() => {
+                    history.push('/shipper')
+                }} className="float-right" variant="warning">Back</Button>
                     <table className="table">
                         <thead>
                             <tr>
@@ -36,7 +42,6 @@ function BidderForShipper (props) {
                                     )
                                 })
                             }
-
                         </tbody>
                     </table>
                 </div>

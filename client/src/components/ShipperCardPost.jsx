@@ -40,10 +40,10 @@ export default function ShipperCardPost (props) {
     <>
     <div className="card p-3 mb-4">
       <div class="row no-gutters">
-        <div class="col-md-4">
+        <div class=''>
           <img src={shipper.product_picture} alt='' height='200'></img>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-12">
           <div class="card-body">
             <div className="mx-1 my-0 row card-test">
               <div className="col-md-10 p-0">
@@ -53,33 +53,37 @@ export default function ShipperCardPost (props) {
                   : <span class="badge badge-warning" style={{fontSize: '13px'}}>Bidder: { shipper.Posts.length}</span>
               }
               </div>
-              <p 
-                className='col-md-2'><Button onClick={(e) => toBidder(e, shipper.id)} variant="warning">Detail</Button>
-                {shipper.Posts.length === 0
-                            ? (
-                                <div className="btn-group">
-                                    <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span className="sr-only">Toggle Dropdown</span>
-                                    </i>
-                                    <div className="dropdown-menu">
-                                        <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a>
-                                        <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
-                                    </div>
-                                </div>
-                            )
-                            : (
-                                <div className="btn-group"  style={{display: `${filterShipperPost.length !== 0 ? 'none' : ''}`}}>
-                                    <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span className="sr-only">Toggle Dropdown</span>
-                                    </i>
-                                    <div className="dropdown-menu">
-                                        {/* <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a> */}
-                                        <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
-                                    </div>
-                                </div>
-                            )
-                        }
-              </p>
+              <div className="row">
+                <p className=''>
+                  <Button onClick={(e) => toBidder(e, shipper.id)} variant="success">Bidder</Button>
+                </p>
+                <div className="mt-1">
+                  {shipper.Posts.length === 0
+                      ? (
+                          <div className="btn-group">
+                              <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span className="sr-only">Toggle Dropdown</span>
+                              </i>
+                              <div className="dropdown-menu">
+                                  <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a>
+                                  <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
+                              </div>
+                          </div>
+                      )
+                      : (
+                          <div className="btn-group"  style={{display: `${filterShipperPost.length !== 0 ? 'none' : ''}`}}>
+                              <i class="fas fa-ellipsis-v  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span className="sr-only">Toggle Dropdown</span>
+                              </i>
+                              <div className="dropdown-menu">
+                                  {/* <a onClick={(e) => handleShow(e, shipper.id)} className="dropdown-item" href="">Edit</a> */}
+                                  <a onClick={(e) => removePost(e, shipper.id)} className="dropdown-item" href="">Delete</a>
+                              </div>
+                          </div>
+                      )
+                  }
+                </div>
+              </div>
             </div>
               <p class="card-text text-muted">Kelas Ekonomi</p>
             {/* <p class="card-text">It's a broader card with text below as a natural lead-in to extra content. This content is a little longer.</p> */}
