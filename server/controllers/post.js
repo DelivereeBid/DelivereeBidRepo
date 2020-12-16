@@ -43,7 +43,6 @@ class PostController {
       },
     })
       .then((post) => {
-        console.log(post, "poszi");
         if (post.length === 0) {
           throw { msg: "Post not found", code: 404 };
         } else {
@@ -54,7 +53,6 @@ class PostController {
   }
   static createPost(req, res, next) {
     const { BidId, price } = req.body;
-    console.log(req.loggedIn, "logeen");
     Post.create({
       TransporterId: req.loggedIn.id,
       BidId,
@@ -68,7 +66,6 @@ class PostController {
         res.status(201).json(post);
       })
       .catch((err) => {
-        console.log(err, "line 46");
         next(err);
       });
   }
@@ -84,7 +81,6 @@ class PostController {
       }
     )
       .then((post) => {
-        console.log(post, "poszz");
         if (post[0] === 0) throw { msg: "Failed update post", code: 400 };
         else {
           res.status(200).json({ msg: "Success update post" });
@@ -192,7 +188,6 @@ class PostController {
         res.status(200).json({ msg: "Success update post" });
       }
     } catch (err) {
-        console.log(err);
       next(err);
     }
   }
