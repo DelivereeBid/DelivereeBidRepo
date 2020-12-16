@@ -306,6 +306,38 @@ describe ("GET /BID" , () => {
   });
 })
 
+describe ("PATCH /bid id", () => {
+  it("200 succes patch bid", done => {
+    request(app)
+    .patch(`/bid/${idBid}`)
+    .set("access_token", access_token)
+    .send({status: "not available", TransporterId: 1})
+    .end((err, response) => {
+      if(err) throw err
+      else {
+        const {body, status} = response
+        expect(status).toBe(200)
+        expect(body).toEqual({"msg": "Success patch bid"})
+        done()
+      }
+    })
+  })
+  it("404 bid not found", done => {
+    request(app)
+    .patch(`/bid/0`)
+    .set("access_token", access_token)
+    .send({status: "not available", TransporterId: 1})
+    .end((err, response) => {
+      if(err) throw err
+      else {
+        const {body, status} = response
+        expect(status).toBe(404)
+        expect(body).toEqual([ "Bid not found"])
+        done()
+      }
+    })
+  })
+})
 describe ("PUT /BID" , () => {
   it("200 Success PUT - should respond if request is valid", (done) => {
     request(app)

@@ -36,6 +36,7 @@ let users = [];
 
 const botName = "DeliverieeBid Bot";
 
+/* istanbul ignore next */
 io.on("connection", (socket) => {
   // socket.emit("your id", socket.id);
 
@@ -74,6 +75,6 @@ io.on("connection", (socket) => {
   //ALTERNATIVE 2 ==end==
 });
 
-http.listen(port, () => console.log(`server running: http://localhost:${port}`))
+// http.listen(port, () => console.log(`server running: http://localhost:${port}`))
 
 module.exports = app;
