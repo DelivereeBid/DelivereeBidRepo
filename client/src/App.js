@@ -1,42 +1,56 @@
-import React from 'react'
-import { Switch, Route, Link, useHistory  } from 'react-router-dom'
-import { HomeShipper, HomeTransporter, PaymentMethod, HomePage, 
-  DetailPostShipper, Wallet, ComplaintPage, ControlPage, LoginTransporter, LoginShipper, 
-  RatingPage, RegisterTranspotter, RegisterShipper, VechileInformation, DeliveryStatus } from './pages'
-import { Provider} from 'react-redux'
-import store from './store'
-import './App.css'
-import PrivateRoute from './routers/PrivateRoute'
-import ShipperHome from './pages/ShipperHome'
+import React from "react";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
+import {
+  HomeShipper,
+  HomeTransporter,
+  PaymentMethod,
+  HomePage,
+  DetailPostShipper,
+  Wallet,
+  ComplaintPage,
+  ControlPage,
+  LoginTransporter,
+  LoginShipper,
+  RatingPage,
+  RegisterTranspotter,
+  RegisterShipper,
+  VechileInformation,
+  DeliveryStatus,
+} from "./pages";
+import { Provider } from "react-redux";
+import store from "./store";
+import "./App.css";
+import PrivateRoute from "./routers/PrivateRoute";
+import ShipperHome from "./pages/ShipperHome";
 
 function App() {
   const history = useHistory();
-  let shipper_token = localStorage.getItem('shipper_token');
-  let transporter_token = localStorage.getItem('transporter_token');
+  let shipper_token = localStorage.getItem("shipper_token");
+  let transporter_token = localStorage.getItem("transporter_token");
 
-  function credentialsHandler () {
-    if(shipper_token) {
-      return 'shipper_token'
+  function credentialsHandler() {
+    if (shipper_token) {
+      return "shipper_token";
     } else {
-      return 'transporter_token'
+      return "transporter_token";
     }
   }
 
-  function homePageHandler () {
+  function homePageHandler() {
     let redirect = false;
-    if(shipper_token || transporter_token) {
+    if (shipper_token || transporter_token) {
       redirect = true;
     }
     return redirect;
   }
 
-  function homePageRedirectHandler () {
-    if(shipper_token) {
-      history.push('/shipper')
+  function homePageRedirectHandler() {
+    if (shipper_token) {
+      history.push("/shipper");
     } else if (transporter_token) {
-      history.push('/transporter')
+      history.push("/transporter");
     } else {
-      return ''
+      return "";
     }
   }
 
@@ -46,46 +60,72 @@ function App() {
         <Route exact path="/shipperTes">
           <ShipperHome />
         </Route>
-          <PrivateRoute auth="shipper_token" component={ShipperHome} path='/shipper' redirect='/shipper-login'>
-          </PrivateRoute>
-          <PrivateRoute auth={credentialsHandler()} component={PaymentMethod} exact path='/payment/:id' redirect='/'>
-          </PrivateRoute>
-          <PrivateRoute auth="transporter_token" exact component={HomeTransporter} path='/transporter' redirect='/transporter-login'>
-          </PrivateRoute>
-          <Route exact path='/'>
-            <HomePage />
-          </Route>
-          <PrivateRoute auth="transporter_token" redirect='/transporter-login' path='/transporter/:id' component={DetailPostShipper}>
-          </PrivateRoute>
-          <Route exact path='/transporter/wallet'>
-            <Wallet/>
-          </Route>
-          <Route exact path="/transporter/deliveryStatus">
-            <DeliveryStatus />
-          </Route>
-          <Route exact path='/complaint'>
-            <ComplaintPage/>
-          </Route>
-          <Route exact path='/controlPage/:id'>
-            <ControlPage/>
-          </Route>
-          <Route exact path='/shipper-login'>
-            <LoginShipper/>
-          </Route>
-          <Route exact path='/transporter-login'>
-            <LoginTransporter/>
-          </Route>
-          <Route exact path='/shipper-register'>
-            <RegisterShipper/>
-          </Route>
-          <Route path='/transporter-register'>
-            <RegisterTranspotter/>
-          </Route>
-          <PrivateRoute auth={credentialsHandler()} component={RatingPage} path='/ratingPage' redirect='/'>
-          </PrivateRoute>
-          <PrivateRoute auth={credentialsHandler()} component={VechileInformation} path='/vechileInformation' redirect='/'>
-          </PrivateRoute>
-        </Switch>
+        <PrivateRoute
+          auth="shipper_token"
+          component={ShipperHome}
+          path="/shipper"
+          redirect="/shipper-login"
+        ></PrivateRoute>
+        <PrivateRoute
+          auth={credentialsHandler()}
+          component={PaymentMethod}
+          exact
+          path="/payment/:id"
+          redirect="/"
+        ></PrivateRoute>
+        <PrivateRoute
+          auth="transporter_token"
+          exact
+          component={HomeTransporter}
+          path="/transporter"
+          redirect="/transporter-login"
+        ></PrivateRoute>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <PrivateRoute
+          auth="transporter_token"
+          redirect="/transporter-login"
+          path="/transporter/:id"
+          component={DetailPostShipper}
+        ></PrivateRoute>
+        <Route exact path="/transporter/wallet">
+          <Wallet />
+        </Route>
+        <Route exact path="/transporter/deliveryStatus">
+          <DeliveryStatus />
+        </Route>
+        <Route exact path="/complaint">
+          <ComplaintPage />
+        </Route>
+        <Route exact path="/controlPage/:id">
+          <ControlPage />
+        </Route>
+        <Route exact path="/shipper-login">
+          <LoginShipper />
+        </Route>
+        <Route exact path="/transporter-login">
+          <LoginTransporter />
+        </Route>
+        <Route exact path="/shipper-register">
+          <RegisterShipper />
+        </Route>
+        <Route path="/transporter-register">
+          <RegisterTranspotter />
+        </Route>
+        <PrivateRoute
+          auth={credentialsHandler()}
+          component={RatingPage}
+          path="/ratingPage"
+          redirect="/"
+        ></PrivateRoute>
+        <PrivateRoute
+          auth={credentialsHandler()}
+          component={VechileInformation}
+          path="/vechileInformation"
+          redirect="/"
+        ></PrivateRoute>
+      </Switch>
     </Provider>
   );
 }

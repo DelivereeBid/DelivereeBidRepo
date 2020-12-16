@@ -29,11 +29,11 @@ function LoginShipper(props) {
   };
 
   const toHome = () => {
-    history.push("/")
-  }
+    history.push("/");
+  };
   return (
     <>
-    <div class="container">
+      <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8 login-box">
@@ -66,7 +66,23 @@ function LoginShipper(props) {
                     </div>
                 </div>
             </div>
-        </div>
+          </div>
+          <div class="col-lg-3 col-md-2">
+            <button
+              onClick={(e) => handleLogin(e)}
+              type="submit"
+              class="btn btn-outline-primary"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => toHome()}
+              type="submit"
+              class="btn btn-outline-primary mb-5"
+            >
+              Back
+            </button>
+          </div>
         </div>
     </>
   );
