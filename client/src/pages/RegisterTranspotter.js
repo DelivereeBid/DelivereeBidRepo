@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setSignUp } from "../store";
+import { setSignUp, setSignUpShipper } from "../store";
 import { Container, Form, Button } from "react-bootstrap";
+import './Register.css'
 
 function RegisterTranspotter(props) {
   const history = useHistory();
@@ -33,13 +34,25 @@ function RegisterTranspotter(props) {
     setUser(newInput);
   };
 
-  const handleRegister = (e) => {
+  const handleRegisterTransporter = (e) => {
     e.preventDefault()
     if(user.username !== "" && user.email !== "" && user.password !== "" && user.file !== "" && user.vehicle !== ""){
       history.push("/transporter-login");
     }
     dispatch(setSignUp(user));
   };
+
+  const handleRegisterShipper = (e) => {
+    e.preventDefault();
+    if(user.username !== "" && user.email !== "" && user.password !== "" && user.file !== ""){
+      history.push("/shipper-login")
+    }
+    dispatch(setSignUpShipper(user));
+  };
+
+  const toLoginShipper = () => {
+    history.push("/shipper-login")
+  }
   
   const toLoginTransporter = () => {
     history.push("/transporter-login");
@@ -47,104 +60,77 @@ function RegisterTranspotter(props) {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={(e) => handleRegister(e)}>
-          <Form.Group>
-            <h2 className="mb-3 mt-5">Create Transporter account</h2>
 
-            <Form.Group controlId="form.username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                onChange={(e) => changeInput(e)}
-                type="text"
-                placeholder="Enter username"
-                name="username"
-              />
-              <Form.Text as="div" className="text text-danger"></Form.Text>
-            </Form.Group>
-            
-            <Form.Group controlId="form.email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                onChange={(e) => changeInput(e)}
-                type="email"
-                placeholder="Enter email"
-                name="email"
-              />
-              <Form.Text as="div" className="text text-danger"></Form.Text>
-            </Form.Group>
-
-            <Form.Group controlId="form.password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter password"
-                name="password"
-                onChange={(e) => changeInput(e)}
-              />
-              <Form.Text as="div" className="text text-danger"></Form.Text>
-            </Form.Group>
-            <Form.Group controlId="form.picture">
-              <Form.Label>Profile Picture</Form.Label>
-              <Form.File.Input
-                onChange={(e) => changeInputFile(e)}
-              ></Form.File.Input>
-            </Form.Group>
-            <Form.Group controlId="form.vehicle">
-              <Form.Label>Vehicle</Form.Label>
-              <Form.Control
-                onChange={(e) => changeInput(e)}
-                type="text"
-                placeholder="Enter vehicle"
-                name="vehicle"
-              />
-              <Form.Text as="div" className="text text-danger"></Form.Text>
-            </Form.Group>
-            <Form.Group>
-              <Button variant="outline-primary" type="submit">
-                Sign Up
-              </Button>
-              <Button
-                variant="outline-success"
-                onClick={() => toLoginTransporter()}
-              >
-                Already have an account?
-              </Button>
-            </Form.Group>
-          </Form.Group>
-        </Form>
-      </Container>
-      {/* <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 mb-3">
-            <h3 class="signin-text mb-3">Register</h3>
-            <form onSubmit={(e) => handleRegister()}>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input onChange={(e) => changeInput(e)} type="email" name="email" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input onChange={(e) => changeInput(e)} type="password" name="password" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input onChange={(e) => changeInput(e)} type="text" name="username" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="username">Picture</label>
-                <input onChange={(e) => changeInputFile(e)} type="file" name="file" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label className="mb-3" for="vehicle">Vehicle</label> <br></br>
-                <input onChange={(e) => changeInput(e)} type="text" name="vehicle" class="form-control" />
-              </div>
-              <button type="submit" class="btn btn-primary">Register</button>
-              <p className="mt-3" role="button" onClick={() => handleRegister()}>Have an account ?</p>
-            </form>
-          </div>
-        </div>
-      </div> */}
+      <div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""></img>
+                        <h3>Welcome</h3>
+                        <p>You are 30 seconds away from becoming our member!</p>
+                        <input type="submit" onClick={() => toLoginTransporter()} value="Login"></input>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transporter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Shipper</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h3 class="register-heading">Apply as a Transporter</h3>
+                                <div class="column register-form">
+                                  <form onSubmit={(e) => handleRegisterTransporter(e)}>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="username" placeholder="Username *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" placeholder="Email *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" name="password" placeholder="Password *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="file" name="profile_picture" onChange={(e) => changeInputFile(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="vehicle" placeholder="Vehicle *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <input type="submit" class="btnRegister" value="Register"></input>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <h3 class="register-heading">Apply as a Shipper</h3>
+                                <div class="column register-form">
+                                  <form onSubmit={(e) => handleRegisterShipper(e)}>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="username" placeholder="Username *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" placeholder="Email *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" name="password" placeholder="Password *" onChange={(e) => changeInput(e)}></input>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="file" name="profile_picture" onChange={(e) => changeInputFile(e)}></input>
+                                        </div>
+                                    
+                                        <input type="submit" class="btnRegister" value="Register"></input>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>                            
     </>
   );
 }
