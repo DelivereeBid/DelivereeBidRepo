@@ -17,6 +17,8 @@ function RegisterTranspotter(props) {
     file: "",
   });
 
+  document.body.style = 'background: #0099ff;';
+
   const changeInput = (e) => {
     const newInput = {
       ...user,
@@ -60,7 +62,7 @@ function RegisterTranspotter(props) {
 
   return (
     <>
-      <div class="container register">
+      <div class="container register mt-5 shadow-content">
                 <div class="row">
                     <div class="col-md-3 register-left">
                         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""></img>

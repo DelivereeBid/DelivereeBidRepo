@@ -238,48 +238,52 @@ function ControlPage (props) {
     return (
         <div >
             {/* <Navbar/> */}
-            <div className="container-fluid h-100 mt-3">
-                <div className="stepwizard">
-                    {   role === 'shipper' &&
-                        <div className="stepwizard-row setup-panel">
-                            <div className="stepwizard-step">
-                                <div  className="btn btn-secondary btn-circle" disabled="disabled">
-                                    <span className="glyphicon glyphicon-envelope"></span>
+            <div className="container-fluid mt-3">
+                <div className="col-md-3">
+                    <h1>Wa</h1>
+                    </div>
+                <div className="col-md-9">
+                    <div className="stepwizard">
+                        {   role === 'shipper' &&
+                            <div className="stepwizard-row setup-panel">
+                                <div className="stepwizard-step">
+                                    <div  className="btn btn-secondary btn-circle" disabled="disabled">
+                                        <span className="glyphicon glyphicon-envelope"></span>
+                                    </div>
+                                    <p>{shipper.from}</p>
                                 </div>
-                                <p>{shipper.from}</p>
-                            </div>
-                            <div className="stepwizard-step">
-                                <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
-                                    <span className="glyphicon glyphicon-user"></span>
+                                <div className="stepwizard-step">
+                                    <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
+                                        <span className="glyphicon glyphicon-user"></span>
+                                    </div>
+                                    <p>
+                                        { post &&
+                                            post.tracking_log
+                                        }
+
+                                    </p>
                                 </div>
-                                <p>
-                                    { post &&
-                                        post.tracking_log
-                                    }
+                                <div className="stepwizard-step">
+                                    <div  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
+                                        <span className="glyphicon glyphicon-ok"></span>
+                                    </div>
+                                    <p>
+                                        {
+                                            post && shipper &&
 
-                                </p>
-                            </div>
-                            <div className="stepwizard-step">
-                                <div  className="btn btn-secondary btn-circle"  disabled="disabled" id="Security-Setup-step-3">
-                                    <span className="glyphicon glyphicon-ok"></span>
+                                                post.tracking_log === shipper.to
+                                                ? 'Delivered'
+                                                : shipper.to
+                                        }
+
+                                    </p>
                                 </div>
-                                <p>
-                                    {
-                                        post && shipper &&
-
-                                            post.tracking_log === shipper.to
-                                            ? 'Delivered'
-                                            : shipper.to
-                                    }
-
-                                </p>
                             </div>
-                        </div>
-                    }
+                        }
 
 
-                </div>
-                <div className="row justify-content-center h-100 contact-in mt-5 mb-5">
+                    </div>
+                    <div className="row justify-content-center h-100 contact-in mt-5 mb-5">
                     <div className="col-md-4 col-12 col-xl-8 chat">
                         {/* {   isMyRoom && */}
                         <div className="card card-chat">
@@ -451,8 +455,15 @@ function ControlPage (props) {
                         }
 
                     </div>
+                </div>    
                 </div>
             </div>
+            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#0099ff" fill-opacity="1" 
+                    d="M0,64L80,58.7C160,53,320,43,480,80C640,117,800,203,960,202.7C1120,203,1280,117,1360,74.7L1440,
+                    32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z">
+                </path>
+            </svg> */}
         </div>
     )
 }

@@ -97,7 +97,7 @@ function LoginShipper(props) {
             </button>
           </div>
         </div> */}
-      <div class="container register">
+      <div class="container register mt-5 shadow-content">
                 <div class="row">
                     <div class="col-md-3 register-left">
                         <img src="https://i.ibb.co/tM658ZS/user.jpg" alt=""></img>
