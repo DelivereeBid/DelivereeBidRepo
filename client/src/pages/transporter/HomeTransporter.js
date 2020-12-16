@@ -49,6 +49,10 @@ function HomeTransporter(props) {
   //   return el.id ==
   // })
 
+  const milihTransporter = transporter.filter((el) => {
+    return el.TransporterId == localStorage.getItem('transporterId') || el.status == 'available'
+  })
+
   // console.log(filterBid, 'feltier')
   return (
     <>
@@ -56,7 +60,8 @@ function HomeTransporter(props) {
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">
-        {transporter.map((el, key) => (
+        {
+        milihTransporter.map((el, key) => (
           <div key={key} className="card-deck mx-auto col-sm-4">
             <div id="card-size" className="card">
               <div className="card-body mt-2 text-center mx-auto">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { fetchShippersById, setBid, fetchTransporterById } from "../../store/index";
+import { fetchShippersById, setBid, fetchTransporterById, patchShipperPost } from "../../store/index";
 import { NavbarTrans } from '../../components/index'
 
 function DetailPostShipper(props) {

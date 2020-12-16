@@ -228,6 +228,25 @@ export const patchWalletTransporter = (id, payload) => {
   };
 };
 
+export const patchShipperPost = (id, payload) => {
+  return (dispatch) => {
+    console.log(id, "ini id", payload, "ini payload bid");
+    axios({
+      url: `/bid/${id}`,
+      headers: {access_token: tokenShipper},
+      method: "PATCH",
+      data: payload,
+    })
+      .then(({ data }) => {
+        console.log(data, "ini patchBid");
+        //fetch ulang transporter disini
+      })
+      .catch((err) => {
+        console.log("Error:", err.response);
+      });
+  };
+};
+
 export const updateShipperPost = (id, payload) => {
   const formData = new FormData();
   if (payload.file) {
@@ -374,6 +393,7 @@ export const setLoginShipper = (payload) => {
 };
 
 export const setBid = (payload) => {
+  console.log(payload, 'payload setBid 376')
   return (dispatch) => {
     axios({
       url: "/post",

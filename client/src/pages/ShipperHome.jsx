@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Navbar } from '../components';
 import { TableRowShipper, CardPostShipper, CreatePostShipper, EditPostShipper, BidderForShipper} from '../components'
-import {fetchShippers} from '../store/index.js'
+import {fetchShippers, patchShipperPost} from '../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
@@ -37,7 +37,7 @@ export default function ShipperHome () {
           <div className="col-3">
             <div className="card px-4 py-2 mb-4">
                 <h3 className="">Filter Result</h3>
-                <Button className="text-left" variant="light" >Price</Button>
+                <Button className="text-left" variant="light" >BIZ</Button>
                 <Button className="text-left" variant="light" >Distance</Button>
                 <Button className="text-left" variant="light" >Price</Button>
                 <Button className="text-left" variant="light" >Distance</Button>

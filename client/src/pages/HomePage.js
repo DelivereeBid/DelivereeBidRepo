@@ -17,25 +17,12 @@ function HomePage (props) {
     return (
         <>
         <div id="homepage">
-        <h1 className="text-center mt-5">Welcome to our DelivereeBid</h1>
-        <div id="card" className="container mx-auto d-flex align-items-center flex-column">
-            <div className="col-4-lg" style={{marginTop:100, marginLeft:800}}>
-                <div className="card" style={{width: 250}}>
-                    <div className="card-body text-center">
-                    
-                        <h5>Sign in as a Transporter</h5>
-                        <button onClick={() => handleLoginAsTransporter()} className="btn btn-danger">Click Here!</button>
-                    </div>
-                </div>
-            </div>
-            <div className="col-4-lg text-center"style={{marginTop: 150, marginLeft:800}}>
-                <div className="card shadow" style={{width: 250}}>
-                    <div className="card-body">
-                        <h5>Sign in as a Shipper</h5>
-                        <button onClick={() => handleLoginAsShipper()} className="btn btn-success">Click Here!</button>
-                    </div>
-                </div>
-            </div>
+        <div className="d-flex align-items-center flex-column"  style={{marginTop: 250}}> 
+        <h1 style={{color:"white"}}>Deliver Me</h1>
+        </div>
+        <div className="d-flex justify-content-center">
+        <button type="button" id="btn-landing" onClick={() => handleLoginAsShipper()} className="btn btn-info mr-3">Sign as Shipper</button>
+        <button id="btn-landing" onClick={() => handleLoginAsTransporter()} className="btn btn-dark">Sign as Transporter</button>
         </div>
         </div>
         </>
