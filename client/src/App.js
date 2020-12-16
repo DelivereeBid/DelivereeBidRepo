@@ -21,6 +21,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import "./App.css";
 import PrivateRoute from "./routers/PrivateRoute";
+import ShipperHome from "./pages/ShipperHome";
 
 function App() {
   const history = useHistory();
@@ -56,9 +57,12 @@ function App() {
   return (
     <Provider store={store}>
       <Switch>
+        <Route exact path="/shipperTes">
+          <ShipperHome />
+        </Route>
         <PrivateRoute
           auth="shipper_token"
-          component={HomeShipper}
+          component={ShipperHome}
           path="/shipper"
           redirect="/shipper-login"
         ></PrivateRoute>

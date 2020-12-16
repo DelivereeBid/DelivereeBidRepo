@@ -29,16 +29,17 @@ function HomeTransporter(props) {
     history.push(`/transporter/${id}`);
   };
 
-  const toControlPage = (ShipperId, postId, bidId) => {
-    // const payload = {
-    //   BidId: bidId,
-    //   id: postId
-    // }
+  const toControlPage = (ShipperId, post) => {
+    const payload = {
+      BidId: post[0].BidId,
+      id: post[0].id,
+    };
 
-    // dispatch({
-    //   type: "SET_BID_ID_POST_ID",
-    //   payload: payload,
-    // })
+    dispatch({
+      type: "SET_BID_ID_POST_ID",
+      payload: payload,
+    });
+    console.log(post, "ini di 36 HomeTransporter");
     history.push(
       `/controlPage/transporter_${trucking.username}_${trucking.id}_${trucking.email}_${ShipperId}`
     );
@@ -70,21 +71,21 @@ function HomeTransporter(props) {
                 <h5 className=" mt-2">{el.description}</h5>
                 <h5 className=" mt-2">{el.from}</h5>
                 <h5 className=" mt-2">{el.to}</h5>
-                {el.Posts.map((post) => (
-                  <p>{post.status}</p>
-                ))}
                 {el.Posts.some(
                   (post) => post.TransporterId === transporterId
                 ) ? (
-                  el.Posts.some((post) => post.status === "accepted") ? (
-                    <button
-                      onClick={() => toControlPage(el.ShipperId)}
-                      className="btn btn-primary"
-                    >
-                      Start
-                    </button>
-                  ) : (
-                    ""
+                  el.Posts.map((post) =>
+                    post.status === "accepted" &&
+                    post.transporterId === transporterId ? (
+                      <button
+                        onClick={() => toControlPage(el.ShipperId, el.Posts)}
+                        className="btn btn-primary"
+                      >
+                        Start
+                      </button>
+                    ) : (
+                      ""
+                    )
                   )
                 ) : el.Posts.some((post) => (post.status = "accepted")) ? (
                   ""

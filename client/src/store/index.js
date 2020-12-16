@@ -2,23 +2,22 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import axios from "../axios/axiosInstance";
 
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 const tokenShipper = localStorage.getItem("shipper_token");
 const tokenTransporter = localStorage.getItem("transporter_token");
 
 const Toast = Swal.mixin({
   toast: true,
-  position: 'top-end',
+  position: "top-end",
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
   didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 const initialState = {
   dataShipper: [],
@@ -36,7 +35,7 @@ const initialState = {
   dataTransporter: [],
   profileTransporter: [],
   postId: 0,
-  bidId: 0
+  bidId: 0,
 };
 
 export const fetchShippers = () => {
@@ -89,6 +88,7 @@ export const fetchTransporterById = (id) => {
       method: "GET",
     })
       .then(({ data }) => {
+        console.log(data, "<<<<<<<data transporter");
         dispatch({
           type: "SET_TRANSPORTER",
           payload: data,
@@ -317,23 +317,26 @@ export const setLogin = (payload) => {
       },
     })
       .then(({ data }) => {
-        if(data.access_token){
+        if (data.access_token) {
           localStorage.setItem("transporter_token", data.access_token);
-          dispatch({ type: "SET_TRANSPORTER_TOKEN", payload: data.access_token });
+          dispatch({
+            type: "SET_TRANSPORTER_TOKEN",
+            payload: data.access_token,
+          });
           dispatch({ type: "SET_TRANSPORTER_ID", payload: data.id });
           Toast.fire({
-            icon: 'success',
-            title: 'Signed in successfully'
-          })
+            icon: "success",
+            title: "Signed in successfully",
+          });
         }
       })
       .catch((err) => {
         Swal.fire({
-          icon: 'error',
+          icon: "error",
           title: err.response.data[0],
           timer: 3000,
           showConfirmButton: false,
-        })
+        });
       });
   };
 };
@@ -349,23 +352,23 @@ export const setLoginShipper = (payload) => {
       },
     })
       .then(({ data }) => {
-        if(data.access_token){
+        if (data.access_token) {
           localStorage.setItem("shipper_token", data.access_token);
           dispatch({ type: "SET_SHIPPER_TOKEN", payload: data.access_token });
           dispatch({ type: "SET_SHIPPER_ID", payload: data.id });
           Toast.fire({
-            icon: 'success',
-            title: 'Signed in successfully'
-          })
+            icon: "success",
+            title: "Signed in successfully",
+          });
         }
       })
       .catch((err) => {
         Swal.fire({
-          icon: 'error',
+          icon: "error",
           title: err.response.data[0],
           timer: 3000,
           showConfirmButton: false,
-        })
+        });
       });
   };
 };
@@ -384,7 +387,7 @@ export const setBid = (payload) => {
       },
     })
       .then(({ data }) => {
-        console.log(data, "<<<< dari setbid action");
+        console.log(data, "data hasil axios setBid 348 index");
       })
       .catch((err) => console.log(err, "<<< eror setBid action"));
   };
@@ -406,17 +409,17 @@ export const setSignUp = (payload) => {
       .then(({ data }) => {
         dispatch({ type: "SET_TOKEN", payload: data.access_token });
         Toast.fire({
-          icon: 'success',
-          title: 'Signed up successfully'
-        })
+          icon: "success",
+          title: "Signed up successfully",
+        });
       })
       .catch((err) => {
         Swal.fire({
-          icon: 'error',
+          icon: "error",
           title: err.response.data.join(", "),
           timer: 3000,
-          showConfirmButton: false
-        })
+          showConfirmButton: false,
+        });
       });
   };
 };
@@ -435,18 +438,18 @@ export const setSignUpShipper = (payload) => {
     })
       .then(({ data }) => {
         Toast.fire({
-          icon: 'success',
-          title: 'Signed up successfully'
-        })
+          icon: "success",
+          title: "Signed up successfully",
+        });
         dispatch({ type: "SET_TOKEN", payload: data.access_token });
       })
       .catch((err) => {
         Swal.fire({
-          icon: 'error',
+          icon: "error",
           title: err.response.data.join(", "),
           timer: 3000,
-          showConfirmButton: false
-        })
+          showConfirmButton: false,
+        });
       });
   };
 };
@@ -508,16 +511,20 @@ function reducer(state = initialState, action) {
     case "SET_TRANSPORTER":
       return { ...state, transporter: action.payload };
     case "SET_TRANSPORTER_ID":
-      localStorage.setItem("transporterId", action.payload.id);
+      localStorage.setItem("transporterId", action.payload);
       return { ...state, transporterId: action.payload };
     case "SET_SHIPPER_ID":
       localStorage.setItem("shipperId", action.payload);
       return { ...state, shipperId: action.payload };
     case "SET_BID_ID_POST_ID":
-      console.log(action.payload, 'ini di payload reducer')
+      console.log(action.payload, "ini di payload reducer");
       localStorage.setItem("bidId", action.payload.BidId);
       localStorage.setItem("postId", action.payload.id);
-      return { ...state, bidId: action.payload.BidId, postId: action.payload.id };
+      return {
+        ...state,
+        bidId: action.payload.BidId,
+        postId: action.payload.id,
+      };
     case "SET_POST":
       return { ...state, post: action.payload };
     case "SET_DEAL":

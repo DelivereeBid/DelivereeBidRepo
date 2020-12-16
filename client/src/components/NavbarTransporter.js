@@ -11,14 +11,17 @@ const NavbarTrans = (props) => {
   const profile = useSelector((state) => state.transporter);
 
   useEffect(() => {
-    console.log(localStorage.getItem("transporterId"));
-    dispatch(fetchTransporterById(localStorage.getItem("transporterId")));
+    dispatch(fetchTransporterById(id));
   }, [dispatch]);
 
   const signOut = () => {
     localStorage.clear();
     history.push("/");
   };
+
+  // if (!profile) {
+  //   return <h1>loading</h1>;
+  // }
 
   return (
     <>
@@ -39,11 +42,6 @@ const NavbarTrans = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <Link to="/transporter/wallet">Wallet</Link>
-              </a>
-            </li>
             <li className="nav-item">
               <a className="nav-link">Your Balance : {profile.wallet}</a>
             </li>
