@@ -233,7 +233,7 @@ export const patchShipperPost = (id, payload) => {
     console.log(id, "ini id", payload, "ini payload bid");
     axios({
       url: `/bid/${id}`,
-      headers: {access_token: tokenShipper},
+      headers: { access_token: tokenShipper },
       method: "PATCH",
       data: payload,
     })
@@ -393,13 +393,13 @@ export const setLoginShipper = (payload) => {
 };
 
 export const setBid = (payload) => {
-  console.log(payload, 'payload setBid 376')
+  console.log(payload, "payload setBid 376");
   return (dispatch) => {
     axios({
       url: "/post",
       method: "POST",
       headers: {
-        access_token: tokenTransporter,
+        access_token: localStorage.getItem("transporter_token"),
       },
       data: {
         BidId: payload.BidId,

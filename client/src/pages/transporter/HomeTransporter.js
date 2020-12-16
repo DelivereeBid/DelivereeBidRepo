@@ -50,8 +50,11 @@ function HomeTransporter(props) {
   // })
 
   const milihTransporter = transporter.filter((el) => {
-    return el.TransporterId == localStorage.getItem('transporterId') || el.status == 'available'
-  })
+    return (
+      el.TransporterId == localStorage.getItem("transporterId") ||
+      el.status == "available"
+    );
+  });
 
   // console.log(filterBid, 'feltier')
   return (
@@ -60,8 +63,7 @@ function HomeTransporter(props) {
       {/* {JSON.stringify(transporter)} */}
       <h1 className="text-center">Find the right order for you!</h1>
       <div className="row">
-        {
-        milihTransporter.map((el, key) => (
+        {milihTransporter.map((el, key) => (
           <div key={key} className="card-deck mx-auto col-sm-4">
             <div id="card-size" className="card">
               <div className="card-body mt-2 text-center mx-auto">
@@ -76,23 +78,14 @@ function HomeTransporter(props) {
                 <h5 className=" mt-2">{el.description}</h5>
                 <h5 className=" mt-2">{el.from}</h5>
                 <h5 className=" mt-2">{el.to}</h5>
-                {el.Posts.some(
-                  (post) => post.TransporterId === transporterId
-                ) ? (
-                  el.Posts.map((post) =>
-                    post.status === "accepted" &&
-                    post.transporterId === transporterId ? (
-                      <button
-                        onClick={() => toControlPage(el.ShipperId, el.Posts)}
-                        className="btn btn-primary"
-                      >
-                        Start
-                      </button>
-                    ) : (
-                      ""
-                    )
-                  )
-                ) : el.Posts.some((post) => (post.status = "accepted")) ? (
+                {el.Posts.some((post) => post.status === "accepted") ? (
+                  <button
+                    onClick={() => toControlPage(el.ShipperId, el.Posts)}
+                    className="btn btn-primary"
+                  >
+                    Start
+                  </button>
+                ) : el.Posts.some((post) => post.status === "pending") ? (
                   ""
                 ) : (
                   <button
