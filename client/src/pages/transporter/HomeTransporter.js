@@ -85,7 +85,7 @@ function HomeTransporter(props) {
                   >
                     Start
                   </button>
-                ) : el.Posts.some((post) => post.status === "Pending") ? (
+                ) : el.Posts.some((post) => post.status === "Pending" && post.TransporterId === transporterId) ? (
                   ""
                 ) : (
                   <button
