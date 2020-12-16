@@ -364,7 +364,7 @@ function ControlPage (props) {
                                     <form>
                                         <div className="row">
 
-                                                <PlacesAutocomplete
+                                            <PlacesAutocomplete
                                                 value={address}
                                                 onChange={handleSearchChange}
                                                 onSelect={handleSelect}

@@ -67,20 +67,22 @@ function TableRowShipper(props) {
   }
 
   return (
-    <tr
-      style={{
-        cursor: "pointer",
-        display: `${bidder.status === "rejected" ? "none" : ""}`,
-      }}
-    >
-      <th scope="row">{bidder.id}</th>
-      <td>{bidder.name}</td>
-      <td>{bidder.vehicle}</td>
-      <td>Rp {bidder.price.toLocaleString(["ban", "id"])}</td>
-      <Button onClick={(e) => selectedBid(e, bidder)} variant="warning">
-        Click
-      </Button>
-    </tr>
+    <>
+      <tr
+        style={{
+          cursor: "pointer",
+          display: `${bidder.status === "rejected" ? "none" : ""}`,
+        }}
+      >
+        <th scope="row">{bidder.id}</th>
+        <td>{bidder.name}</td>
+        <td>{bidder.vehicle}</td>
+        <td>Rp {bidder.price.toLocaleString(["ban", "id"])}</td>
+        <Button onClick={(e) => selectedBid(e, bidder)} variant="warning">
+          Click
+        </Button>
+      </tr>
+    </>
   );
 }
 

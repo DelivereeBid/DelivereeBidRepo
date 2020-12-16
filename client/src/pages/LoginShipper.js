@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setLoginShipper } from "../store";
 import { Container, Form, Button } from "react-bootstrap";
+import './Login.css'
 
 function LoginShipper(props) {
   const history = useHistory();
@@ -44,7 +45,7 @@ function LoginShipper(props) {
                 </div>
                 <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">
-                        <form onSubmit={(e) => handleLogin(e)}>
+                        <form className='inputLogin' onSubmit={(e) => handleLogin(e)}>
                             <div class="form-group">
                                 <label class="form-control-label">EMAIL</label>
                                 <input onChange={(e) => setEmail(e.target.value)} type="email" class="form-control"></input>
@@ -55,16 +56,14 @@ function LoginShipper(props) {
                             </div>
 
                             <div class="col-lg-12 loginbttm">
-                                <div class="col-lg-6 login-btm login-text">
-                                <p role="button" onClick={() => handleRegister()}>Don't have an account?</p>   
-                                </div>
+                              <div class="col-lg-6 login-btn login-text">
+                                  <button type="submit" class="mr-2 btn btn-outline-primary">Sign In</button>
+                                  <button onClick={() => toHome()} type="submit" class="btn btn-outline-primary">Back</button>
+                                <p className='mt-3' role="button" onClick={() => handleRegister()}>Don't have an account?</p>   
+                              </div>
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-2">
-                <button type="submit" class="btn btn-outline-primary">Sign In</button>
-                <button onClick={() => toHome()} type="submit" class="btn btn-outline-primary mb-5">Back</button>
                 </div>
             </div>
         </div>
