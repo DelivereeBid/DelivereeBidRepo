@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/24</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.92% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/13</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/24</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -92,16 +92,21 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">61x</span>
 <span class="cline-any cline-yes">61x</span>
 <span class="cline-any cline-yes">61x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">61x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
@@ -112,13 +117,15 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-yes">28x</span>
@@ -127,49 +134,54 @@
 <span class="cline-any cline-yes">61x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">function errHandler(err, req, res, next){
-    let code = err.code || 500
-    let msg = err.msg || 'Internal server error'
-    let errors = []
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">function errHandler(err, req, res, next) {
+  let code = err.code || 500;
+  let msg = err.msg || "Internal server error";
+  let errors = [];
 &nbsp;
-    switch(err.name){
-        case 'SequelizeValidationError':
-            err.errors.forEach(el =&gt; {
-                <span class="missing-if-branch" title="else path not taken" >E</span>if(el.message) {
-                    errors.push(el.message)
-                }
-            })
-            code = 400
-            msg = errors.join(', ')
-            break;
-        case 'SequelizeUniqueConstraintError':
-            code = 400
-            errors.push("Email must be unique")
-            break;
-<span class="branch-2 cbranch-no" title="branch not covered" >        case 'SequelizeDatabaseError':</span>
-<span class="cstat-no" title="statement not covered" >            code = 500;</span>
-<span class="cstat-no" title="statement not covered" >            errors.push("Internal server error")</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-<span class="branch-3 cbranch-no" title="branch not covered" >        case 'SequelizeConnectionError':</span>
-<span class="cstat-no" title="statement not covered" >            code = 400;</span>
-<span class="cstat-no" title="statement not covered" >            errors.push("Connection failed")</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-        default:
-            errors.push(err.msg || err.message)
-            code = err.code
-            break;
-    }
-    res.status(code).json(errors)
+  switch (err.name) {
+    case "SequelizeValidationError":
+        /* istanbul ignore next */
+      err.errors.forEach((el) =&gt; {
+        if (el.message) {
+          errors.push(el.message);
+        }
+      });
+      code = 400;
+      msg = errors.join(", ");
+      break;
+    case "SequelizeUniqueConstraintError":
+      code = 400;
+      errors.push("Email must be unique");
+      break;
+    /* istanbul ignore next */
+    case "SequelizeDatabaseError":
+      code = 500;
+      errors.push("Internal server error");
+      break;
+    /* istanbul ignore next */
+    case "SequelizeConnectionError":
+      code = 400;
+      errors.push("Connection failed");
+      break;
+    default:
+      errors.push(err.msg || err.message);
+      code = err.code;
+      break;
+  }
+  res.status(code).json(errors);
 }
 &nbsp;
-module.exports = errHandler;</pre></td></tr></table></pre>
+module.exports = errHandler;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Dec 16 2020 00:53:50 GMT+0700 (Western Indonesia Time)
+                at Wed Dec 16 2020 13:08:32 GMT+0700 (Western Indonesia Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
