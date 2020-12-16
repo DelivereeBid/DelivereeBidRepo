@@ -4,6 +4,7 @@ import {fetchShippers} from '../../store/index.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
+import wave from '../../assets/wave.svg'
 
 
 function HomeShipper (props) {
@@ -28,6 +29,7 @@ function HomeShipper (props) {
     return (
         <div>
             <Navbar/>
+
             <div className='row'>
                 <div className='col-3'>
                     <h3>Your Post<i class="fas fa-plus float-right" type='button' onClick={handleShow}></i></h3>

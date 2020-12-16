@@ -88,7 +88,7 @@ function EditPostShipper (props) {
 
         <>
 
-            <Modal show={showEdit} onHide={handleClose}>
+            <Modal dialogClassName="modal-100w"  show={showEdit} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Request</Modal.Title>
                 </Modal.Header>
@@ -96,39 +96,39 @@ function EditPostShipper (props) {
 
                 <form onSubmit={(e) => submitPost(e)} method="post" encType="multipart/form-data">
                         <div class="form-group row">
-                            <label for="inputTitle" class="col-sm-2 col-form-label">Product Name</label>
-                            <div class="col-sm-10">
+                            <label for="inputTitle" class="col-sm-3 col-form-label">Product Name</label>
+                            <div class="col-sm-9">
                                 <input defaultValue={product_name} onChange={(e) => onName(e)} type="text" class="form-control" id="inputTitle" placeholder="Laptop"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputFrom" class="col-sm-2 col-form-label">From</label>
-                            <div class="col-sm-10">
+                            <label for="inputFrom" class="col-sm-3 col-form-label">From</label>
+                            <div class="col-sm-9">
                                 <input defaultValue={from} onChange={(e) => onFrom(e)} type="text" class="form-control" id="inputFrom" placeholder="Jl. Pangeran Antasari no.2A"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputTo" class="col-sm-2 col-form-label">To</label>
-                            <div class="col-sm-10">
+                            <label for="inputTo" class="col-sm-3 col-form-label">To</label>
+                            <div class="col-sm-9">
                                 <input defaultValue={to} onChange={(e) => onTo(e)}  type="text" class="form-control" id="inputTo" placeholder="Jl. Sangkuriang no.31"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputDate" class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
+                            <label for="inputDate" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
                                 <input defaultValue={description} onChange={(e) => onDescription(e)}  type="text" class="form-control" id="inputDate" placeholder="Ada 5 laptop, tolong hati-hati"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="customFile" class="col-sm-2 col-form-label">Product Picture</label>
-                            <div className='custom-file col-sm-10'>
+                            <label for="customFile" class="col-sm-3 col-form-label">Product Picture</label>
+                            <div className='custom-file col-sm-9'>
                                 <input
                                     type='file'
                                     className='custom-file-input'
                                     id='customFile'
                                     onChange={onChange}
                                 />
-                                <label className='custom-file-label' htmlFor='customFile'>
+                                <label className='custom-file-label' htmlFor='customFile' style={{right: '15px', left: '15px'}}>
                                     {filename}
                                 </label>
                             </div>
@@ -136,8 +136,7 @@ function EditPostShipper (props) {
                             {/* <Progress percentage={uploadPercentage} /> */}
 
                         </div>
-                        <Button  type="submit">Edit Request</Button>
-                        <Button variant='secondary' onClick={handleClose}>Close</Button>
+                        <Button className='btn-block' type="submit">Edit Request</Button>
                     </form>
 
                 </Modal.Body>
