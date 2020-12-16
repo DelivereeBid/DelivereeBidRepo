@@ -43,12 +43,20 @@ const NavbarTrans = (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link">Your Balance : {profile.wallet}</a>
+              {
+                profile &&
+                <a className="nav-link">Your Balance : {profile.wallet}</a>
+              }
+
             </li>
           </ul>
           <ul className="navbar-nav mr-2">
             <li className="nav-item">
-              <a className="nav-item">Welcome, {profile.username}</a>
+              {
+                profile &&
+                <a className="nav-item">Welcome, {profile.username}</a>
+              }
+
             </li>
           </ul>
 
