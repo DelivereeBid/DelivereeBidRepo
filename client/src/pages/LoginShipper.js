@@ -67,7 +67,7 @@ function LoginShipper(props) {
                 </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-2">
+          {/* <div class="col-lg-3 col-md-2">
             <button
               onClick={(e) => handleLogin(e)}
               type="submit"
@@ -82,7 +82,7 @@ function LoginShipper(props) {
             >
               Back
             </button>
-          </div>
+          </div> */}
         </div>
     </>
   );

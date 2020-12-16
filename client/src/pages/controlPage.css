@@ -75,13 +75,16 @@
 
 
 .chat{
+    width: 100%;
+    height: auto;
+    flex: 50%;
     margin-top: auto;
-    margin-bottom: auto;
+    /* /* margin-bottom: auto;  */
 }
 .card-chat{
-    height: 400px;
+    height: 750px;
     border-radius: 15px !important;
-    background-color: rgba(0,0,0,0.4) !important;
+    background-color:#f6f6f6 !important;
 }
 .contacts_body{
     padding:  0.75rem 0 !important;
@@ -109,6 +112,36 @@
      box-shadow:none !important;
    outline:0px !important;
 }
+
+.contact-in {
+    width: 80%;
+    height: auto;
+    margin: auto;
+    display: flex;
+    /* flex-wrap: wrap; */
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 0px #666;
+}
+
+.map {
+    width: 100%;
+    height: auto;
+    /* flex: 50%; */
+}
+
+.map-div iframe {
+    height: 100%;
+    width: 100%;
+}
+
+.map-div {
+    height: 100%;
+}
+
+
+
 .type_msg{
     background-color: rgba(0,0,0,0.3) !important;
     border:0 !important;
