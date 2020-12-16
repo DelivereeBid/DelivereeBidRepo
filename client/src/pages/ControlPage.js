@@ -110,8 +110,8 @@ function ControlPage (props) {
 
               // Scroll down
 
-            // const chatMessages = document.querySelector('.msg_card_body');
-            // chatMessages.scrollTop = chatMessages.scrollHeight;
+            const chatMessages = document.querySelector('.msg_card_body');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         })
 
         //ALTERNATIVE 2 ==END==========
@@ -167,9 +167,9 @@ function ControlPage (props) {
                 div.appendChild(divChildSend);
             }
 
-            if(shipper && post) {
+
                 document.querySelector('.msg_card_body').appendChild(div);
-            }
+
             // document.querySelector('.msg_card_body').appendChild(div);
 
           }
