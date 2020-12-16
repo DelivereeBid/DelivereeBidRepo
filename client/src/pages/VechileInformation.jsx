@@ -6,6 +6,9 @@ import './vehicleInfo.css'
 import { Navbar } from '../components';
 import VehicleCDD from '../components/vehicleInfo/VehicleCDD';
 import Van from '../components/vehicleInfo/Van';
+import Pickup from '../components/vehicleInfo/Pickup'
+import Tronton from '../components/vehicleInfo/Tronton'
+import VehicleCDE from '../components/vehicleInfo/VehicleCDE'
 
 
 function VechileInformation (props) {
@@ -32,16 +35,25 @@ function VechileInformation (props) {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item as="li">
-              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">Pickup</Nav.Link>
+              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">
+                <Link to={`${path}/pickup`}>
+                  Pickup
+                </Link>
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item as="li">
-              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">Tronton</Nav.Link>
+              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">
+                <Link to={`${path}/tronton`}>
+                  Tronton
+                </Link>
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item as="li">
-              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">Colt Diesel Engine</Nav.Link>
-            </Nav.Item>
-            <Nav.Item as="li">
-              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">Fuso</Nav.Link>
+              <Nav.Link eventKey="link-2" className="mr-1 bg-warning">
+                <Link to={`${path}/cde`}>
+                    Colt Diesel Engine
+                </Link>
+              </Nav.Link>
             </Nav.Item>
           </Nav>
           <Switch>
@@ -50,6 +62,15 @@ function VechileInformation (props) {
             </Route>
             <Route path={`${path}/van`}>
               <Van />
+            </Route>
+            <Route path={`${path}/pickup`}>
+              <Pickup />
+            </Route>
+            <Route path={`${path}/tronton`}>
+              <Tronton />
+            </Route>
+            <Route path={`${path}/cde`}>
+              <VehicleCDE />
             </Route>
           </Switch>
         </div>

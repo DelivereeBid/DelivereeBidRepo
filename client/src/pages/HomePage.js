@@ -18,7 +18,8 @@ function HomePage (props) {
         <>
         <div id="homepage">
         <div className="d-flex align-items-center flex-column"  style={{marginTop: 250}}> 
-        <h1 style={{color:"white"}}>Deliver Me</h1>
+        <h1 style={{color:"white"}}>Deliver Jobbers</h1>
+        <h3 style={{color:"white"}}>We set the standards others try to live up to.</h3>
         </div>
         <div className="d-flex justify-content-center">
         <button type="button" id="btn-landing" onClick={() => handleLoginAsShipper()} className="btn btn-info mr-3">Sign as Shipper</button>

@@ -10,8 +10,14 @@ import {
     geocodeByPlaceId,
     getLatLng,
   } from 'react-places-autocomplete';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 import './controlPage.css'
 import { Button } from 'react-bootstrap';
+
+const mapStyles = {
+    width: '100%',
+    height: '100%'
+  };
 
 function ControlPage (props) {
     const dispatch = useDispatch()
@@ -231,8 +237,7 @@ function ControlPage (props) {
     return (
         <div >
             {/* <Navbar/> */}
-            <h3>Control Page</h3>
-            <div className="container-fluid h-100">
+            <div className="container-fluid h-100 mt-3">
                 <div className="stepwizard">
                     {   role === 'shipper' &&
                         <div className="stepwizard-row setup-panel">
@@ -273,15 +278,14 @@ function ControlPage (props) {
 
 
                 </div>
-                <div className="row justify-content-center h-100">
-
-                    <div className="col-md-8 col-xl-8 chat">
+                <div className="row justify-content-center h-100 contact-in mt-5 mb-5">
+                    <div className="col-md-4 col-12 col-xl-8 chat">
                         {/* {   isMyRoom && */}
-                            <div className="card card-chat">
+                        <div className="card card-chat">
                             <div className="card-header-chat msg_head">
                                 <div className="d-flex bd-highlight">
                                     <div className="user_info">
-                                        <span>Chat with {username}</span>
+                                        <span className='text-primary'>To: {username}</span>
                                     </div>
                                 </div>
                             </div>
@@ -336,48 +340,28 @@ function ControlPage (props) {
 
 
                     </div>
-                    <div className="col-md-4 col-xl-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <h4 className="card-title">Contact</h4>
-                                <h6 className="card-subtitle mb-2 text-muted">
-                                    {
-                                        role === 'transporter'
-                                        ? profile_shipper.username
-                                        : transporter.username
-                                    }
-                                </h6>
-                                <div className="card-text">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td><i class="fas fa-clock mr-2 text-center"></i></td>
-                                                <td>
-                                                    {
-                                                        role === 'transporter'
-                                                        ? profile_shipper.email
-                                                        : transporter.email
-                                                    }
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col-md-6 col-xl-4 map col-12">
                         {   role === 'transporter' &&
-                            <div className="card">
-                                    {
-                                        // let latlon = position.coords.latitude + "," + position.coords.longitude;
-                                        latitude && longitude ?
-                                        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude +','+longitude}
-                                        &zoom=14&size=400x400&sensor=false&markers=color:red%7C${latitude + ',' + longitude}
-                                        &key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw`} alt=''></img> : null
-                                    }
+                            <div className="card map-div">
+                                <iframe
+                                width="100%"
+                                height="400"
+                                frameborder="0"
+                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw&center=${latitude}
+                                ,${longitude}&maptype=satellite&q=a`}
+                                allowfullscreen>
+                                </iframe>
+                                {/* {
+                                    // let latlon = position.coords.latitude + "," + position.coords.longitude;
+                                    latitude && longitude ?
+                                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${latitude +','+longitude}
+                                    &zoom=14&size=600x400&sensor=false&markers=color:red%7C${latitude + ',' + longitude}
+                                    &key=AIzaSyAaoKpi0CH9Ur9s7sVNfyHMN8ANlLa6JIw`} alt=''></img> : null
+                                } */}
                                 <div className="card-body">
-                                    <h4 className="card-title">Update Location</h4>
+                                    <h4 className="card-title mx-0 text-left">Update Location</h4>
                                     <form>
-                                        <div className="row">
+                                        <div className="ml-1 row d-flex justify-content-between">
 
                                             <PlacesAutocomplete
                                                 value={address}
@@ -423,11 +407,45 @@ function ControlPage (props) {
                                 </div>
                             </div>
                         }
+                        
+                        {
+                            role === 'shipper' &&
+                            <div className="card mb-3">
+                                    <div className="card-body">
+                                        <h4 className="card-title">Contact</h4>
+                                        <h6 className="card-subtitle mb-2 text-muted">
+                                            {
+                                                role === 'transporter'
+                                                ? profile_shipper.username
+                                                : transporter.username
+                                            }
+                                        </h6>
+                                        <div className="card-text">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><i class="fas fa-clock mr-2 text-center"></i></td>
+                                                        <td>
+                                                            {
+                                                                role === 'transporter'
+                                                                ? profile_shipper.email
+                                                                : transporter.email
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                        }
 
                         { post && shipper && post.tracking_log === shipper.to && role === 'shipper' &&
-                            <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                                {/* <button type="button" class="btn btn-danger">Complaint</button> */}
-                                <button onClick={(e) => removeBid(e, bidID)} type="button" class="btn btn-success">Yeayy, your order has been deliverd!</button>
+                            <div>
+                                <div class="btn-group btn-block" role="group" aria-label="Basic example">
+                                    {/* <button type="button" class="btn btn-danger">Complaint</button> */}
+                                    <button onClick={(e) => removeBid(e, bidID)} type="button" class="btn btn-success">Yeayy, your order has been deliverd!</button>
+                                </div>
                             </div>
                         }
 

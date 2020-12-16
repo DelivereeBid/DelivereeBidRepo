@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {fetchShippersById, fetchPostById, transporterById, 
     patchWalletTransporter, updateWalletShipper, patchPostById, patchShipperPost} from '../../store/index.js'
+import './PaymentMethod.css'
 
 function PaymentMethod (props) {
     const dispatch = useDispatch()
@@ -66,7 +67,7 @@ function PaymentMethod (props) {
     return (
         <div>
             <Navbar/>
-            <div className='row'>
+            <div className='row paymentContent'>
                 <div className='col-7'>
                     <div class="card panel-default plain" id="dash_0">
                         <div class="card-body p30">

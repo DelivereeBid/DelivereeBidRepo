@@ -45,6 +45,14 @@ function HomeTransporter(props) {
     );
   };
 
+  function filteredPosts (el, id) {
+    const result = el.Posts.filter(el => {
+      return el.TransporterId == id
+    })
+    console.log(result.length > 0, 'resz')
+    return result;
+  }
+
   // const filterBid = transporter.filter((el) => {
   //   return el.id ==
   // })
@@ -61,13 +69,13 @@ function HomeTransporter(props) {
     <>
       <NavbarTrans />
       {/* {JSON.stringify(transporter)} */}
-      <h1 className="text-center">Find the right order for you!</h1>
+      <h1 className="text-center mb-5">Find the right order for you!</h1>
       <div className="row">
         {milihTransporter.map((el, key) => (
           <div key={key} className="card-deck mx-auto col-sm-4">
             <div id="card-size" className="card">
               <div className="card-body mt-2 text-center mx-auto">
-                <h5>{el.product_name}</h5>
+               
                 {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
                 {console.log(transporter[0].ShipperId, "awa")}
                 <img
@@ -75,8 +83,9 @@ function HomeTransporter(props) {
                   src={el.product_picture}
                   style={{ width: 150, height: 150 }}
                 ></img>
+                 <h5 className="fas fa-suitcase">{el.product_name}</h5>
                 <h5 className=" mt-2">{el.description}</h5>
-                <h5 className=" mt-2">{el.from}</h5>
+                <h5 className="fas fa-house-user mt-2">{el.from}</h5>
                 <h5 className=" mt-2">{el.to}</h5>
                 {el.Posts.some((post) => post.status === "accepted") ? (
                   <button
