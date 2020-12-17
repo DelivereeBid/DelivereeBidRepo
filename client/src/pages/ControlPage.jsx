@@ -361,7 +361,7 @@ function ControlPage (props) {
                             </div>
                         }
             <div style={{height: '55vh'}}>
-<div className="chat-container">
+            <div className="chat-container">
             <div className="search-container">
                 <input type="text" placeholder='Search...' />
             </div>
@@ -434,7 +434,7 @@ function ControlPage (props) {
           </div>
             </div>
 
-          <div style={{top: '300px'}}>A</div>
+
           {/* <svg className='mt-5' style={{top: '300px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path fill="#0099ff" fill-opacity="1"
                   d="M0,64L80,58.7C160,53,320,43,480,80C640,117,800,203,960,202.7C1120,203,1280,117,1360,74.7L1440,

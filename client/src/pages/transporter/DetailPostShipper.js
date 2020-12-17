@@ -35,23 +35,23 @@ function DetailPostShipper(props) {
     <NavbarTrans/>
       {/* {JSON.stringify(detail)} */}
       <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div className="container mb-5" style={{backgroundColor: "blue"}}>
+        <div className="container shadow mb-5" style={{backgroundColor: "#0099ff", borderRadius: '15px'}}>
           <div className="row">
-        <div className="col mx-auto d-flex justify-content-center align-items-center">
-          <img src={detail.product_picture}></img>
+        <div className="col mx-auto d-flex mt-3 justify-content-center align-items-center">
+          <img  src={detail.product_picture} style={{  width: '500px', height: '250px', objectFit: 'contain', objectPosition: 'center'}}></img>
         </div>
-        <div class="col mt-5 mb-5">
+        <div class="col mt-3 mb-5">
           <div class="card">
-            <h3 className="text-center">Shipping's Detail</h3>
+            <h3 className="text-center mt-2">Shipping's Detail</h3>
             <div class="card-body">
             <table class="table">
                 <tbody>
                   <tr>
-                   
+
                     <th>From</th>
                     <td>{detail.from}</td>
-                    
-                    
+
+
                   </tr>
                   <tr>
                     <th>To</th>
@@ -64,16 +64,16 @@ function DetailPostShipper(props) {
                   </tr>
 
                   <tr>
-                    
+
                   <th>Product's Description</th>
-                    
+
                     <td>{detail.description}</td>
                   </tr>
-                  
-                  
+
+
                 </tbody>
               </table>
-              <div class="input-group">
+              <div class="input-group justify-content-center">
                 <div class="input-group-text mb-3 mr-1">Bid :</div>
                 <input
                   onChange={(e) => {
@@ -84,16 +84,19 @@ function DetailPostShipper(props) {
                   placeholder="000000"
                 ></input>
               </div>
-              <button onClick={(e) => handleBid(e)} className="btn btn-success">
-                Submit Bid
-              </button>
+              <div  class="input-group justify-content-center">
+                <button className='justify-content-center' onClick={(e) => handleBid(e)} className="btn btn-success">
+                  Submit Bid
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
         </div>
       </div>
       </div>
-     
+
     </>
   );
 }
