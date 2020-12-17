@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchTransporter, fetchTransporterById } from "../../store/index";
 import { NavbarTrans } from "../../components";
+import wave from '../../assets/wave.svg'
+import ShipperCardPost from "../../components/ShipperCardPost";
 
 function HomeTransporter(props) {
   const history = useHistory();
@@ -68,8 +70,58 @@ function HomeTransporter(props) {
   return (
     <>
       <NavbarTrans />
-      {/* {JSON.stringify(transporter)} */}
-      <h1 className="text-center mb-5">Find the right order for you!</h1>
+      {/* {JSON.stringify(trucking)} */}
+      <img style={{top: '10px', zIndex: '-1', position: 'fixed'}} width= '100%' src={wave}/>
+      <div className="content" stye={{margin: '0 1%'}}>
+        <div className="row d-flex justify-content-between">
+          <div className="col-md-3 col-12">
+            <div class="card shadow-sm profile-sidebar " style={{borderRadius: '15px'}}>
+
+              <div class="profile-userpic">
+                { !trucking.profile_picture
+                    ? <img
+                    src="https://www.w3schools.com/howto/img_avatar2.png"
+                    class="img-responsive" alt="" />
+                    : <img
+                    src={trucking.profile_picture}
+                    class="img-responsive" alt="" />
+
+                }
+
+              </div>
+              <div class="profile-usertitle">
+                <div class="profile-usertitle-job">
+                  {trucking.username}
+                </div>
+                <div class="profile-usertitle-name">
+                  <i class="fas fa-envelope"></i> {trucking.email}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-9 col-12">
+            <div className="card px-4 py-2 mb-4 text-white" style={{border: '0px', backgroundColor: 'transparent'}}>
+              <span className="row">
+                <h3 className="mt-1 ml-1">Find your order </h3>
+               
+              </span>
+            </div>
+            
+          {
+            milihTransporter.map(jobs => {
+              return (
+                <ShipperCardPost
+                key={jobs.id}
+                shipper={jobs}
+                />
+              )
+            })
+          }
+</div>
+          </div>
+          
+        </div>
+{/*       
       <div className="row">
         {milihTransporter.map((el, key) => (
           <div key={key} className="card-deck mx-auto col-sm-4">
@@ -77,7 +129,7 @@ function HomeTransporter(props) {
               <div className="card-body mt-2 text-center mx-auto">
                
                 {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
-                {console.log(transporter[0].ShipperId, "awa")}
+                {/* {console.log(transporter[0].ShipperId, "awa")}
                 <img
                   className="card-img-top"
                   src={el.product_picture}
@@ -107,8 +159,8 @@ function HomeTransporter(props) {
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        ))} */}
+      {/* </div> */}
     </>
   );
 }
