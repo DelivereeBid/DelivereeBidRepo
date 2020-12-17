@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { fetchTransporter, fetchTransporterById } from "../../store/index";
 import { NavbarTrans } from "../../components";
 import wave from '../../assets/wave.svg'
-import ShipperCardPost from "../../components/ShipperCardPost";
+import { Button } from 'react-bootstrap'
 
 function HomeTransporter(props) {
   const history = useHistory();
@@ -106,40 +106,43 @@ function HomeTransporter(props) {
                
               </span>
             </div>
-            
-          {
-            milihTransporter.map(jobs => {
-              return (
-                <ShipperCardPost
-                key={jobs.id}
-                shipper={jobs}
-                />
-              )
-            })
-          }
-</div>
-          </div>
-          
-        </div>
-{/*       
-      <div className="row">
         {milihTransporter.map((el, key) => (
-          <div key={key} className="card-deck mx-auto col-sm-4">
-            <div id="card-size" className="card">
-              <div className="card-body mt-2 text-center mx-auto">
-               
-                {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
-                {/* {console.log(transporter[0].ShipperId, "awa")}
-                <img
-                  className="card-img-top"
-                  src={el.product_picture}
-                  style={{ width: 150, height: 150 }}
-                ></img>
-                 <h5 className="fas fa-suitcase">{el.product_name}</h5>
-                <h5 className=" mt-2">{el.description}</h5>
-                <h5 className="fas fa-house-user mt-2">{el.from}</h5>
-                <h5 className=" mt-2">{el.to}</h5>
-                {el.Posts.some((post) => post.status === "accepted") ? (
+          <div key={key} className="card mb-4 shadow" style={{borderRadius: '15px', borderColor: '#0099ff'}}>
+          <div class="row no-gutters">
+            <div className='col-4 d-flex justify-content-center align-items-center'>
+             
+                <img className='img-fluid' src={el.product_picture} alt='' style={{  width: '250px', height: '250px', objectFit: 'cover', objectPosition: 'center'}}></img>
+           
+            </div>
+            <div className='col-8  justify-content-end align-items-center'>
+            
+                <div class="card-body mt-3">
+                  <div className="mx-1 my-0  card-test">
+                    <div className='row mb-3'>
+    
+                      <div className='col-8'>
+                        <h5 class="card-title text-left text-blueish" style={{marginBottom:'0rem', textTransform: 'capitalize'}}>{el.product_name}</h5>
+    
+                      </div>
+    
+                      
+                    </div>
+                  </div>
+                  {/* <p class="card-text">It's a broader card with text below as a natural lead-in to extra content. This content is a little longer.</p> */}
+                  <div class="input-group mt-1 mb-3">
+                    <span class="input-group-text" id="basic-addon1" style={{width: '70px'}}>From</span>
+                    <div className="input-group-text" style={{backgroundColor: 'transparent', width: '85%'}}>
+                      {el.from}
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1" style={{width: '70px'}}>To</span>
+                    <div className="input-group-text" style={{backgroundColor: 'transparent', width: '85%'}}>
+                      {el.to}
+                    </div>
+                  </div>
+                  <p className='float-right mr-1'>
+                  {el.Posts.some((post) => post.status === "accepted") ? (
                   <button
                     onClick={() => toControlPage(el.ShipperId, el.Posts)}
                     className="btn btn-primary"
@@ -151,16 +154,48 @@ function HomeTransporter(props) {
                 ) : (
                   <button
                     onClick={() => changePage(el.id)}
-                    className="btn btn-danger"
+                    className="btn btn-success"
                   >
-                    Bid !
+                    Bid Your Price !
                   </button>
                 )}
-              </div>
+                     
+                  </p>
+                </div>
+              {/* </div> */}
             </div>
+    
+    
           </div>
-        ))} */}
-      {/* </div> */}
+        </div>
+          // <div key={key} className="card-deck mx-auto col-sm-4">
+          //   <div id="card-size" className="card">
+          //     <div className="card-body mt-2 text-center mx-auto">
+               
+          //       {/* <h5>{JSON.stringify(el.Posts[0])}</h5> */}
+          //       {console.log(transporter[0].ShipperId, "awa")}
+          //       <div className="row mb-3">
+          //         <div className="col-8">
+          //           <h5 className="fas fa-suitcase">{el.product_name}</h5>
+          //         </div>
+          //       <img
+          //         className="card-img-top"
+          //         src={el.product_picture}
+          //         style={{ width: 150, height: 150 }}
+          //       ></img>
+                 
+          //       <h5 className=" mt-2">{el.description}</h5>
+          //       <h5 className="fas fa-house-user mt-2">{el.from}</h5>
+          //       <h5 className=" mt-2">{el.to}</h5>
+                
+          //     </div>
+          //     </div>
+          //   </div>
+          // </div>
+        ))}
+         </div>
+          </div>
+        </div>
     </>
   );
 }
