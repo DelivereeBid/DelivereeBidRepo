@@ -25,46 +25,28 @@ const NavbarTrans = (props) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a className="navbar-brand" href="#">
-          DeliverieeBid
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+      <nav className="navbar navbar-expand-lg navbar-light mb-4 sticky-top nav-back-color px-4">
+        <div className="navbar-brand text-decoration-none font-weight-bolder" ><Link className='text-decoration-none text-white' to='/transporter'>Delivery Jobbers</Link>
+        </div>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              {
-                profile &&
-                <a className="nav-link">Your Balance : {profile.wallet}</a>
-              }
+              <a className="nav-link text-white" href="#"><Link to='/vechileInformation'></Link>Vehicle</a>
             </li>
           </ul>
-          <ul className="navbar-nav mr-2">
+          <ul className="navbar-nav mr-4">
             <li className="nav-item">
-              {
-                profile &&
-                <a className="nav-item">Welcome, {profile.username}</a>
-              }
-            </li>
+                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i>
+                {profile.wallet?.toLocaleString('id', { style: 'currency', currency: 'IDR' })}</div>
+              </li>
+              <li className="nav-item">
+              <div className="nav-item text-decoration-none text-white" style={{textTransform: 'capitalize'}}><i class="fas fa-user-circle"></i> {profile.username}</div>
+              </li>
           </ul>
-
-          <button
-            className="nav-item"
-            onClick={() => signOut()}
-            className="btn btn-danger"
-          >
-            Sign Out
-          </button>
+          <div type='button' className="nav-item" onClick={() => signOut()} className="font-weight-bold text-white">Sign Out</div>
         </div>
       </nav>
     </>

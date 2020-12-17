@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {Navbar} from '../components'
+import {Navbar, NavbarTrans} from '../components'
 import io from "socket.io-client";
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
@@ -13,6 +13,7 @@ import {
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import './controlPage.css'
 import { Button } from 'react-bootstrap';
+import wave from '../assets/wave.svg'
 
 const mapStyles = {
     width: '100%',
@@ -220,7 +221,7 @@ function ControlPage (props) {
         history.push('/shipper')
     }
 
-  document.body.style = 'background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);';
+//   document.body.style = 'background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);';
 
 
 
@@ -237,8 +238,13 @@ function ControlPage (props) {
 
     return (
         <div>
-          {/* <Navbar/> */}
-          <div className="bg-info p-1">
+            {   role === 'shipper'
+                ? <Navbar/>
+                : <NavbarTrans />
+            }
+            <img style={{top: '10px', zIndex: '-1', position: 'fixed'}} width= '100%' src={wave}/>
+
+          <div className="p-1">
 
           <div className="stepwizard col-12 mt-5">
                         {   role === 'shipper' &&
@@ -247,25 +253,31 @@ function ControlPage (props) {
                                     <div  className="btn btn-secondary btn-circle" disabled="disabled">
                                         <span className="glyphicon glyphicon-envelope"></span>
                                     </div>
-                                    <p className='text-danger' style={{fontWeight: 'bold'}}>{shipper.from}</p>
+                                    <div className='mt-2'>
+                                        <span className='p-1 px-2 bg-white shadow-sm' style={{fontWeight: 'bold', borderRadius: '10px'}}>{shipper.from}</span>
+                                    </div>
+
+
                                 </div>
                                 <div className="stepwizard-step">
                                     <div className="btn btn-secondary btn-circle" id="ProfileSetup-step-2">
                                         <span className="glyphicon glyphicon-user"></span>
                                     </div>
-                                    <p className='text-light' style={{fontWeight: 'bold'}}>
-                                        { post &&
-                                            post.tracking_log
-                                        }
-
-                                    </p>
+                                    <div className='mt-2'>
+                                        <span className='p-1 px-2 bg-white shadow-sm' style={{fontWeight: 'bold', borderRadius: '10px'}}>
+                                            { post &&
+                                                post.tracking_log
+                                            }
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="stepwizard-step">
-                                    <div  className="btn btn-secondary btn-circle"  
+                                    <div  className="btn btn-secondary btn-circle"
                                     disabled="disabled" id="Security-Setup-step-3">
                                         <span className="glyphicon glyphicon-ok"></span>
                                     </div>
-                                    <p className='text-warning' style={{fontWeight: 'bold'}}>
+                                    <div className='mt-2'>
+                                        <span className='p-1 px-2 bg-white shadow-sm' style={{fontWeight: 'bold', borderRadius: '10px'}}>
                                         {
                                             post && shipper &&
 
@@ -273,8 +285,8 @@ function ControlPage (props) {
                                                 ? 'Delivered'
                                                 : shipper.to
                                         }
-
-                                    </p>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -282,7 +294,7 @@ function ControlPage (props) {
 
                     </div>
           </div>
-          
+
           {   role === 'transporter' &&
                             <div className="card map-container mt-5">
                                 <iframe
@@ -348,7 +360,8 @@ function ControlPage (props) {
                                 </div>
                             </div>
                         }
-          <div className="chat-container">
+            <div style={{height: '55vh'}}>
+<div className="chat-container">
             <div className="search-container">
                 <input type="text" placeholder='Search...' />
             </div>
@@ -386,7 +399,13 @@ function ControlPage (props) {
 
             </div>
             <div className="chat-title">
-                <span>To: {username}</span>
+                <span>
+                    To: {
+                            role === 'transporter'
+                            ? profile_shipper.username
+                            : transporter.username
+                        }
+                </span>
             </div>
             <div className="chat-message-list chat">
               {/* {   isMyRoom && */}
@@ -413,9 +432,11 @@ function ControlPage (props) {
                 {/* <input type='text' placeholder='Send Message...' /> */}
             </div>
           </div>
+            </div>
+
           <div style={{top: '300px'}}>A</div>
           {/* <svg className='mt-5' style={{top: '300px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#0099ff" fill-opacity="1" 
+              <path fill="#0099ff" fill-opacity="1"
                   d="M0,64L80,58.7C160,53,320,43,480,80C640,117,800,203,960,202.7C1120,203,1280,117,1360,74.7L1440,
                   32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z">
               </path>
