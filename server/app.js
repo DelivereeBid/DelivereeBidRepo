@@ -34,7 +34,7 @@ let isSameUser = false;
 let indexArr = 0;
 let users = [];
 
-const botName = "DeliverieeBid Bot";
+const botName = "Delivery Jobbers Bot";
 
 /* istanbul ignore next */
 io.on("connection", (socket) => {
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
     socket.join(user.room);
 
     // Welcome current user
-    socket.emit("message", formatMessage(botName, "Welcome to DeliverieeBid!"));
+    socket.emit("message", formatMessage(botName, "Welcome to Delivery Jobbers!"));
 
     // Broadcast when a user connects
     socket.broadcast

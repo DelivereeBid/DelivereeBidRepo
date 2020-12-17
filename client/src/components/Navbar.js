@@ -34,7 +34,7 @@ function Navbar (props) {
       {/* {JSON.stringify(profile)} */}
     <nav className="navbar navbar-expand-lg navbar-light  mb-4 sticky-top nav-back-color px-4" >
 
-        <div className="navbar-brand text-decoration-none font-weight-bolder" ><Link className='text-decoration-none text-white' to={role === 'shipper' ? '/shipper' : '/transporter'}>Delivery Jobbers</Link></div>
+        <div className="navbar-brand text-decoration-none font-weight-bolder" ><Link className='text-decoration-none text-white' to='/shipper'>Delivery Jobbers</Link></div>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -65,7 +65,7 @@ function Navbar (props) {
           </ul>
           <ul className="navbar-nav mr-4">
             <li className="nav-item">
-                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i> 
+                <div className="nav-item text-decoration-none text-white mr-4" style={{textTransform: 'capitalize'}}><i class="fas fa-wallet"></i>
                 {profile.wallet?.toLocaleString('id', { style: 'currency', currency: 'IDR' })}</div>
               </li>
               <li className="nav-item">

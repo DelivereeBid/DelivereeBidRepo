@@ -116,13 +116,13 @@
 .chat-container {
   box-shadow: 0px 10px 20px 0px #666;
     display: grid;
-    grid: 
+    grid:
         'search-container chat-title' 71px
         'conversation-list chat-message-list' 1fr
         'new-message-container chat-form' 78px
         / 275px 1fr;
     margin: 5% 10%;
-    height: 55vh;
+    /* height: 55vh; */
     background: #fff;
     border-radius: 10px;
 }
